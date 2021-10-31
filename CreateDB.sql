@@ -4,6 +4,11 @@ go
 use HT_DHCH_ONLINE
 go
 
+/*
+use master
+drop database HT_DHCH_ONLINE
+*/
+
 create table DoiTac (
 	MaDT varchar(10) primary key,
 	MSThue varchar(10),
@@ -20,35 +25,33 @@ create table DoiTac (
 )
 
 create table ChiNhanh (
-	STT int,
+	MaCN varchar(10) primary key,
 	MaDT varchar(10) foreign key (MaDT) references DoiTac(MaDT),
 	TenQL nvarchar(100),
 	DiaChi nvarchar(100),
 	SDT varchar(10),
-	constraint PK_CN primary key (STT, MaDT)
 )
 
 create table HopDong (
-	MSThue varchar(10) foreign key (MSThue) references DoiTac(MSThue),
-	TenNgDaiDien nvarchar(100) foreign key (TenNgDaiDien) references DoiTac(TenNgDaiDien),
+	MSThue varchar(10) primary key,
+	MaDT varchar(10) foreign key (MaDT) references DoiTac(MaDT),
+	TenNgDaiDien nvarchar,
 	SoChiNhanh int,
 	TGHieuLuc Date,
 	HoaHong int,
-	constraint PK_HD primary key (MSThue)
 )
 
 create table SanPham (
-	MaSP varchar(6),
+	MaSP varchar(6) primary key,
 	TenSP nvarchar(50),
 	GiaBan int,
 	SLTon int
 )
 
 create table CN_SP (
-	MaDT varchar(10) foreign key (MaDT) references ChiNhanh(MaDT),
-	STT int foreign key (STT) references ChiNhanh(STT),
+	MaCN varchar(10) foreign key (MaCN) references ChiNhanh(MaCN),
 	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
-	constraint PK_CNSP primary key (MaDT, MaSP, STT)
+	primary key (MaCN, MaSP)
 )
 
 create table KhachHang (
@@ -60,7 +63,7 @@ create table KhachHang (
 )
 
 create table DonHang (
-	MaHD varchar(10) primary key,
+	MaDH varchar(10) primary key,
 	MaKH varchar(10),
 	DiaChi nvarchar(30),
 	Phuong nvarchar(30),
@@ -73,13 +76,13 @@ create table DonHang (
 )
 
 create table CT_HoaDon (
-	MaHD varchar(6) foreign key (MaHD) references HoaDon(MaHD),
-	MaSP varchar(5) foreign key (MaSP) references SanPham(MaSP),
+	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
+	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
 	SoLuong int,
 	GiaBan int,
 	GiaGiam int, 
 	ThanhTien int,
-	constraint PK_CTHD primary key (MaHD, MaSP)
+	constraint PK_CTHD primary key (MaDH, MaSP)
 )
 
 create table TaiXe (
@@ -97,7 +100,7 @@ create table TaiXe (
 
 create table ThuNhapTX (
 	MaTX varchar(12) foreign key (MaTX) references TaiXe (CMND),
-	MaHD varchar(6) foreign key (MaHD) references HoaDon(MaHD),
-	PhiVanChuyen int foreign key (PhiVanChuyen) references HoaDon(PhiVanChuyen),
-	constraint PK_TNTX primary key (MaHD, MaTX)
+	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
+	PhiVanChuyen int ,
+	constraint PK_TNTX primary key (MaDH, MaTX)
 )
