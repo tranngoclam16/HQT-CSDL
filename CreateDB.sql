@@ -8,10 +8,17 @@ go
 use master
 drop database HT_DHCH_ONLINE
 */
+create table HopDong (
+	MSThue varchar(10) primary key,
+	TenNgDaiDien nvarchar,
+	SoChiNhanh int,
+	TGHieuLuc Date,
+	HoaHong int,
+)
 
 create table DoiTac (
 	MaDT varchar(10) primary key,
-	MSThue varchar(10),
+	MSThue varchar(10) foreign key (MSThue) references HopDong(MSThue),
 	TenDT nvarchar(100),
 	TenNgDaiDien nvarchar(100),
 	ThanhPho nvarchar(50),
@@ -30,15 +37,6 @@ create table ChiNhanh (
 	TenQL nvarchar(100),
 	DiaChi nvarchar(100),
 	SDT varchar(10),
-)
-
-create table HopDong (
-	MSThue varchar(10) primary key,
-	MaDT varchar(10) foreign key (MaDT) references DoiTac(MaDT),
-	TenNgDaiDien nvarchar,
-	SoChiNhanh int,
-	TGHieuLuc Date,
-	HoaHong int,
 )
 
 create table SanPham (
@@ -69,7 +67,7 @@ create table DonHang (
 	Phuong nvarchar(30),
 	Quan nvarchar(30),
 	Tinh nvarchar(30),
-	NgayLap date,
+	NgayLap datetime,
 	PhiVanChuyen int,
 	TongTien int,
 	ThanhToan nvarchar(50)
@@ -80,7 +78,6 @@ create table CT_HoaDon (
 	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
 	SoLuong int,
 	GiaBan int,
-	GiaGiam int, 
 	ThanhTien int,
 	constraint PK_CTHD primary key (MaDH, MaSP)
 )
@@ -104,3 +101,18 @@ create table ThuNhapTX (
 	PhiVanChuyen int ,
 	constraint PK_TNTX primary key (MaDH, MaTX)
 )
+
+
+create table CT_TTDH (
+	MaTinhTrang int primary key,
+	Mota nvarchar(100)
+)
+
+create table TinhTrangDH (
+	NgayCapNhat datetime,
+	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
+	MaTT int foreign key (MaTT) references CT_TTDH (MaTinhTrang),
+	primary key (NgayCapNhat, MaDH)
+)
+
+
