@@ -6,11 +6,47 @@ GO
 		--được thêm, xóa, sửa thông tin sản phẩm
 		--được sửa thông tin chi nhánh
 		--xem  đơn hàng, chi tiết và cập nhật  tình trạng đơn hàng
+exec sp_addlogin 'doitac1', 'doitac1', 'HT_DHCH_ONLINE'
+create user user_dt1 for login doitac1
+create role [DOITAC] authorization [dbo]
+go
+alter role [DOITAC] add member user_dt1
+go
+
+		--cấp quyền
+	--được quyền sửa thông tin cá nhân
+	grant select, update on DoiTac to [DOITAC]
+	--được thêm, xóa, sửa thông tin sản phẩm
+	grant select, create, delete, update on SanPham to [DOITAC]
+	--được sửa thông tin chi nhánh
+	grant select, update on ChiNhanh to [DOITAC]
+	--xem thông tin đơn hàng, chi tiết và tình trạng đơn hàng
+	grant select on DonHang to [DOITAC]
+	grant select, update on TinhTrangDonHang to [DOITAC]
+
 
 --Khách hàng: 
 			--được quyền sửa thông tin cá nhân
 			--Xem danh sách đối tác, danh sách chi nhánh, danh sách sản phẩm
 			--Xem tình trạng đơn hàng và chi tiết đơn hàng, thông tin đơn hàng của mình
+exec sp_addlogin 'khachhang1','khachhang1', 'HT_DHCH_ONLINE'
+create user user_kh1 for login khachhang1
+create role [KHACHHANG] authorization [dbo]
+go
+alter role [KHACHHANG] add member user_kh1
+go
+
+		--cấp quyền
+	--được quyền sửa thông tin cá nhân
+	grant select, update on KhachHang to [KHACHHANG] 
+	--Xem danh sách đối tác, danh sách chi nhánh, danh sách sản phẩm
+	grant select on DoiTac to [KHACHHANG]
+	grant select on ChiNhanh to [KHACHHANG]
+	grant select on SanPham to [KHACHHANG]
+	--Xem tình trạng đơn hàng và chi tiết đơn hàng, thông tin đơn hàng của mình
+	grant select on DonHang to [KHACHHANG]
+	grant select on CT_HoaDon to [KHACHHANG]
+	grant select on TinhTrangDonHang to [KHACHHANG]
 
 --Tài xế: 
 			--Sửa thông tin cá nhân
