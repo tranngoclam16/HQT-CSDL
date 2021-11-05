@@ -22,7 +22,9 @@ go
 	grant select, update on ChiNhanh to [DOITAC]
 	--xem thông tin đơn hàng, chi tiết và tình trạng đơn hàng
 	grant select on DonHang to [DOITAC]
-	grant select, update on TinhTrangDonHang to [DOITAC]
+	grant select on CT_HoaDon to [DOITAC]
+	--grant select on CT_TTDH to [DOITAC]
+	grant select, update on TinhTrangDH to [DOITAC]
 
 
 --Khách hàng: 
@@ -46,7 +48,8 @@ go
 	--Xem tình trạng đơn hàng và chi tiết đơn hàng, thông tin đơn hàng của mình
 	grant select on DonHang to [KHACHHANG]
 	grant select on CT_HoaDon to [KHACHHANG]
-	grant select on TinhTrangDonHang to [KHACHHANG]
+	grant select on TinhTrangDH to [KHACHHANG]
+	--grant select on CT_TTDH to [DOITAC]
 
 --Tài xế: 
 			--Sửa thông tin cá nhân
@@ -59,6 +62,7 @@ GRANT SELECT,UPDATE ON TaiXe TO [TAIXE]
 GRANT SELECT,UPDATE ON TinhTrangDH TO [TAIXE]
 GRANT SELECT ON DonHang TO [TAIXE]
 GRANT SELECT ON ThuNhapTX TO [TAIXE]
+--grant select on CT_TTDH to [DOITAC]
 GO
 
 --Nhân viên:
