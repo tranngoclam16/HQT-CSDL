@@ -2,7 +2,7 @@ Thành tiền
 giá bán trong chi tiết hóa đơn = giá bên sản phẩm-->LAM
 Tổng tiền =phí vận chuyển + sum (thành tiền)
 phí vận chuyển tính theo % phí đơn hàng-->NGA
-Phí vận chuyển TNTX= Đơn hàng--> LAM
+//Phí vận chuyển TNTX= Đơn hàng--> LAM
 Số lượng tồn-->NGA
 số đơn hàng-->VY
 số chi nhánh-->VY

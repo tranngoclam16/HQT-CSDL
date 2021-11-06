@@ -73,7 +73,7 @@ create table DonHang (
 	NgayLap datetime,
 	PhiVanChuyen int,
 	TongHang int,
-	TongTien int,
+	TongTien as (PhiVanChuyen+TongHang),
 	ThanhToan nvarchar(50)
 )
 
@@ -119,92 +119,4 @@ create table TinhTrangDH (
 	primary key (NgayCapNhat, MaDH)
 )
 go
-
---Trigger
--- ThanhTien = GiaBan(SanPham)*Soluong
-
-create trigger tinh_thanh_tien 
-on CT_DonHang
-for insert, update
-as
-begin
-	update CT_DonHang
-	set GiaBan = sp.GiaBan
-	from inserted i join SanPham sp on i.MaSP = sp.MaSP
-
-	update CT_DonHang
-	set ThanhTien=i.SoLuong*i.GiaBan
-	from INSERTED i 
-	where i.MaDH=CT_DonHang.MaDH and i.MaSP=CT_DonHang.MaSP;
-
-end
-go
-
---TongTien = sum(ThanhTien) (CTHD)
-create trigger insert_CTHD 
-on CT_DonHang
-FOR INSERT
-AS 
-BEGIN
-	update DonHang 
-	set DonHang.TongTien= (select sum (ct.ThanhTien)
-	from INSERTED i join CT_DonHang ct on i.MaDH=ct.MaDH
-	group by ct.MaDH )
-	from INSERTED i
-	where DonHang.MaDH=i.MaDH
-END
-GO
-
-create trigger insert_DonHang on DonHang
-for insert
-as
-begin
-	update DonHang
-	set TongTien = 0
-	from inserted i
-	where i.MaDH = DonHang.MaDH
-end
-go
-
-create trigger delete_CTHD 
-on CT_DonHang
-FOR Delete
-AS 
-BEGIN
-	
-	declare @thanhtien int, @mahd varchar(6)
-	select @thanhtien = d.ThanhTien, @mahd = d.MaDH
-	from deleted d join SanPham sp on d.MaSP= sp.MaSP
-	
-
-	update DonHang
-	Set TongTien = TongTien - d.ThanhTien
-	from deleted d join SanPham sp on d.MaSP = sp.MaSP
-	where DonHang.MaDH = d.MaDH
-END
-GO
-
-create trigger update_CTHD on CT_DonHang
-for update
-as
-begin
-	declare @thanhtien int, @mahd varchar(6)
-	select @thanhtien = d.ThanhTien, @mahd = d.MaDH
-	from deleted d join SanPham sp on d.MaSP= sp.MaSP
-	
-
-	update DonHang
-	Set TongTien = TongTien - d.ThanhTien
-	from deleted d join SanPham sp on d.MaSP = sp.MaSP
-	where DonHang.MaDH = d.MaDH
-
-	update DonHang 
-	set DonHang.TongTien= (select sum (ct.ThanhTien)
-	from INSERTED i join CT_DonHang ct on i.MaDH=ct.MaDH
-	group by ct.MaDH )
-	from INSERTED i
-	where DonHang.MaDH=i.MaDH
-end
-go
-
 
