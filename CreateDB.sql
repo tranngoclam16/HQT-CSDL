@@ -72,6 +72,7 @@ create table DonHang (
 	Tinh nvarchar(30),
 	NgayLap datetime,
 	PhiVanChuyen int,
+	TongHang int,
 	TongTien int,
 	ThanhToan nvarchar(50)
 )
