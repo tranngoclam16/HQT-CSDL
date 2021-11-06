@@ -33,7 +33,7 @@ go
 	grant select,insert on DonHang to [KHACHHANG]
 	grant select,insert on CT_HoaDon to [KHACHHANG]
 	grant select on TinhTrangDH to [KHACHHANG]
-	grant select on CT_TTDH to [DOITAC]
+	grant select on CT_TTDH to [KHACHHANG]
 
 --Tài xế: 
 			--Sửa thông tin cá nhân
@@ -45,8 +45,8 @@ GO
 GRANT SELECT,UPDATE ON TaiXe TO [TAIXE]
 GRANT SELECT,UPDATE ON TinhTrangDH TO [TAIXE]
 GRANT SELECT ON DonHang TO [TAIXE]
-GRANT SELECT ON ThuNhapTX TO [TAIXE]
-grant select on CT_TTDH to [DOITAC]
+GRANT SELECT, INSERT ON ThuNhapTX TO [TAIXE]
+grant select on CT_TTDH to [TAIXE]
 GO
 
 --Nhân viên:
