@@ -8,17 +8,10 @@ go
 use master
 drop database HT_DHCH_ONLINE
 */
-create table HopDong (
-	MSThue varchar(10) primary key,
-	TenNgDaiDien nvarchar,
-	SoChiNhanh int,
-	TGHieuLuc Date,
-	HoaHong int,
-)
 
 create table DoiTac (
 	MaDT varchar(10) primary key,
-	MSThue varchar(10) foreign key (MSThue) references HopDong(MSThue),
+	MSThue varchar(10) unique not null,
 	TenDT nvarchar(100),
 	TenNgDaiDien nvarchar(100),
 	ThanhPho nvarchar(50),
@@ -30,6 +23,16 @@ create table DoiTac (
 	SDT varchar(10),
 	Email varchar(30)
 )
+create table HopDong (
+	MaHD varchar(10) primary key,
+	MSThue varchar(10) foreign key (MSThue) references DoiTac(MSThue),
+	TenNgDaiDien nvarchar(100),
+	SoChiNhanh int,
+	TGHieuLuc Date,
+	HoaHong int,
+)
+
+
 
 create table ChiNhanh (
 	MaCN varchar(10) primary key,
@@ -73,7 +76,7 @@ create table DonHang (
 	ThanhToan nvarchar(50)
 )
 
-create table CT_HoaDon (
+create table CT_DonHang (
 	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
 	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
 	SoLuong int,
@@ -114,40 +117,44 @@ create table TinhTrangDH (
 	MaTT int foreign key (MaTT) references CT_TTDH (MaTinhTrang),
 	primary key (NgayCapNhat, MaDH)
 )
+go
 
 --Trigger
 -- ThanhTien = GiaBan(SanPham)*Soluong
-CREATE Trigger tinh_thanh_tien on CT_HoaDon
+
+create trigger tinh_thanh_tien 
+on CT_DonHang
 for insert, update
 as
 begin
-	update CT_HoaDon
+	update CT_DonHang
 	set GiaBan = sp.GiaBan
 	from inserted i join SanPham sp on i.MaSP = sp.MaSP
 
-	update CT_HoaDon
+	update CT_DonHang
 	set ThanhTien=i.SoLuong*i.GiaBan
 	from INSERTED i 
-	where i.MaDH=CT_HoaDon.MaDH and i.MaSP=CT_HoaDon.MaSP;
+	where i.MaDH=CT_DonHang.MaDH and i.MaSP=CT_DonHang.MaSP;
 
 end
+go
 
 --TongTien = sum(ThanhTien) (CTHD)
 create trigger insert_CTHD 
-on CT_HoaDon
+on CT_DonHang
 FOR INSERT
 AS 
 BEGIN
 	update DonHang 
 	set DonHang.TongTien= (select sum (ct.ThanhTien)
-	from INSERTED i join CT_HoaDon ct on i.MaDH=ct.MaDH
+	from INSERTED i join CT_DonHang ct on i.MaDH=ct.MaDH
 	group by ct.MaDH )
 	from INSERTED i
 	where DonHang.MaDH=i.MaDH
 END
 GO
 
-create trigger insert_hoadon on DonHang
+create trigger insert_DonHang on DonHang
 for insert
 as
 begin
@@ -159,7 +166,7 @@ end
 go
 
 create trigger delete_CTHD 
-on CT_HoaDon
+on CT_DonHang
 FOR Delete
 AS 
 BEGIN
@@ -176,7 +183,7 @@ BEGIN
 END
 GO
 
-create trigger update_CTHD on CT_HoaDon
+create trigger update_CTHD on CT_DonHang
 for update
 as
 begin
@@ -192,10 +199,11 @@ begin
 
 	update DonHang 
 	set DonHang.TongTien= (select sum (ct.ThanhTien)
-	from INSERTED i join CT_HoaDon ct on i.MaDH=ct.MaDH
+	from INSERTED i join CT_DonHang ct on i.MaDH=ct.MaDH
 	group by ct.MaDH )
 	from INSERTED i
 	where DonHang.MaDH=i.MaDH
 end
+go
 
 
