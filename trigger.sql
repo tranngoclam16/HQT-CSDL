@@ -97,3 +97,48 @@ BEGIN
 	where d.MaDT= DoiTac.MaDT
 END
 GO
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+---trigger cập nhật số lượng tồn
+-- khi đặt hàng
+CREATE TRIGGER slt_dathang ON CT_DonHang for INSERT AS 
+BEGIN
+		UPDATE SanPham
+		SET SLTon = SLTon - (
+		SELECT sum(SoLuong)
+		FROM INSERTED i
+		WHERE i.MaSP = SanPham.MaSP
+	)
+		FROM INSERTED i
+		where SanPham.MaSP = i.MaSP
+		select * from SanPham
+END
+GO
+
+-- khi hủy hàng
+CREATE TRIGGER slt_huyhang ON CT_DonHang FOR DELETE AS 
+BEGIN
+	UPDATE SanPham
+	SET SLTon = SLTon + (
+		SELECT sum(SoLuong)
+		FROM deleted d
+		WHERE d.MaSP = SanPham.MaSP
+	)
+	FROM DELETED d 
+	where SanPham.MaSP = d.MaSP
+END
+GO
+-- khi sửa chi tiết hóa đơn
+CREATE TRIGGER slt_capnhathang ON CT_DonHang after update AS
+BEGIN
+   UPDATE SanPham 
+   SET SLTon = SLTon -
+	   (SELECT sum(SoLuong) FROM inserted WHERE MaSP = SanPham.MaSP) +
+	   (SELECT sum(SoLuong) FROM deleted WHERE MaSP = SanPham.MaSP)
+   FROM SanPham
+   JOIN deleted ON SanPham.MaSP = deleted.MaSP
+END
+GO
