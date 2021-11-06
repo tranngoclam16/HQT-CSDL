@@ -115,4 +115,87 @@ create table TinhTrangDH (
 	primary key (NgayCapNhat, MaDH)
 )
 
+--Trigger
+-- ThanhTien = GiaBan(SanPham)*Soluong
+CREATE Trigger tinh_thanh_tien on CT_HoaDon
+for insert, update
+as
+begin
+	update CT_HoaDon
+	set GiaBan = sp.GiaBan
+	from inserted i join SanPham sp on i.MaSP = sp.MaSP
+
+	update CT_HoaDon
+	set ThanhTien=i.SoLuong*i.GiaBan
+	from INSERTED i 
+	where i.MaDH=CT_HoaDon.MaDH and i.MaSP=CT_HoaDon.MaSP;
+
+end
+
+--TongTien = sum(ThanhTien) (CTHD)
+create trigger insert_CTHD 
+on CT_HoaDon
+FOR INSERT
+AS 
+BEGIN
+	update DonHang 
+	set DonHang.TongTien= (select sum (ct.ThanhTien)
+	from INSERTED i join CT_HoaDon ct on i.MaDH=ct.MaDH
+	group by ct.MaDH )
+	from INSERTED i
+	where DonHang.MaDH=i.MaDH
+END
+GO
+
+create trigger insert_hoadon on DonHang
+for insert
+as
+begin
+	update DonHang
+	set TongTien = 0
+	from inserted i
+	where i.MaDH = DonHang.MaDH
+end
+go
+
+create trigger delete_CTHD 
+on CT_HoaDon
+FOR Delete
+AS 
+BEGIN
+	
+	declare @thanhtien int, @mahd varchar(6)
+	select @thanhtien = d.ThanhTien, @mahd = d.MaDH
+	from deleted d join SanPham sp on d.MaSP= sp.MaSP
+	
+
+	update DonHang
+	Set TongTien = TongTien - d.ThanhTien
+	from deleted d join SanPham sp on d.MaSP = sp.MaSP
+	where DonHang.MaDH = d.MaDH
+END
+GO
+
+create trigger update_CTHD on CT_HoaDon
+for update
+as
+begin
+	declare @thanhtien int, @mahd varchar(6)
+	select @thanhtien = d.ThanhTien, @mahd = d.MaDH
+	from deleted d join SanPham sp on d.MaSP= sp.MaSP
+	
+
+	update DonHang
+	Set TongTien = TongTien - d.ThanhTien
+	from deleted d join SanPham sp on d.MaSP = sp.MaSP
+	where DonHang.MaDH = d.MaDH
+
+	update DonHang 
+	set DonHang.TongTien= (select sum (ct.ThanhTien)
+	from INSERTED i join CT_HoaDon ct on i.MaDH=ct.MaDH
+	group by ct.MaDH )
+	from INSERTED i
+	where DonHang.MaDH=i.MaDH
+end
+
 
