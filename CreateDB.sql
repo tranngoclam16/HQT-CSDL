@@ -70,6 +70,8 @@ create table DonHang (
 	Phuong nvarchar(30),
 	Quan nvarchar(30),
 	Tinh nvarchar(30),
+	TenNguoiNhan nvarchar(50),
+	SDT varchar(10),
 	NgayLap datetime,
 	PhiVanChuyen int,
 	TongHang int,
