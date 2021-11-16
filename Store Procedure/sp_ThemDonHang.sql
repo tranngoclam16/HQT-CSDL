@@ -1,7 +1,7 @@
 USE HT_DHCH_ONLINE
 GO
 
-CREATE PROCEDURE sp_ThemHoaDon
+CREATE PROCEDURE sp_ThemDonHang
 	@MaKH varchar(10),
 	@DiaChi nvarchar(30),
 	@Phuong nvarchar(30),
@@ -16,8 +16,18 @@ BEGIN
 		BEGIN TRY
 			waitfor delay '00:00:05'
 			declare @ma_count bigint,@MaDH varchar(10)
-			set @ma_count=(select count(*)from DonHang with (NOLOCK))+1
-			set @MaDH = RIGHT(CAST(@ma_count AS VARCHAR(10)), 10)
+		
+			set @MaDH=(select TOP 1 (MaDH) from DonHang  order by MaDH DESC)
+			
+			if (isnull(@MaDH,'false')<>'false')
+			begin
+				set @ma_count=cast (@MaDH as bigint)+1
+			end
+			else
+			begin
+				set @ma_count=1 
+			end
+			set @MaDH = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
 			waitfor delay '00:00:02'
 
 			print @MaDH

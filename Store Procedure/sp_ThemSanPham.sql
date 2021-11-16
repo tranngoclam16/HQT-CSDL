@@ -11,8 +11,19 @@ BEGIN
 		BEGIN TRY
 			waitfor delay '00:00:05'
 			declare @ma_count bigint,@MaSP varchar(6)
-			set @ma_count=(select count(*)from SanPham with (NOLOCK))+1
-			set @MaSP = RIGHT(CAST(@ma_count AS VARCHAR(6)), 6)
+		
+			set @MaSP=(select TOP 1 (MaSP) from SanPham  order by MaSP DESC)
+			
+			if (isnull(@MaSP,'false')<>'false')
+			begin
+				set @ma_count=cast (@MaSP as bigint)+1
+			end
+			else
+			begin
+				set @ma_count=1 
+			end
+			set @MaSP = RIGHT('00000'+CAST(@ma_count AS VARCHAR(6)), 6)
+			
 			waitfor delay '00:00:02'
 
 			print @MaSP

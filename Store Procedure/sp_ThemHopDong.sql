@@ -13,8 +13,19 @@ BEGIN
 		BEGIN TRY
 			waitfor delay '00:00:05'
 			declare @ma_count bigint,@MaHD varchar(10)
-			set @ma_count=(select count(*)from HopDong with (NOLOCK))+1
-			set @MaHD = RIGHT(CAST(@ma_count AS VARCHAR(10)), 10)
+		
+			set @MaHD=(select TOP 1 (MaHD) from HopDong  order by MaHD DESC)
+			
+			if (isnull(@MaHD,'false')<>'false')
+			begin
+				set @ma_count=cast (@MaHD as bigint)+1
+			end
+			else
+			begin
+				set @ma_count=1 
+			end
+			set @MaHD = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
+			
 			waitfor delay '00:00:02'
 
 			print @MaHD

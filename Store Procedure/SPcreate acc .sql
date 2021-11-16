@@ -23,8 +23,18 @@ BEGIN
 		BEGIN TRY
 			waitfor delay '00:00:05'
 			declare @ma_count bigint,@MaDT varchar(10)
-			set @ma_count=(select count(*)from DoiTac with (NOLOCK))+1
-			set @MaDT = RIGHT(CAST(@ma_count AS VARCHAR(10)), 10)
+		
+			set @MaDT=(select TOP 1 (MaDT) from DoiTac  order by MaDT DESC)
+			
+			if (isnull(@MaDT,'false')<>'false')
+			begin
+				set @ma_count=cast (@MaDT as bigint)+1
+			end
+			else
+			begin
+				set @ma_count=1 
+			end
+			set @MaDT = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
 			waitfor delay '00:00:02'
 			
 			print @MaDT
