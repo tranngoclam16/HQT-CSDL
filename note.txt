@@ -7,3 +7,4 @@ Số lượng tồn-->NGA
 số đơn hàng-->VY
 số chi nhánh-->VY
 //tình trạng đơn hàng : xong-> insert vào bảng thu nhập
+
