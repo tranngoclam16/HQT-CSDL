@@ -31,7 +31,7 @@ BEGIN
 			BEGIN
 				print('2')
 				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
-				rollback TRAN
+				--rollback TRAN
 			END
 		COMMIT TRAN
 		END TRY
