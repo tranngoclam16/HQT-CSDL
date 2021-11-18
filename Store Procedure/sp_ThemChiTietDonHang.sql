@@ -10,6 +10,12 @@ AS
 BEGIN 
 	BEGIN TRAN
 		BEGIN TRY
+			if not exists (select * from DonHang where @MaDH= MaDH)
+				begin
+					print('1')
+					raiserror(N'Không tồn tại đơn hàng',15,1)
+				end
+
 			waitfor delay '00:00:05'
 			declare @sl int
 			set @sl=(select SLTon from SanPham where MaSP=@MaSP)
@@ -24,15 +30,16 @@ BEGIN
 						where MaDH = @MaDH and MaSP = @MaSP
 					end
 				else
-					waitfor delay '00:00:02'
-					INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)	
+					begin
+						waitfor delay '00:00:02'
+						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)	
+					end
 			end
 			else
-			BEGIN
+			begin
 				print('2')
 				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
-				--rollback TRAN
-			END
+			end
 		COMMIT TRAN
 		END TRY
 		BEGIN CATCH

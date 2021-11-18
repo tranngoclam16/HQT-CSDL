@@ -1,0 +1,1 @@
+﻿EXEC sp_CapNhatSanPham '000001',N'Bông cải',300,3

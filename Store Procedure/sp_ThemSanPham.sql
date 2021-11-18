@@ -1,4 +1,4 @@
-USE HT_DHCH_ONLINE
+﻿USE HT_DHCH_ONLINE
 GO
 
 CREATE PROCEDURE sp_ThemSanPham
@@ -29,6 +29,14 @@ BEGIN
 			print @MaSP
 
 			INSERT INTO SanPham values (@MaSP, @TenSP, @GiaBan, @SLTon)
+
+			waitfor delay '00:00:04'
+			if (@SLTon <0)
+				begin
+					print('1')
+					raiserror(N'không được nhỏ hơn 0',15,1)
+				end
+
 		COMMIT TRAN
 		END TRY
 		BEGIN CATCH
@@ -40,3 +48,5 @@ BEGIN
 		END CATCH
 END
 GO
+
+--drop procedure sp_ThemSanPham
