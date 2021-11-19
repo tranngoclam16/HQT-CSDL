@@ -5,7 +5,7 @@ begin
 	begin tran
 		begin try
 			select SLTon from SanPham where MaSP = @MaSP
-			waitfor delay '00:00:05'
+			waitfor delay '00:00:10'
 			select SLTon from SanPham where MaSP = @MaSP
 		commit tran
 		end try
@@ -19,3 +19,5 @@ begin
 end
 
 exec sp_XemSLT 'SP001'
+
+--drop procedure sp_XemSLT
