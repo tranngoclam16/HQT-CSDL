@@ -4,7 +4,6 @@ GO
 CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
-	@TenSP nvarchar(50),
 	@SoLuong int)
 AS
 BEGIN 
