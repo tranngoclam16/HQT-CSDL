@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript"></script>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <title>LOGIN</title>
+   
+    <div class="login">
+        <div class="form-box">
+           
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick=login()>Login</button>
+                <button type="button" class="toggle-btn" onclick=register()>Register</button>
+            </div>
+            <form id="login-form"class="input-group">
+                <input id="username" type="text" class="input-field" placeholder="Username" required>
+                <input id="password" type="text"  class="input-field" placeholder="Password" required>
+                <input id="submit" class="submit-btn" type="button" value="Login">
+            </form> 
+            <form id="register-form" class="input-group">
+                <a class="submit-btn" href="SignUp_DT.html" role="button">
+                    Register for Bussiness
+                </a>
+                <br><br>
+                <br><br>
+                <a class="submit-btn" href="SignUp_KH.html" role="button">
+                    Register for Shopping
+                </a>
+                <br><br>
+                <br><br>
+                <a class="submit-btn" href="SignUp_TX.html" role="button">
+                    Register for Driver
+                </a>
+            </form>
+        </div>     
+    </div>
+
+    <script>
+        var x=document.getElementById("login-form");
+        var y= document.getElementById("register-form");
+        var z=document.getElementById("btn");
+
+        function register(){
+            x.style.left="-400px";
+            y.style.left="50px";
+            z.style.left="110px";
+        }
+
+        function login(){
+            x.style.left="50px";
+            y.style.left="450px";
+            z.style.left="0px";
+        }
+    </script>
+	
+	
+	
+	
+	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>
