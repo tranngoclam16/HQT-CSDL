@@ -3,7 +3,7 @@
     padding:0;
 }
 .login{
-    height:110%;
+    height:100%;
     width:100%;
     background: radial-gradient(circle, #7c6969 0%, #f4f4f5 100%);
     background-position: center;
@@ -11,8 +11,8 @@
     position:absolute;
 }
 .form-box{
-    width:580px;
-    height:650px;
+    width:380px;
+    height:480px;
     position:relative;
     margin:6% auto;
     background:#fff;
@@ -42,14 +42,14 @@
     width:110px;
     height:100%;
     /*background: linear-gradient(to right, #c2739e,#f1cfdf);*/
-    background: linear-gradient(to right, #eea0a0,#faf9f9);
+    background: linear-gradient(to right, #ef7b8c,#faf9f9);
     border-radius:30px;
     transition:.5s;
 }
 .input-group{
-    top:90px;
+    top:180px;
     position:absolute;
-    width:400px;
+    width:280px;
     transition:.5s;
 }
 .input-field{
@@ -70,7 +70,7 @@
     display:block;
     margin:auto;
     /*background:linear-gradient(to right, #c2739e,#f1cfdf);;*/
-    background: linear-gradient(to right, #eea0a0,#faf9f9);
+    background: #ef7b8c;
     border: 0;
     outline:none;
     border-radius: 30px;
@@ -78,17 +78,11 @@
     color: rgb(15, 15, 15);
     text-decoration: none;
 }
+#login-form{
+    left:50px;
 
-#registerDT-form{
-    left:90px;
 }
-#registerTX-form{
-    left:90px;
-}
-#registerKH-form{
-    left:90px
-}
-.text{
-    text-align: center;
-}
+#register-form{
+    left:450px;
 
+}
