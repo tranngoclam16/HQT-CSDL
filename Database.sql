@@ -43,7 +43,7 @@ create table ChiNhanh (
 )
 
 create table SanPham (
-	MaSP varchar(10) primary key,
+	MaSP varchar(6) primary key,
 	TenSP nvarchar(50),
 	GiaBan int,
 	SLTon int
@@ -51,7 +51,7 @@ create table SanPham (
 
 create table CN_SP (
 	MaCN varchar(10) foreign key (MaCN) references ChiNhanh(MaCN),
-	MaSP varchar(10) foreign key (MaSP) references SanPham(MaSP),
+	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
 	primary key (MaCN, MaSP)
 )
 
@@ -81,7 +81,7 @@ create table DonHang (
 
 create table CT_DonHang (
 	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
-	MaSP varchar(10) foreign key (MaSP) references SanPham(MaSP),
+	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
 	SoLuong int,
 	GiaBan int,
 	ThanhTien int,
