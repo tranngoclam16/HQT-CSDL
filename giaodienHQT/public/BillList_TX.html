@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/UpdateInfo.css">
+    <link rel="stylesheet" href="css/BillList_TX.css">
 </head>
 <body>
   <nav class="navbar"> 
@@ -29,72 +29,77 @@
         
     </div>
 </nav>    
-    <title>ViewDetail_TX</title>
+    <title>BillList_TX</title>
     <div class="login">
        
        
         <div class="form-box-Info">
             <div class="text">
                 <br>
-                <h1>Thông tin Tài Xế</h1>
-            </div>
-            <div class="template">
-                <h6>
-                    <div> Mã Tài xế: <span id="template-MaKH"></span></div>  
-                        
-                </h6>
-            </div>
-            <br></br> 
-            <form id="registerDT-form"class="input-group">
-                <input id="CMND" type="text" class="input-field" placeholder="CMND" required>
-                <input id="HoTen" type="text"  class="input-field" placeholder="Họ và Tên" required>
-                <input id="SDT" type="text" class="input-field" placeholder="Số điện thoại" required>
-                <input id="DiaChi" type="text"  class="input-field" placeholder="Địa chỉ" required>
-                <input id="BienSoXe" type="text" class="input-field" placeholder="Biển số xe" required>
-                <input id="KVHoaDong" type="text"  class="input-field" placeholder="Khu vực hoạt động" required>
-                <input id="Email" type="text"  class="input-field" placeholder="Email" required>
-                <input id="STK" type="text" class="input-field" placeholder="Số tài khoản" required>
-                <input id="NganHang" type="text"  class="input-field" placeholder="Ngân hàng" required>
-                <input id="ChiNhanh" type="text" class="input-field" placeholder="Chi nhánh ngân hàng" required>
-                <input id="Password" type="text" class="input-field" placeholder="Mật khẩu" required>
-                <br>
-                <input id="update-btn" class="submit-btn" type="button" value="Sửa thông tin">
-            </form> 
-           
-        </div> 
-        <div class="box-Agent">
-            <div class="text">
-                <br>
-                <h1>Thu nhập cá nhân</h1>
+                <h1>Danh Sách Đơn Hàng</h1>
             </div>
             
-            <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">  </th>
-                    <th scope="col">Mã đơn hàng</th>
-                    <th scope="col">Thu nhập</th>
-                    <th scope="col">Tình Trạng</th>
-                    
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="card shadow mt-5">
+          
                    
-                    <th scope="col">&nbsp;</th>
-                  </tr>
-                  <td>  </td>
-                    <td>MaDH</td>
-                   
-                    <td>ThuNhap</td>
-                    <td>TinhTrang</td>
-                    <td class="text-right">
-                   
-                    <a class="submit-view-btn" href="CN_Info.html?MaCN={{MaCN}}" role="button" data-id="{{MaCN}}">
-                     <i class="fa fa-eye" aria-hidden="true"></i>
-                    </a>
-                    </td>
-                </thead>
-                <tbody id="listAgent"></tbody>
-              </table>
+                    <div class="tableFixHeight">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th class="text-center" scope="col">#</th>
+                          <th scope="col">Mã DH</th>
+                          <th scope="col">Mã KH</th>
+                          <th scope="col">Địa chỉ</th>
+                          <th scope="col">Phường</th>
+                          <th scope="col">Quận</th>
+                          <th scope="col">Tỉnh</th>
+                          <th scope="col">Tên Người Nhận</th>
+                          <th scope="col">Số điện thoại</th>
+                          <th scope="col">Ngày Lập</th>
+                          <th scope="col">Phí Vận Chuyển</th>
+                          <th scope="col">Tổng Tiền</th>
+                          <th scope="col">Thanh Toán</th>
+                          <th scope="col">Tình Trạng</th>
+                          <th scope="col">&nbsp;</th>
+                        </tr>
+                      </thead>
+                      <tbody id="listBill">
+                        <td></td>  
+                        <td>MaDH</td>
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td></td> 
+                        <td class="text-right">
+                            <a class="submit-view-btn" href="addDetailBill.html?MaHD={{MaHD}}" data-id="{{MaHD}}">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                            </a>
+                            
+                          </td>
+                      </tbody>
+                    </table>
+                    </div>
+                    <div class="card-footer text-muted">
+                      <span style="float: right; padding-left: 50px" id="currentPage" ></span>
+                      <Button onClick="goToPage(1)" class="btn btn-dark" style="float: right">Trang kế</Button>
+                      <Button onClick="goToPage(-1)" style="float: left" >Trang trước</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
            
-        </div>     
+        </div> 
+        
     </div>
 
     <script id="entry-template" type="text/x-handlebars-template">

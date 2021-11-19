@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/UpdateTTDH.css">
+</head>
+<body>
+    <nav class="navbar"> 
+        <div class="nav">
+            <img src="img/logo.png" class="brand-logo" alt="">
+            <div class="nav-items">
+                
+                
+                <ul class="links-container">
+                    <li class="link-item"><a href="BillList_TX.html" class="link">Đơn hàng</a></li>
+                    <li class="link-item"><a href="UpdateInfo_TX.html" class="link">Chỉnh sửa thông tin</a></li>
+                    <li class="link-item"><a href="UpdateInfo_TX.html" class="link">Thu nhập cá nhân</a></li>
+    
+                </ul>
+                <a href="#"><img src="img/user.png" alt=""></a>
+               
+        </div>
+            
+        </div>
+    </nav>      
+  
+    
+    <br><br><br>
+        
+    <title>UpdateTTDH_TX</title>
+    <div class="login">
+        <br><br>
+        
+       
+        <div class="form-box-Info">
+            <div class="text">
+                <br>
+                <h1>Thông tin Đơn hàng</h1>
+            </div>
+            <div class="template">
+                <h6>
+                    <div> Mã đơn hàng: <span id="template-MaKH"></span></div><br></br>
+                    <div> Mã Khách hàng: <span id="template-MaKH"></span></div><br></br>
+                    <div> Địa chỉ: <span id="template-MaKH"></span></div><br></br>
+                    <div> Phường: <span id="template-MaKH"></span></div><br></br>
+                    <div> Quận: <span id="template-MaKH"></span></div><br></br>
+                    <div> Tỉnh: <span id="template-MaKH"></span></div><br></br>
+                    <div> Tên Người Nhận: <span id="template-MaKH"></span></div><br></br>  
+                    <div> Số điện thoại: <span id="template-MaKH"></span></div><br></br>
+                    <div> Phí Vận chuyển: <span id="template-MaKH"></span></div><br></br>
+                    <div> Tổng Tiền: <span id="template-MaKH"></span></div><br></br>
+                    <div> Thanh Toán: <span id="template-MaKH"></span></div><br></br>
+                        
+                </h6>
+            </div>
+           
+           
+        </div> 
+        <div class="form-checkbox">
+            <div class="text">
+                <br>
+                <h3>Tình Trạng Đơn hàng</h3>
+            </div>
+            <br>
+           <input type="checkbox" name="checklist"class="checkbox" id="3." onclick="return checkfun()">
+           <label for="3." class="label-checkbox">Đơn hàng đang giao</label>
+           <br>
+           <input type="checkbox" name="checklist"class="checkbox" id="4."onclick="return checkfun()">
+           <label for="4." class="label-checkbox">Đơn hàng giao thành công</label>
+           <br>
+           <button class="submit-btn">Cập nhật</button>
+           
+        </div> 
+       
+    </div>
+    <script>
+        function checkfun(){
+            var a=document.getElementsByName('checklist');
+            var newvar=0;
+            var count;
+            for (count=0;count<a.length;count++){
+                if (a[count].checked==true){
+                    newvar=newvar+1;
+                }
+            }
+            if (newvar>=2){
+                document.innerHTML="Chỉ chọn 1 tình trạng"
+                return false;
+            }
+        }
+    </script>
+
+	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>
