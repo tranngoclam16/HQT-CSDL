@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" convert="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/nav.css">
+    <!--<link rel="stylesheet" href="css/SignUp.css">-->
+    <link rel="stylesheet" href="css/AddProduct.css">
+    
+</head>
+<body>
+    <title>AddProduct</title>
+    <img src="img/loader.gif" class="loader" alt=""> 
+
+    <div class="alert-box">
+        <img src="img/error.png" class="alert-img" alt="">
+        <p class="alert-msg"></p>
+    </div>
+
+    <img src="img/logo.png" class="logo" alt="">
+
+    <div class="form">
+        <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
+        <input type="number" min="1000" step="1000" id="product-price" placeholder="Giá bán">
+        <input type="number" id="product-stock" placeholder="Số lượng tồn">
+        <textarea id="des" placeholder="Mô tả sản phẩm"></textarea>
+
+        <!--product image-->
+        <div class="product-info">
+            <div class="product-image"><p class="text">Hình ảnh</p></div>
+            <div class="upload-image-sec">
+                <!--upload input-->
+                <p class="text"><img src="img/insert-picture-icon.png" alt="">Thêm hình</p>
+                <div class="upload-catalouge">
+                    <input type="file" class="fileupload" id="first-file-upload-btn" hidden>
+                    <label for="first-file-upload-btn" class="upload-image"></label>
+                    <input type="file" class="fileupload" id="second-file-upload-btn" hidden>
+                    <label for="second-file-upload-btn" class="upload-image"></label>
+                    <input type="file" class="fileupload" id="third-file-upload-btn" hidden>
+                    <label for="third-file-upload-btn" class="upload-image"></label>
+                    <input type="file" class="fileupload" id="fourth-file-upload-btn" hidden>
+                    <label for="fourth-file-upload-btn" class="upload-image"></label>
+                </div>
+            </div>
+            <div class="select-sizes">
+                <p class="text">Size available</p>
+                <div class="sizes">
+                    <input type="checkbox" class="size-checkbox" id="xs" value="xs">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
