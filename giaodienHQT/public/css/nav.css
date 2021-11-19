@@ -10,18 +10,19 @@
     top: 0;
     left: 0;
     width: 100%;
-    background: #f10000;
+    height: 150px;  
+    background: #fce9e5;
     z-index: 9;
 }
 
 .nav{
-    padding: 10px 10vw;
+    padding: 5px 5vw;
     display: flex;
     justify-content: space-between ;
 }
 
 .brand-logo{
-    height: 200px;
+    height: 150px;
 }
 
 .nav-items{
@@ -42,7 +43,7 @@
     border-bottom-left-radius: 10px;
     border: 1px solid #d1d1d1;
     text-transform: capitalize;
-    background: none;
+    background: #ffffff;
     color: #a9a9a9;
     outline: none;
 }
@@ -64,4 +65,35 @@
 
 .search-box::placeholder{
     color: #9e5858;
+}
+
+.nav-items a{
+    margin-left: 20px;
+}
+
+.nav-items a img{
+    width: 30px;
+}
+
+.links-container{
+   width: 100%;
+   display: flex;
+   padding: 10px 10vw;
+   justify-content: center;
+   list-style: none;
+   border-top: 1px solid #d1d1d1; 
+} 
+
+.link{
+    text-transform: capitalize;
+    padding: 0 10px;
+    margin: 0 5px;
+    text-decoration:  none;
+    color:  #9e5858;
+    opacity: 0.5;
+    transition: .5s;
+}
+
+.links:hover{
+    opacity: 1;
 }
