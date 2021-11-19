@@ -10,9 +10,26 @@
     background-size: cover;
     position:absolute;
 }
+.brand-logo{
+    height:150px;
+    display:block;
+    margin:0 auto 50px;
+}
 .form-box{
-    width:580px;
+    top:-130px;
+    width:900px;
     height:650px;
+    position:relative;
+    margin:6% auto;
+    background:#fff;
+    padding :5px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.form-box-KH{
+    top:-130px;
+    width:900px;
+    height:450px;
     position:relative;
     margin:6% auto;
     background:#fff;
@@ -49,7 +66,7 @@
 .input-group{
     top:90px;
     position:absolute;
-    width:400px;
+    width:500px;
     transition:.5s;
 }
 .input-field{
@@ -80,13 +97,13 @@
 }
 
 #registerDT-form{
-    left:90px;
+    left:200px;
 }
 #registerTX-form{
-    left:90px;
+    left:200px;
 }
 #registerKH-form{
-    left:90px
+    left:200px;
 }
 .text{
     text-align: center;

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/UpdateInfo.css">
+</head>
+<body>
+    <title>ViewDetail_TX</title>
+    <div class="login">
+        <br><br>
+        <a class="back-btn" href="main.html" role="button">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Trở về trang chủ
+          </a>
+       
+        <div class="form-box-Info">
+            <div class="text">
+                <br>
+                <h1>Thông tin Tài Xế</h1>
+            </div>
+            <div class="template">
+                <h6>
+                    <div> Mã Tài xế: <span id="template-MaKH"></span></div>  
+                        
+                </h6>
+            </div>
+            <br></br> 
+            <form id="registerDT-form"class="input-group">
+                <input id="CMND" type="text" class="input-field" placeholder="CMND" required>
+                <input id="HoTen" type="text"  class="input-field" placeholder="Họ và Tên" required>
+                <input id="SDT" type="text" class="input-field" placeholder="Số điện thoại" required>
+                <input id="DiaChi" type="text"  class="input-field" placeholder="Địa chỉ" required>
+                <input id="BienSoXe" type="text" class="input-field" placeholder="Biển số xe" required>
+                <input id="KVHoaDong" type="text"  class="input-field" placeholder="Khu vực hoạt động" required>
+                <input id="Email" type="text"  class="input-field" placeholder="Email" required>
+                <input id="STK" type="text" class="input-field" placeholder="Số tài khoản" required>
+                <input id="NganHang" type="text"  class="input-field" placeholder="Ngân hàng" required>
+                <input id="ChiNhanh" type="text" class="input-field" placeholder="Chi nhánh ngân hàng" required>
+                <input id="Password" type="text" class="input-field" placeholder="Mật khẩu" required>
+                <br>
+                <input id="update-btn" class="submit-btn" type="button" value="Sửa thông tin">
+            </form> 
+           
+        </div> 
+        <div class="box-Agent">
+            <div class="text">
+                <br>
+                <h1>Thu nhập cá nhân</h1>
+            </div>
+            
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">  </th>
+                    <th scope="col">Mã đơn hàng</th>
+                    <th scope="col">Thu nhập</th>
+                    
+                   
+                    <th scope="col">&nbsp;</th>
+                  </tr>
+                  <td>  </td>
+                    <td>MaDH</td>
+                   
+                    <td>ThuNhap</td>
+                    
+                    <td class="text-right">
+                   
+                    <a class="submit-view-btn" href="CN_Info.html?MaCN={{MaCN}}" role="button" data-id="{{MaCN}}">
+                     <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    </td>
+                </thead>
+                <tbody id="listAgent"></tbody>
+              </table>
+           
+        </div>     
+    </div>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+  
+        {{#each this}}
+        <tr>
+            <th scope="row">{{ROWNUMBER}}</th>
+            <td>MaCN</td>
+            <td>TenQL</td>
+            <td>SDT</td>
+            <td>DiaChi</td>
+            <td class="text-right">
+              <a class="submit-btn" href="addDetailBill.html?MaHD={{MaHD}}" data-id="{{MaHD}}">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </a>
+              <a class="submit-btn" href="billinfo.html?MaHD={{MaHD}}" role="button" data-id="{{MaHD}}">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+            </td>
+        </tr>
+        {{/each}}
+        
+      </script>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+	
+      
+        
+      </script>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+	
+	
+	
+	
+	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

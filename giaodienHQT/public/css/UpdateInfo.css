@@ -12,9 +12,11 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 13px;
 }
+
 .form-box-Info{
+    top:-130px;
     width:580px;
-    height:650px;
+    height:700px;
     position: absolute;
     top:0px;
     right:800px;
@@ -25,6 +27,7 @@
     overflow: hidden;
 }
 .box-Agent{
+    top:-130px;
     width:580px;
     height:650px;
     position:absolute;
@@ -37,6 +40,7 @@
     overflow: hidden;
 }
 .form-box-Info-KH{
+    top:-100px;
     width:580px;
     height:500px;
     position:relative;
@@ -64,6 +68,7 @@
     width:400px;
     transition:.5s;
 }
+
 .input-field{
     width:100%;
     padding:10px 0;
