@@ -1,9 +1,17 @@
-﻿begin tran
+﻿Use HT_DHCH_ONLINE
+go
+
+--TestCase09
+--Transaction 1
+begin tran
 	begin try
-		update KhachHang 
-		set DiaChi = '100 Lê Văn Quới'
-		where MaKH = '0000000001'
+		select count(*)
+		from SanPham
+		where GiaBan < 100000
 		waitfor delay '00:00:05'
+		select count(*)
+		from SanPham
+		where GiaBan < 100000
 	commit tran
 	end try
 	begin catch

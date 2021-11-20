@@ -1,15 +1,12 @@
-﻿begin tran
-	begin try
-		insert into SanPham values
-		 ('SP020',NULL,70000, 20)
-	commit tran
-	end try
-	begin catch
-	IF @@trancount>0
-	BEGIN	
-		print(N'Lỗi')
-		ROLLBACK TRANSACTION 
-	END
-end catch
+﻿USE HT_DHCH_ONLINE
+Go
 
---select* from KhachHang where MaKH = '0000000001'
+exec sp_CapNhatTTDonHang_TC 'DH0000', 3;
+
+
+--drop procedure sp_CapNhatTTDonHang_TC
+--Insert into TinhTrangDH values
+--(GETDATE(), 'DH0000', 1)
+--waitfor delay '00:00:02'
+--Insert into TinhTrangDH values
+--(GETDATE(), 'DH0000', 2)
