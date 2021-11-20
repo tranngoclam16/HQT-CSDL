@@ -1,10 +1,11 @@
 ﻿USE HT_DHCH_ONLINE
 Go
 
-exec sp_CapNhatTTDonHang_TC 'DH0000', 3;
+declare @TTDonHang nvarchar(100);	
+exec sp_XemTTDonHang_TC 'DH0000', @TTDonHang output;
+print (@TTDonHang)
 
-
---drop procedure sp_CapNhatTTDonHang_TC
+--drop procedure sp_XemTTDonHang
 --Insert into TinhTrangDH values
 --(GETDATE(), 'DH0000', 1)
 --waitfor delay '00:00:02'
