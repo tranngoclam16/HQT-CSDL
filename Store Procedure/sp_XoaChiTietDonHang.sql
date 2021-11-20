@@ -1,7 +1,7 @@
 ﻿--PROCEDURE XÓA CHI TIẾT ĐƠN HÀNG
 USE HT_DHCH_ONLINE
 GO
-CREATE PROCEDURE ctdh_XoaChiTietDonHang(@MaDH varchar(10), @MaSP varchar(6))
+CREATE PROCEDURE sp_XoaChiTietDonHang(@MaDH varchar(10), @MaSP varchar(6))
 AS
 BEGIN
 	begin tran

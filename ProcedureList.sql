@@ -563,7 +563,7 @@ GO
 --=======================================================================================================================
 --XÓA ĐƠN HÀNG
 --
-CREATE PROCEDURE dh_XoaDonHang
+CREATE PROCEDURE sp_XoaDonHang
 	(@MaDH varchar(10))
 AS
 BEGIN
@@ -590,10 +590,10 @@ BEGIN
 		END CATCH
 END
 GO
---DROP PROCEDURE dh_XoaDonHang
+--DROP PROCEDURE sp_XoaDonHang
 --
 --XÓA CHI TIẾT ĐƠN HÀNG
-CREATE PROCEDURE ctdh_XoaChiTietDonHang(@MaDH varchar(10), @MaSP varchar(6))
+CREATE PROCEDURE sp_XoaChiTietDonHang(@MaDH varchar(10), @MaSP varchar(6))
 AS
 BEGIN
 	begin tran
@@ -613,7 +613,7 @@ BEGIN
 		end catch
 END
 GO
---DROP PROCEDURE ctdh_XoaChiTietDonHang
+--DROP PROCEDURE sp_XoaChiTietDonHang
 --
 --TÀI XẾ HỦY NHẬN ĐƠN HÀNG -> XÓA TRONG THU NHẬP TÀI XẾ
 --

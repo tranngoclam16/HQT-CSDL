@@ -1,8 +1,6 @@
 ﻿--PROCEDURE THÊM CHI TIẾT ĐƠN HÀNG
 USE HT_DHCH_ONLINE
 GO
-DISABLE TRIGGER slt_dathang ON CT_DonHang
-GO
 CREATE PROCEDURE sp_ThemChiTietDonHang_TC
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
@@ -17,7 +15,7 @@ BEGIN
 					raiserror(N'Không tồn tại đơn hàng',15,1)
 				end
 
-			waitfor delay '00:00:10'
+			waitfor delay '00:00:05'
 			declare @sl int
 			set @sl=(select SLTon from SanPham where MaSP=@MaSP)
 			print(@sl)
@@ -33,10 +31,7 @@ BEGIN
 				else
 					begin
 						waitfor delay '00:00:02'
-						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)
-						UPDATE SanPham
-						SET SLTon = SLTon - @SoLuong
-						WHERE MaSP = @MaSP
+						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)	
 					end
 			end
 			else

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE sp_TaiXeNhanDonHang_tc
+﻿CREATE PROCEDURE sp_TaiXeNhanDonHang_TC
             (@MaTX VARCHAR(12),
             @MaDH VARCHAR(10))
 AS
@@ -33,4 +33,4 @@ BEGIN
 	END CATCH
 END
 GO
---DROP PROCEDURE sp_TaiXeNhanDonHang_tc
+--DROP PROCEDURE sp_TaiXeNhanDonHang_TC
