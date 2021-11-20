@@ -97,16 +97,13 @@
 .links:hover{
     opacity: 1;
 } */
-@font-face {
-    font-family: fontvidu;
-    src: url('https://fonts.google.com/specimen/Montserrat?subset=vietnamese');
-}
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: fontvidu, sans-serif;
+    font-family: 'Bitter', serif;
 }
 
 .brand-logo{
