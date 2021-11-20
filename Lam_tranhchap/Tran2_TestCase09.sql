@@ -3,18 +3,6 @@ go
 
 --TestCase09
 --Transaction 2
-begin tran
-	begin try
-		insert into SanPham values
-		 ('SP020',NULL,70000, 20)
-	commit tran
-	end try
-	begin catch
-	IF @@trancount>0
-	BEGIN	
-		print(N'Lỗi')
-		ROLLBACK TRANSACTION 
-	END
-end catch
+exec sp_ThemSanPham 'Bút bi', 7000, 80
 
 --select* from KhachHang where MaKH = '0000000001'

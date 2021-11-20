@@ -2,7 +2,7 @@
 Go
 
 declare @TTDonHang nvarchar(100);	
-exec sp_XemTTDonHang_TC 'DH0000', @TTDonHang output;
+exec sp_XemTinhTrangDonHang_TC 'DH0000', @TTDonHang output;
 print (@TTDonHang)
 
 --drop procedure sp_XemTTDonHang

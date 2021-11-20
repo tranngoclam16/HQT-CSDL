@@ -97,12 +97,16 @@
 .links:hover{
     opacity: 1;
 } */
+@font-face {
+    font-family: fontvidu;
+    src: url('https://fonts.google.com/specimen/Montserrat?subset=vietnamese');
+}
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Dosis", Sans Script;
+    font-family: fontvidu, sans-serif;
 }
 
 .brand-logo{

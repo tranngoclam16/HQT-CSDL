@@ -497,7 +497,7 @@ GO
 --
 --CẬP NHẬT CHI TIẾT ĐƠN HÀNG
 --
-CREATE PROCEDURE sp_CapNhatChiTietDonHang
+CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
 	@SoLuong int)

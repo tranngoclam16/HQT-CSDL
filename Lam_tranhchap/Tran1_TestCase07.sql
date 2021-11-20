@@ -1,7 +1,7 @@
 ﻿USE HT_DHCH_ONLINE
 Go
 
-exec sp_CapNhatTTDonHang_TC 'DH0000', 3;
+exec sp_ThemTinhTrangDonHang_TC 'DH0000', 4;
 
 
 --drop procedure sp_CapNhatTTDonHang_TC

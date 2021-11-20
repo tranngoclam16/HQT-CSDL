@@ -5,10 +5,16 @@ go
 --Transaction 1
 begin tran
 	begin try
+		select *
+		from SanPham
+		where GiaBan < 100000
 		select count(*)
 		from SanPham
 		where GiaBan < 100000
 		waitfor delay '00:00:05'
+		select *
+		from SanPham
+		where GiaBan < 100000
 		select count(*)
 		from SanPham
 		where GiaBan < 100000
