@@ -19,12 +19,10 @@
         <p class="alert-msg"></p>
     </div>
 
-    <img src="img/logo.png" class="logo" alt="">
+    <img src="img/logo1.png" class="logo" alt="">
 
     <div class="form">
         <input type="text" id="product-name" placeholder="Tên sản phẩm" required>
-        <input type="number" min="1000" step="1000" id="product-price" placeholder="Giá bán">
-        <input type="number" id="product-stock" placeholder="Số lượng tồn">
         <textarea id="des" placeholder="Mô tả sản phẩm"></textarea>
 
         <!--product image-->
@@ -51,6 +49,14 @@
                 </div>
             </div>
         </div>
+        
+        <div class="product-price">
+            <p class="text-price">Giá bán</p>
+            <input type="number" min="1000" step="1000" id="product-price" placeholder="Giá bán">
+            <p class="text-price">Số lượng tồn</p>
+            <input type="number" min="1" id="product-stock" placeholder="Số lượng tồn (tối thiểu 1)">
+        </div>
+        
     </div>
 </body>
 </html>
