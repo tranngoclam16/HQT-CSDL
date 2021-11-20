@@ -1,6 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
 *{
     margin:0;
     padding:0;
+}
+h1{
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+h3{
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+h4{
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 .login{
     height:110%;
@@ -9,8 +29,9 @@
     background-position: center;
     background-size: cover;
     position:absolute;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Bitter', serif;
     font-size: 13px;
+    box-sizing: border-box;
 }
 
 .form-box-Info{
