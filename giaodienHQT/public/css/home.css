@@ -1,11 +1,12 @@
-@import "nav.css";
+/* @import "nav.css";
 
 .hero-section{
     width: 100%;
-    height: calc(10vh - 120px);
-    background-image: url("../img/SALE.png");
-    background-size: cover;
+    height: 100vh;
+    background-image: url("../img/header.jpg");
+    background-size: auto;
+    background-position: top center;
     display: flex;
     justify-content: center;
-    align-items: center;
-}
+    align-items: flex-start
+} */
