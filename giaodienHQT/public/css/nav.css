@@ -98,12 +98,14 @@
     opacity: 1;
 } */
 @import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Bitter', serif;
+    font-family: 'Lora', serif;
 }
 
 .brand-logo{
@@ -331,3 +333,17 @@ button:hover{
     text-align: end;
 }
 
+/* Products */
+
+.product{
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.product img{
+    transition: 0.3s all ;
+}
+
+.product:hover img{
+    opacity: 0.7;
+}
