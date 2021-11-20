@@ -1,20 +1,13 @@
-﻿begin tran
-	begin try
-		select count(*)
-		from SanPham
-		where GiaBan < 100000
-		waitfor delay '00:00:05'
-		select count(*)
-		from SanPham
-		where GiaBan < 100000
-	commit tran
-	end try
-	begin catch
-	IF @@trancount>0
-	BEGIN	
-		print(N'Lỗi')
-		ROLLBACK TRANSACTION 
-	END
-end catch
+﻿USE HT_DHCH_ONLINE
+Go
 
---select* from KhachHang where MaKH = '0000000001'
+declare @TTDonHang nvarchar(100);	
+exec sp_XemTTDonHang_TC 'DH0000', @TTDonHang output;
+print (@TTDonHang)
+
+--drop procedure sp_XemTTDonHang
+--Insert into TinhTrangDH values
+--(GETDATE(), 'DH0000', 1)
+--waitfor delay '00:00:02'
+--Insert into TinhTrangDH values
+--(GETDATE(), 'DH0000', 2)

@@ -1,31 +1,20 @@
-﻿create procedure sp_CapNhatTTDonHang
-	(@MaDH varchar(10), @MaTT int)
-as
-begin
-	begin tran
-		begin try
-			insert into TinhTrangDH
-			values (GETDATE(), @MaDH, @MaTT)
-			waitfor delay '00:00:07'
-			ROLLBACK TRANSACTION 
-		end try
-		begin catch
-			IF @@trancount>0
-				BEGIN	
-					print(N'Lỗi')
-					ROLLBACK TRANSACTION 
-				END
-		end catch
-end
-
+﻿Use HT_DHCH_ONLINE
 go
-	
-exec sp_CapNhatTTDonHang 'DH0000', 3;
+--TestCase03
+--Transaction 1
+begin tran
+	begin try
+		update KhachHang 
+		set DiaChi = '15/2/1 Nguyễn Sơn'
+		where MaKH = '0000000001'
+	commit tran
+	end try
+	begin catch
+	IF @@trancount>0
+	BEGIN	
+		print(N'Lỗi')
+		ROLLBACK TRANSACTION 
+	END
+end catch
 
-
-drop procedure sp_CapNhatTTDonHang
---Insert into TinhTrangDH values
---(GETDATE(), 'DH0000', 1)
---waitfor delay '00:00:02'
---Insert into TinhTrangDH values
---(GETDATE(), 'DH0000', 2)
+--select* from KhachHang where MaKH = '0000000001'

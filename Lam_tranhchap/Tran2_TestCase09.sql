@@ -1,8 +1,12 @@
-﻿begin tran
+﻿Use HT_DHCH_ONLINE
+go
+
+--TestCase09
+--Transaction 2
+begin tran
 	begin try
-		update KhachHang 
-		set DiaChi = '15/2/1 Nguyễn Sơn'
-		where MaKH = '0000000001'
+		insert into SanPham values
+		 ('SP020',NULL,70000, 20)
 	commit tran
 	end try
 	begin catch
