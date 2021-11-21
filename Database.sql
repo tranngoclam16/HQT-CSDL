@@ -1,4 +1,4 @@
-create database HT_DHCH_ONLINE
+﻿create database HT_DHCH_ONLINE
 go
 
 use HT_DHCH_ONLINE
@@ -121,4 +121,12 @@ create table TinhTrangDH (
 	primary key (NgayCapNhat, MaDH)
 )
 go
+
+insert into CT_TTDH values
+(0, 'Đơn hàng đã hủy.'),
+(1, 'Đơn hàng được tiếp nhận.'),
+(2, 'Đơn hàng đang đóng gói.'),
+(3, 'Đang chờ giao hàng.'),
+(4, 'Đơn hàng đang giao.'),
+(5, 'Đơn hàng giao thành công.')
 
