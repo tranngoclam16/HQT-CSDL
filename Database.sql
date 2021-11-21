@@ -25,21 +25,25 @@ create table DoiTac (
 )
 create table HopDong (
 	MaHD varchar(10) primary key,
-	MSThue varchar(10) foreign key (MSThue) references DoiTac(MSThue),
+	MSThue varchar(10),
 	TenNgDaiDien nvarchar(100),
 	SoChiNhanh int,
 	TGHieuLuc Date,
 	HoaHong int,
+	CONSTRAINT FK__HopDong__MSThue
+	FOREIGN KEY (MSThue) references DoiTac(MSThue)
 )
 
 
 
 create table ChiNhanh (
 	MaCN varchar(10) primary key,
-	MaDT varchar(10) foreign key (MaDT) references DoiTac(MaDT),
+	MaDT varchar(10) ,
 	TenQL nvarchar(100),
 	DiaChi nvarchar(100),
 	SDT varchar(10),
+	CONSTRAINT FK__ChiNhanh__MaDT
+	FOREIGN KEY (MaDT) references DoiTac(MaDT)
 )
 
 create table SanPham (
@@ -50,9 +54,13 @@ create table SanPham (
 )
 
 create table CN_SP (
-	MaCN varchar(10) foreign key (MaCN) references ChiNhanh(MaCN),
-	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
-	primary key (MaCN, MaSP)
+	MaCN varchar(10) ,
+	MaSP varchar(6) ,
+	primary key (MaCN, MaSP),
+	CONSTRAINT FK__CN_SP__MaCN
+	FOREIGN KEY (MaCN) references ChiNhanh(MaCN),
+	CONSTRAINT FK__CN_SP__MaSP
+	FOREIGN KEY (MaSP) references SanPham(MaSP)
 )
 
 create table KhachHang (
@@ -80,12 +88,16 @@ create table DonHang (
 )
 
 create table CT_DonHang (
-	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
-	MaSP varchar(6) foreign key (MaSP) references SanPham(MaSP),
+	MaDH varchar(10) ,
+	MaSP varchar(6),
 	SoLuong int,
 	GiaBan int,
 	ThanhTien int,
-	constraint PK_CTHD primary key (MaDH, MaSP)
+	constraint PK_CTHD primary key (MaDH, MaSP),
+	CONSTRAINT FK__CT_DonHang__MaDH 
+	FOREIGN KEY (MaDH) references DonHang(MaDH),
+	CONSTRAINT FK__CT_DonHang__MaSP
+	FOREIGN KEY (MaSP) references SanPham(MaSP)
 )
 
 create table TaiXe (
@@ -102,10 +114,14 @@ create table TaiXe (
 )
 
 create table ThuNhapTX (
-	MaTX varchar(12) foreign key (MaTX) references TaiXe (CMND),
-	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
+	MaTX varchar(12) ,
+	MaDH varchar(10) ,
 	PhiVanChuyen int ,
-	constraint PK_TNTX primary key (MaDH, MaTX)
+	constraint PK_TNTX primary key (MaDH, MaTX),
+	CONSTRAINT FK__ThuNhapTX__MaDH
+	FOREIGN KEY (MaDH) references DonHang(MaDH),
+	CONSTRAINT FK__ThuNhapTX__MaTX 
+	FOREIGN KEY (MaTX) references TaiXe (CMND)
 )
 
 
@@ -116,9 +132,13 @@ create table CT_TTDH (
 
 create table TinhTrangDH (
 	NgayCapNhat datetime,
-	MaDH varchar(10) foreign key (MaDH) references DonHang(MaDH),
-	MaTT int foreign key (MaTT) references CT_TTDH (MaTinhTrang),
-	primary key (NgayCapNhat, MaDH)
+	MaDH varchar(10),
+	MaTT int ,
+	primary key (NgayCapNhat, MaDH),
+	CONSTRAINT FK__TinhTrangD__MaDH
+	FOREIGN KEY (MaDH) references DonHang(MaDH),
+	CONSTRAINT FK__TinhTrangD__MaTT
+	FOREIGN KEY (MaTT) references CT_TTDH (MaTinhTrang)
 )
 go
 
