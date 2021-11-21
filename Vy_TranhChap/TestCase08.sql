@@ -1,4 +1,5 @@
-﻿--PROCEDURE THÊM CHI TIẾT ĐƠN HÀNG
+﻿--TestCase08
+--Transaction 2
 USE HT_DHCH_ONLINE
 GO
 CREATE PROCEDURE sp_ThemChiTietDonHang_TC
