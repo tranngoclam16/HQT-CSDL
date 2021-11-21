@@ -17,4 +17,4 @@ begin tran
 	END
 end catch
 
---select* from KhachHang where MaKH = '0000000001'
+select* from KhachHang where MaKH = '0909123450'
