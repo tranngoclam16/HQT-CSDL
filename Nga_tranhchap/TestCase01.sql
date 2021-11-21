@@ -1,4 +1,4 @@
-﻿--PROCEDURE THÊM CHI TIẾT ĐƠN HÀNG
+﻿--TEST CASE 01
 USE HT_DHCH_ONLINE
 GO
 DISABLE TRIGGER slt_dathang ON CT_DonHang
@@ -57,3 +57,20 @@ END
 GO
 --
 --drop procedure sp_ThemChiTietDonHang_TC
+--DATA TEST
+
+TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_DonHang
+TRUNCATE TABLE ThuNhapTX
+DELETE FROM DonHang
+DELETE FROM SanPham
+TRUNCATE TABLE KhachHang
+GO
+INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES 
+  ('0930123450', N'Nguyễn Hồng Hạnh', '0930123450', N'637 Đường Số 10, Phường 10, Quận 3, TP.HCM', 'nhhanh@email.com'),
+  ('0930123451', N'Huỳnh Tuấn Khoa', '0930123451', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
+GO
+INSERT INTO DonHang(MaDH, MaKH) VALUES ('0000000001','0930123450'),('0000000002','0930123451')
+GO
+INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES ('000001', N'Áo thun Mickey', 50000, 50);
+GO

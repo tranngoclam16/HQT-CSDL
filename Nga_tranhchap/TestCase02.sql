@@ -1,4 +1,5 @@
-﻿CREATE PROCEDURE sp_TaiXeNhanDonHang_TC
+﻿--TEST CASE 02
+CREATE PROCEDURE sp_TaiXeNhanDonHang_TC
             (@MaTX VARCHAR(12),
             @MaDH VARCHAR(10))
 AS
@@ -46,3 +47,25 @@ BEGIN
 END
 GO
 --DROP PROCEDURE sp_TaiXeNhanDonHang_TC
+--TEST DATA
+TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_DonHang
+TRUNCATE TABLE ThuNhapTX
+DELETE FROM TaiXe
+DELETE FROM DonHang
+DELETE FROM SanPham
+TRUNCATE TABLE KhachHang
+GO
+INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123451', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
+GO
+INSERT INTO DonHang(MaDH, MaKH) VALUES ('0000000001','0930123450')
+GO
+INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES ('000001', N'Áo thun Mickey', 50000, 50);
+GO
+INSERT INTO CT_DonHang (MaDH, MaSP, SoLuong) VALUES ('0000000001', '000001', 30);
+GO
+INSERT INTO TinhTrangDH (NgayCapNhat, MaDH, MaTT) VALUES (GETDATE(), '0000000001', 3);
+GO
+INSERT INTO TaiXe (CMND, HoTen) VALUES
+	('012317983262', N'Huỳnh Bá Vỹ'),
+	('047733459124', N'Tô Huy Thành')
