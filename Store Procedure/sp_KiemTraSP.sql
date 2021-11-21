@@ -1,4 +1,6 @@
-﻿create procedure sp_KiemTraSP
+﻿USE HT_DHCH_ONLINE
+GO
+create procedure sp_KiemTraSP
 	@MaSP varchar(6),
 	@TenSP nvarchar(50)
 as
