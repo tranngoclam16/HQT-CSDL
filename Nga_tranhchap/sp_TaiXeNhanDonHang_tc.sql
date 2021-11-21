@@ -5,10 +5,14 @@ AS
 BEGIN
   BEGIN TRAN
     BEGIN TRY
-      IF (SELECT MaTT FROM TinhTrangDH ttd1 
+	  DECLARE @ttdh int, @mota nvarchar(100)
+	  Set @ttdh = (SELECT MaTT FROM TinhTrangDH ttd1 
           WHERE ttd1.MaDH = @MaDH 
-            AND ttd1.NgayCapNhat > ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM TinhTrangDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 3
+            AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
+                                      FROM TinhTrangDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
+		SET @mota = (select Mota from CT_TTDH where @ttdh = MaTinhTrang)
+		print(@mota)
+      IF @ttdh <> 3
         BEGIN
           PRINT('1')
           RAISERROR(N'Đơn hàng đang không được chờ vận chuyển',15,1)
@@ -18,9 +22,17 @@ BEGIN
         WAITFOR DELAY '00:00:05'
         DECLARE @PhiVanChuyen int
         SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-        INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+        if exists (select MaDH from ThuNhapTX where @MaDH = MaDH)
+		begin
+			print('2')
+			raiserror(N'Đơn hàng đã có người nhận',15,1);
+		end
+		else
+		begin
+		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
         INSERT INTO TinhTrangDH VALUES (GETDATE(), @MaDH, 4)
+		end
         END
     COMMIT TRAN
     END TRY
