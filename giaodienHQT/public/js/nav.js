@@ -2,23 +2,33 @@ const createNav = () => {
     let nav = document.querySelector('.navbar');
 
     nav.innerHTML = `
-    <div class="nav">
+      <div class="container">
         <img src="img/logo.png" class="brand-logo" alt="">
-        <div class="nav-items">
-            <div class="search">
-                <input type="text" class="search-box" placeholder="Tìm sản phẩm, đối tác">
-                <button class="search-btn">Tìm kiếm</button>       
-            </div>
-            <a href="#"><img src="img/user.png" alt=""></a>
-            <a href="#"><img src="img/shopping-cart.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span>
+            <i id="bar" class="fas fa-bars"></i>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sản phẩm</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Đối tác</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Chi nhánh</a>
+            </li>
+              <li class="nav-item">
+              <i class="fas fa-search"></i>
+              <i class="fas fa-shopping-bag"></i>
+            </li>
         </div>
-    </div>
-    <ul class="links-container">
-        <li class="link-item"><a href="#" class="link">Trang chủ</a></li>
-        <li class="link-item"><a href="#" class="link">Sản phẩm</a></li>
-        <li class="link-item"><a href="#" class="link">Đối tác</a></li>
-        <li class="link-item"><a href="#" class="link">Chi nhánh</a></li>
-    </ul>`;
+      </div>`;
 }
 
 createNav();

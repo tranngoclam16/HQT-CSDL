@@ -191,6 +191,12 @@ as
 begin
 	begin tran
 		begin try
+		if not exists (select * from KhachHang where MaKH= @MaKH)
+				begin
+					print('1')
+					raiserror(N'Không tồn tại khách hàng',15,1)
+				end
+
 			if (@HoTen != '')
 			begin
 				update KhachHang
@@ -546,6 +552,11 @@ as
 begin
 	begin tran
 		begin try
+			if not exists (select * from TinhTrangDH where MaDH= @MaDH)
+				begin
+					print('1')
+					raiserror(N'Không tồn tại đơn hàng',15,1)
+				end
 			insert into TinhTrangDH
 			values (GETDATE(), @MaDH, @MaTT)
 			ROLLBACK TRANSACTION 
@@ -685,6 +696,8 @@ as
 begin
 	begin tran
 		begin try
+			if not exists (select * from DonHang where MaDH=@MaDH) 
+				raiserror(N'Không tồn tại sản phẩm',15,1)
 			declare @MaTT int
 			select @MaTT = MaTT
 			from TinhTrangDH
