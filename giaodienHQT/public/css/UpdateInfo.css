@@ -1,8 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
+
 *{
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Bitter', serif;
+   /* */
+   
 }
+
+.login{
+    background: #1d1d1d;
+   /* background:radial-gradient(to right, #7c6969 0%, #f4f4f5 100%);;*/
+}
+  
+.brand-logo{
+    height: 150px;
+}
+
 h1{
     font-size: 2.5rem;
     font-weight: 700;
@@ -22,20 +37,134 @@ h4{
     font-size: 1.1rem;
     font-weight: 600;
 }
-.login{
-    height:110%;
-    width:100%;
-    background: radial-gradient(circle, #7c6969 0%, #f4f4f5 100%);
-    background-position: center;
-    background-size: cover;
-    position:absolute;
-    font-family: 'Bitter', serif;
-    font-size: 13px;
-    box-sizing: border-box;
+
+h5{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1d1d1d;
 }
 
+h6{
+    color: #d8d8d8;
+}
+button{
+    font-size: 1.2rem;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    background-color: #1d1d1d;
+    color: aliceblue;
+    padding: 13px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+}
+
+button:hover{
+    background-color: #f8c3c3 ;
+}
+
+.btnShopping{
+    font-size: 1.2rem;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    background-color: #1d1d1d;
+    color: aliceblue;
+    padding: 13px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+    position: relative;
+    top: 200px;
+    left: 500px;
+}
+
+.btnShopping:hover{
+    background-color: #3a3a3a ;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    -ms-transform: translate(50%, 50%);
+    transform: translate(-400%, -100%);
+}
+
+.navbar{
+    font-size: 16px;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    padding: 0 20px;
+    color: #e29090;
+    transition: 0.3s ease ;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar i:hover,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar i.active {
+    color: rgb(247, 49, 49);
+}
+
+.navbar i{
+    font-size: 1.2rem;
+    padding: 0 7px;
+    color: #e29090;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+#bar{
+    font-size: 1.5rem;
+    padding: 7px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+    color: black;
+}
+
+#bar:hover,
+#bar.active {
+    color: #fff;
+}
+
+@media only screen and (max-width: 991px){
+    body > nav > div > button:hover,
+    body > nav > div > button :focus{
+        background-color: #e29090;
+    }
+
+    body > nav > div > button:hover #bar,
+    body > nav > div > button :focus #bar{
+        color: #fff;
+    }
+
+    #navbarSupportedContent > ul {
+        margin: 1rem;
+        justify-content: flex-end;
+        align-content: flex-end;
+        text-align: right;
+    }
+
+    #navbarSupportedContent > ul > li:nth-child(n) > a{
+        padding: 10px 0;
+    }
+}
+
+.navbar-light .navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+
+
 .form-box-Info{
-    top:-130px;
+    top:0px;
     width:580px;
     height:700px;
     position: absolute;
@@ -48,7 +177,7 @@ h4{
     overflow: hidden;
 }
 .box-Agent{
-    top:-130px;
+    top:0px;
     width:580px;
     height:650px;
     position:absolute;
