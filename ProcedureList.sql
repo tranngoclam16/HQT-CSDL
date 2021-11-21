@@ -1,7 +1,6 @@
 ﻿-- TẠO TÀI KHOẢN ĐỐI TÁC, TÀI XẾ, KHÁCH HÀNG, NHÂN VIÊN
 --
 CREATE PROC sp_CreateAccount_DT
-	--@MaDT varchar(10),
 	@MSThue varchar(10),
 	@TenDT nvarchar(100),
 	@TenNgDaiDien nvarchar(100),
@@ -275,7 +274,44 @@ GO
 --
 --THÊM CHI NHÁNH
 --
+CREATE PROCEDURE sp_ThemChiNhanh
+	@MaDT varchar(10),
+	@TenQL nvarchar(100),
+	@DiaChi nvarchar(100),
+	@SDT varchar(10)
+AS
+BEGIN
+	BEGIN TRAN
+		BEGIN TRY
+			declare @ma_count bigint,@MaCN varchar(10)
+		
+			set @MaCN=(select TOP 1 (MaCN) from ChiNhanh  order by MaCN DESC)
+			
+			if (isnull(@MaCN,'false')<>'false')
+			begin
+				set @ma_count=cast (@MaCN as bigint)+1
+			end
+			else
+			begin
+				set @ma_count=1 
+			end
+			set @MaCN = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
 
+			print @MaCN
+			INSERT INTO ChiNhanh 
+			VALUES (@MaCN, @MaDT,@TenQL, @DiaChi, @SDT)
+		COMMIT TRAN
+		END TRY
+		BEGIN CATCH
+			IF @@trancount>0
+				BEGIN	
+					print('loi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+END
+GO
+--DROP PROCEDURE sp_ThemChiNhanh
 --
 --THÊM HỢP ĐỒNG
 --
@@ -497,7 +533,7 @@ GO
 --
 --CẬP NHẬT CHI TIẾT ĐƠN HÀNG
 --
-CREATE PROCEDURE sp_ThemChiTietDonHang
+CREATE PROCEDURE sp_CapNhatChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
 	@SoLuong int)
@@ -617,7 +653,7 @@ GO
 --
 --TÀI XẾ HỦY NHẬN ĐƠN HÀNG -> XÓA TRONG THU NHẬP TÀI XẾ
 --
-CREATE PROCEDURE sp_TaiXeHuyNhanDonHang_tc
+CREATE PROCEDURE sp_TaiXeHuyNhanDonHang
             (@MaTX VARCHAR(12),
             @MaDH VARCHAR(10))
 AS
@@ -649,7 +685,7 @@ BEGIN
 	END CATCH
 END
 GO
---DROP PROCEDURE sp_TaiXeHuyNhanDonHang_tc
+--DROP PROCEDURE sp_TaiXeHuyNhanDonHang
 --=======================================================================================================================
 --KIỂM TRA SẢN PHẨM TỒN TẠI
 --
