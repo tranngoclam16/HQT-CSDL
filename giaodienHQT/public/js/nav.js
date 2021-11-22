@@ -21,7 +21,7 @@ const createNav = () => {
               <a class="nav-link" href="#">Đối tác</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Chi nhánh</a>
+              <a class="nav-link" href="#">Đơn hàng</a>
             </li>
               <li class="nav-item">
               <i class="fas fa-search"></i>
