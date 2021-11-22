@@ -73,7 +73,7 @@ create table KhachHang (
 
 create table DonHang (
 	MaDH varchar(10) primary key,
-	MaKH varchar(10),
+	MaKH varchar(10) references KhachHang(MaKH),
 	DiaChi nvarchar(30),
 	Phuong nvarchar(30),
 	Quan nvarchar(30),
