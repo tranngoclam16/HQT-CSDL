@@ -19,8 +19,34 @@
         }
 
         #featured > div.row.mx-auto.container > nav > ul > li.page-item.active > a {
-            
+            background-color: rgb(253, 130, 130);
         }
+
+        #featured > div.row.mx-auto.container > nav > ul > li:nth-child(n):hover > a{
+            background-color: rgb(247, 163, 151);
+            color: white
+        }
+
+        .pagination a{
+           color: #000;
+        }
+
+        .row-2{
+          justify-content: space-around;
+          margin: 10px auto 5px;
+          align-items: left;
+        }
+
+        select{
+          border: 2px solid #ff523b;
+          padding: 2px;
+
+        }
+
+        select:focus{
+          outline: none;
+        }
+
     </style>
 </head>
 <body>
@@ -28,9 +54,30 @@
 
     <section id="featured" class="my-5 pb-5">
         <div class="container mt-5 py-5">
-          <h3>Đặc trưng</h3>
-          <hr>
-          <p>Tại đây bạn có thể xem sản phẩm mới của chúng tôi với giá hợp lý tại Vyngalam</p>
+          <h2 class="font-weight-bold">Sản phẩm</h2>
+          <div class="row row-2 ml-auto">
+            
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="DoiTac" data-bs-toggle="dropdown" aria-expanded="false">
+                Đối tác
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="DoiTac">
+                <li><a class="dropdown-item" href="#">Vinamilk</a></li>
+                <li><a class="dropdown-item" href="#">Cầu Tre</a></li>
+                <li><a class="dropdown-item" href="#">Kinh Đô</a></li>
+              </ul>
+
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="ChiNhanh" data-bs-toggle="dropdown" aria-expanded="false">
+                Chi nhánh
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="ChiNhanh">
+                <li><a class="dropdown-item" href="#">1</a></li>
+                <li><a class="dropdown-item" href="#">2</a></li>
+                <li><a class="dropdown-item" href="#">3</a></li>
+              </ul>
+            </div>
+          </div>
+          
         </div>
         <div class="row mx-auto container">
           <div class="product text-center col-lg-3 col-md-4 col-12">
