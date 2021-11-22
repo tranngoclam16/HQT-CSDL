@@ -60,7 +60,7 @@ TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang
 DELETE FROM SanPham
-TRUNCATE TABLE KhachHang
+DELETE FROM KhachHang
 GO
 INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123451', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
 GO
