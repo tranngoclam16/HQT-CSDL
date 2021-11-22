@@ -39,7 +39,6 @@ const createNav = () => {
         <div class="nav-items">
           <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm">
           <button class="fas fa-search"></button>
-
         </div>
         
       </div>
