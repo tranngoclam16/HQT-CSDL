@@ -25,10 +25,23 @@ const createNav = () => {
             </li>
               <li class="nav-item">
               <i class="fas fa-search"></i>
-              <i class="fas fa-shopping-bag"></i>
+              <i id="cart-btn" class="fas fa-shopping-bag"></i>
             </li>
         </div>
       </div>`;
 }
 
 createNav();
+
+
+document.getElementById("cart-btn").addEventListener("click",function()
+        {
+            var box1=document.getElementById("cart");
+            if( box1.style.display=="none")
+            {
+                box1.style.display="block";
+            }
+            else{
+                box1.style.display="none";
+            }
+        })
