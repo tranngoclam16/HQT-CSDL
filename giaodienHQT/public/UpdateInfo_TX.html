@@ -1,19 +1,17 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ViewDetail_TX</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/UpdateInfo.css">
-    
+
 </head>
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
     <div class="container">
       <img src="img/logo.png" class="brand-logo" alt="">
@@ -29,16 +27,16 @@
             <a class="nav-link" href="#">Trang chủ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Đơn hàng</a>
+            <a class="nav-link" href="BillList_TX.html">Đơn hàng</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Chỉnh sửa thông tin</a>
+            <a class="nav-link" href="UpdateInfo_TX.html">Chỉnh sửa thông tin</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Thu nhập cá nhân</a>
+            <a class="nav-link" href="UpdateInfo_TX.html">Thu nhập cá nhân</a>
           </li>
           <li class="nav-item">
-            <i class="fas fa-user"></i>
+            <i class="fa fa-user"></i>
          
             <!-- <a href="#"><img src="img/user.png" alt=""></a>
             <a href="#"><img src="img/shopping-cart.png" alt=""></a>   -->
@@ -46,84 +44,88 @@
       </div>
     </div>
   </nav>
+  <br>
+ 
 
-
-
-
-    <title>ViewDetail_TX</title>
-   
-    <div class="login" class="container">
-         <div class="form-box-Info" class="row m-0 py-3">
-            <div class="text">
-                <br>
-                <h1>Thông tin Tài Xế</h1>
-            </div>
-            <div class="template">
-                <h6>
-                    <div> Mã Tài xế: <span id="template-MaKH"></span></div>  
-                        
-                </h6>
-            </div>
-            <br></br> 
-            <form id="registerDT-form"class="input-group">
-              <div class="form-group">
-                <input id="CMND" type="text" class="input-field" placeholder="CMND" required>
-                <input id="HoTen" type="text"  class="input-field" placeholder="Họ và Tên" required>
-                <input id="SDT" type="text" class="input-field" placeholder="Số điện thoại" required>
-                <input id="DiaChi" type="text"  class="input-field" placeholder="Địa chỉ" required>
-                <input id="BienSoXe" type="text" class="input-field" placeholder="Biển số xe" required>
-                <input id="KVHoaDong" type="text"  class="input-field" placeholder="Khu vực hoạt động" required>
-                <input id="Email" type="text"  class="input-field" placeholder="Email" required>
-                <input id="STK" type="text" class="input-field" placeholder="Số tài khoản" required>
-                <input id="NganHang" type="text"  class="input-field" placeholder="Ngân hàng" required>
-                <input id="ChiNhanh" type="text" class="input-field" placeholder="Chi nhánh ngân hàng" required>
-                <input id="Password" type="text" class="input-field" placeholder="Mật khẩu" required>
-                <br>
-                <input id="update-btn" class="submit-btn" type="button" value="Sửa thông tin">
-              </div>
-            </form> 
-          </div>
-           
+  
+  <div class="container">
+    <form action="#">
+        <div class="form-content">
+            <ul>
+                <div class="info-form">
+                    <div class="text">
+                        <br>
+                        <h1>Thông tin Tài Xế</h1>
+                    </div>
+                    <div class="template">
+                        <h6>
+                            <div> Mã Tài xế: <span id="template-MaKH"></span></div>        
+                        </h6>
+                    </div>
+                    <br></br> 
+                    <form id="registerDT-form">
+                        <div class="form-group">
+                          <input id="CMND" type="text" class="input-field" placeholder="CMND" required>
+                          <input id="HoTen" type="text"  class="input-field" placeholder="Họ và Tên" required>
+                          <input id="SDT" type="text" class="input-field" placeholder="Số điện thoại" required>
+                          <input id="DiaChi" type="text"  class="input-field" placeholder="Địa chỉ" required>
+                          <input id="BienSoXe" type="text" class="input-field" placeholder="Biển số xe" required>
+                          <input id="KVHoaDong" type="text"  class="input-field" placeholder="Khu vực hoạt động" required>
+                          <input id="Email" type="text"  class="input-field" placeholder="Email" required>
+                          <input id="STK" type="text" class="input-field" placeholder="Số tài khoản" required>
+                          <input id="NganHang" type="text"  class="input-field" placeholder="Ngân hàng" required>
+                          <input id="ChiNhanh" type="text" class="input-field" placeholder="Chi nhánh ngân hàng" required>
+                          <input id="Password" type="text" class="input-field" placeholder="Mật khẩu" required>
+                          <br>
+                          <input id="update-btn" class="submit-btn" type="button" value="Sửa thông tin">
+                        </div>
+                      </form>
+                </div> 
           
-       
-     
-        <div class="box-Agent">
-            <div class="text">
-                <br>
-                <h1>Thu nhập cá nhân</h1>
-            </div>
-            
-            <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">  </th>
-                    <th scope="col">Mã đơn hàng</th>
-                    <th scope="col">Thu nhập</th>
-                    <th scope="col">Tình Trạng</th>
+            </ul>
+            <ul>
+                <div class="agent-box">
+                    <div class="text">
+                        <br>
+                        <h1>Thu nhập cá nhân</h1>
+                    </div>
                     
-                   
-                    <th scope="col">&nbsp;</th>
-                  </tr>
-                  <td>  </td>
-                    <td>MaDH</td>
-                   
-                    <td>ThuNhap</td>
-                    <td>TinhTrang</td>
-                    <td class="text-right">
-                   
-                    <a class="submit-view-btn" href="CN_Info.html?MaCN={{MaCN}}" role="button" data-id="{{MaCN}}">
-                     <i class="fa fa-eye" aria-hidden="true"></i>
-                    </a>
-                    </td>
-                </thead>
-                <tbody id="listAgent"></tbody>
-              </table>
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">  </th>
+                            <th scope="col">Mã đơn hàng</th>
+                            <th scope="col">Thu nhập</th>
+                            <th scope="col">Tình Trạng</th>
+                            
+                           
+                            <th scope="col">&nbsp;</th>
+                          </tr>
+                          <td>  </td>
+                            <td>MaDH</td>
+                           
+                            <td>ThuNhap</td>
+                            <td>TinhTrang</td>
+                            <td class="text-right">
+                           
+                            <a class="submit-view-btn" href="CN_Info.html?MaCN={{MaCN}}" role="button" data-id="{{MaCN}}">
+                             <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                            </td>
+                        </thead>
+                        <tbody id="listAgent"></tbody>
+                      </table>
+                </div>
+            </ul>
            
-        </div> 
-       
-    </div>
-  </div>
+        </div>
+    </form>
+</div>
+    
 
+
+
+   
 
 
     <script id="entry-template" type="text/x-handlebars-template">

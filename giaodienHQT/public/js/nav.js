@@ -39,6 +39,7 @@ const createNav = () => {
         <div class="nav-items">
           <input type="text" class="search-box" placeholder="Tìm kiếm sản phẩm">
           <button class="fas fa-search"></button>
+
         </div>
         
       </div>
@@ -46,3 +47,16 @@ const createNav = () => {
 }
 
 createNav();
+
+
+document.getElementById("cart-btn").addEventListener("click",function()
+        {
+            var box1=document.getElementById("cart");
+            if( box1.style.display=="none")
+            {
+                box1.style.display="block";
+            }
+            else{
+                box1.style.display="none";
+            }
+        })

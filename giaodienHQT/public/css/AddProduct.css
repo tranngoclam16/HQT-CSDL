@@ -16,12 +16,14 @@ textarea{
 body{
     display: block;
     background: #FFCCD2;
-    padding: 0 10vh;
+    padding: 0 10vw;
 }
 
 .logo{
-    margin:auto;
+    display: block;
+    margin: auto;
     height: auto;
+    padding-top: 10px;
 }
 
 .center-block {
@@ -190,4 +192,49 @@ input[type="number"]::-webkit-inner-spin-button {
     font-weight: 500;
     margin-top: 7%;
   }
+
+.buttons{
+    margin: 2em auto 5em;
+    width: 50%;
+    width: auto;
+    grid-template-columns: 60px 60px;
+}
+/*
+.btn{
+    padding: 10px 50px;
+    text-transform: uppercase;
+    color: #383838;
+    background-color: #f199a6;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-block; 
+    text-align: center;  
+}
+*/
+.btn{
+    width: 30%;
+    padding:10px 30px;
+    cursor:pointer;
+    margin:auto;
+    /*background:linear-gradient(to right, #c2739e,#f1cfdf);;*/
+    background: #ef7b8c;
+    border: 0;
+    outline:none;
+    border-radius: 5px;
+    text-align: center;
+    color: rgb(15, 15, 15);
+    text-transform: uppercase;
+}
+.add-btn{
+    float: left;
+}
+.back-btn{
+    float: right;
+}
+.btn:hover{
+    background: #ec5168;
+}
   

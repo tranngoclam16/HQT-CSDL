@@ -1,21 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Bitter', serif;
-   /* */
-   
+    font-family: 'Lora', serif;
 }
 
-.login{
-    background: #1d1d1d;
-   /* background:radial-gradient(to right, #7c6969 0%, #f4f4f5 100%);;*/
-}
-  
 .brand-logo{
-    height: 150px;
+    height: 90px;
 }
 
 h1{
@@ -47,6 +42,7 @@ h5{
 h6{
     color: #d8d8d8;
 }
+
 button{
     font-size: 1.2rem;
     font-weight: 700;
@@ -64,25 +60,7 @@ button:hover{
     background-color: #f8c3c3 ;
 }
 
-.btnShopping{
-    font-size: 1.2rem;
-    font-weight: 700;
-    outline: none;
-    border: none;
-    background-color: #1d1d1d;
-    color: aliceblue;
-    padding: 13px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.5s ease;
-    position: relative;
-    top: 200px;
-    left: 500px;
-}
 
-.btnShopping:hover{
-    background-color: #3a3a3a ;
-}
 
 .center {
     margin: 0;
@@ -95,6 +73,8 @@ button:hover{
 
 .navbar{
     font-size: 16px;
+    width: 100%;
+    top:0;
 }
 
 .navbar-light .navbar-nav .nav-link{
@@ -154,6 +134,12 @@ button:hover{
     #navbarSupportedContent > ul > li:nth-child(n) > a{
         padding: 10px 0;
     }
+    .container form div ul {
+        justify-content: flex-end;
+        align-content: flex-end;
+        text-align: right;
+    
+    }
 }
 
 .navbar-light .navbar-toggler {
@@ -161,12 +147,62 @@ button:hover{
     outline: none;
 }
 
+body{
+    background-image:linear-gradient(to right, #7c6969 0%, #f4f4f5 100%);
+   /* display:flex;
+    min-height: 100vh;
+    align-items:  center;
+    justify-content: center;*/
+    
+}
 
+#home{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.container form{
+    height:100%;
+    width: 100%;
+    background:transparent;
+    display: flex;
+    flex-direction: row;
+
+}
+.container.form-content{
+    display:flex;
+    justify-content: space-between;
+
+}
+.info-form{
+    float: left;
+    width: 55%;
+    height:850px;
+    margin:6% auto;
+    background:#fff;
+    padding :5px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.agent-box{
+    float: right;
+    top:0px;
+    width: 40%;
+    height:650px;
+    margin:6% auto;
+    background:#fff;
+    padding :5px;
+    border-radius: 20px;
+    overflow: hidden;
+}
 
 .form-box-Info{
     top:0px;
     width:580px;
-    height:700px;
+    height:800px;
     position: absolute;
     top:0px;
     right:800px;
@@ -190,11 +226,11 @@ button:hover{
     overflow: hidden;
 }
 .form-box-Info-KH{
-    top:-100px;
-    width:580px;
-    height:500px;
+    
+    width:80%;
+    height:650px;
     position:relative;
-    margin:6% auto;
+    margin:0% auto;
     background:#fff;
     padding :5px;
     border-radius: 20px;
@@ -205,7 +241,7 @@ button:hover{
     top:0;
     left:0;
     position:absolute;
-    width:110px;
+    /*width:110px;*/
     height:100%;
     /*background: linear-gradient(to right, #c2739e,#f1cfdf);*/
     background: linear-gradient(to right, #ef7b8c,#faf9f9);
@@ -214,8 +250,7 @@ button:hover{
 }
 .input-group{
     top:90px;
-    position:absolute;
-    width:400px;
+    width:50%;
     transition:.5s;
 }
 
@@ -236,7 +271,6 @@ button:hover{
     cursor:pointer;
     display:block;
     margin:auto;
-    /*background:linear-gradient(to right, #c2739e,#f1cfdf);;*/
     background: #ef7b8c;
     border: 0;
     outline:none;
@@ -270,76 +304,13 @@ button:hover{
     font-size: 15px;
 }
 
-#registerDT-form{
-    left:90px
-}
 .text{
     text-align: center;
 }
 .template{
     text-align: center;
 }
-.navbar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 73px;  
-    background: #fce9e5;
-    z-index: 9;
-}
-
-.nav{
-    padding: 5px 5vw;
-    display: flex;
-    justify-content: space-between ;
-    
-}
-
-.brand-logo{
-    height:60px;
-    display:block;
-    margin:0 auto 10px;
- 
-}
-
-.nav-items{
-    display: flex;
-  
-}
 
 
-.nav-items a{
-    margin-left: 20px;
-  
-}
 
-.nav-items a img{
-    width: 30px;
-    margin-left:20px;
-  
-}
-
-.links-container{
-   width: 100%;
-   display: flex;
-   padding: 10px 350px 10vw;
-   justify-content: center;
-   list-style: none;
-   border-top: 1px solid #d1d1d1; 
-} 
-
-.link{
-    text-transform: capitalize;
-    padding: 0 10px;
-    margin: 0 5px;
-    text-decoration:  none;
-    color:  #0c0b0b;
-    opacity: 0.5;
-    transition: .5s;
-}
-
-.links:hover{
-    opacity: 1;
-}
 
