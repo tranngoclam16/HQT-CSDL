@@ -1,4 +1,6 @@
 ﻿--TEST CASE 02
+USE HT_DHCH_ONLINE
+GO
 CREATE PROCEDURE sp_TaiXeNhanDonHang_TC
             (@MaTX VARCHAR(12),
             @MaDH VARCHAR(10))
@@ -54,9 +56,9 @@ TRUNCATE TABLE ThuNhapTX
 DELETE FROM TaiXe
 DELETE FROM DonHang
 DELETE FROM SanPham
-TRUNCATE TABLE KhachHang
+DELETE FROM KhachHang
 GO
-INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123451', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
+INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123450', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
 GO
 INSERT INTO DonHang(MaDH, MaKH) VALUES ('0000000001','0930123450')
 GO
