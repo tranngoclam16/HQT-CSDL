@@ -146,10 +146,10 @@ button:hover{
 
 body{
     background-image:linear-gradient(to right, #7c6969 0%, #f4f4f5 100%);
-   /* display:flex;
+    width: 100%;
     min-height: 100vh;
     align-items:  center;
-    justify-content: center;*/
+    justify-content: center;
     
 }
 /*.login{
