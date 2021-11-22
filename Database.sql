@@ -142,11 +142,13 @@ create table TinhTrangDH (
 )
 go
 
+--delete from CT_TTDH
+
 insert into CT_TTDH values
-(0, 'Đơn hàng đã hủy.'),
-(1, 'Đơn hàng được tiếp nhận.'),
-(2, 'Đơn hàng đang đóng gói.'),
-(3, 'Đang chờ giao hàng.'),
-(4, 'Đơn hàng đang giao.'),
-(5, 'Đơn hàng giao thành công.')
+(0, N'Đơn hàng đã hủy.'),
+(1, N'Đơn hàng được tiếp nhận.'),
+(2, N'Đơn hàng đang đóng gói.'),
+(3, N'Đang chờ giao hàng.'),
+(4, N'Đơn hàng đang giao.'),
+(5, N'Đơn hàng giao thành công.')
 

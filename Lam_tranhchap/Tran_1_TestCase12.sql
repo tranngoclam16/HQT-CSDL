@@ -1,6 +1,7 @@
 ﻿Use HT_DHCH_ONLINE
 go
 
-exec sp_XemSLTon_TC '000001'
+--TestCase12
+--Transaction1
 
---drop procedure sp_XemSLT
+exec sp_XemSLTon_TC '000001'
