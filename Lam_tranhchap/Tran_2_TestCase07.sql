@@ -2,12 +2,6 @@
 Go
 
 declare @TTDonHang nvarchar(100);	
-exec sp_XemTinhTrangDonHang_TC 'DH0000', @TTDonHang output;
+exec sp_XemTinhTrangDonHang_TC '0000000001', @TTDonHang output;
 print (@TTDonHang)
 
---drop procedure sp_XemTTDonHang
---Insert into TinhTrangDH values
---(GETDATE(), 'DH0000', 1)
---waitfor delay '00:00:02'
---Insert into TinhTrangDH values
---(GETDATE(), 'DH0000', 2)

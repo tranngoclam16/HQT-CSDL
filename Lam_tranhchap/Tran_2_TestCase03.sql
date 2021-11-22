@@ -1,12 +1,13 @@
 ﻿Use HT_DHCH_ONLINE
 go
+
 --TestCase03
---Transaction 1
+--Transaction 2
 begin tran
 	begin try
 		update KhachHang 
-		set DiaChi = '15/2/1 Nguyễn Sơn'
-		where MaKH = '0000000001'
+		set DiaChi = N'15/2/1 Nguyễn Sơn'
+		where MaKH = '0909123450'
 	commit tran
 	end try
 	begin catch
@@ -17,4 +18,4 @@ begin tran
 	END
 end catch
 
---select* from KhachHang where MaKH = '0000000001'
+select* from KhachHang where MaKH = '0909123450'
