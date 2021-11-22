@@ -1,0 +1,5 @@
+BEGIN TRAN
+UPDATE SanPham set SLTon = 100 where MaSP = '000001'; 
+WAITFOR DELAY '00:00:10'
+UPDATE SanPham set SLTon = 100 where MaSP = '000002'; 
+COMMIT TRAN
