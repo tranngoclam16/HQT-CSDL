@@ -43,3 +43,17 @@ END
 GO
 --
 --drop procedure sp_CapNhatSanPham_TC
+--=========================================
+--DATATEST
+TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_DonHang
+TRUNCATE TABLE ThuNhapTX
+DELETE FROM DonHang
+DELETE FROM SanPham
+TRUNCATE TABLE KhachHang
+GO
+INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES 
+	('000001', N'Áo thun Mickey', 50000, 32),
+	('000002', N'Áo thun Minnie', 45000, 4),
+	('000003', N'Áo thun Donald', 46000, 7);
+GO

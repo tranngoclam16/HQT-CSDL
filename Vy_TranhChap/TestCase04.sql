@@ -49,4 +49,13 @@ BEGIN
 END
 GO
 --==============
---Data test
+--DATATEST
+TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_DonHang
+TRUNCATE TABLE ThuNhapTX
+DELETE FROM DonHang
+DELETE FROM SanPham
+TRUNCATE TABLE KhachHang
+GO
+INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES 
+	('000001', N'Nước hoa', 50000, 32)
