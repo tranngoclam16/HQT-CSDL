@@ -21,4 +21,7 @@ o SCRIPT:
 ● Tran_1 – Tran_1_TenLoi.sql
 ● Tran_2 – Tran_2_TenLoi.sql
 o BAOCAO – MaNhom_report.pdf
-
+----------
+Deadline 19/12
+30/11
+https://drive.google.com/drive/folders/1geKxXfdUdYsjpHjZxIbl1PmP3eIiyAbb?usp=sharing
