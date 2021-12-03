@@ -7,52 +7,23 @@ CREATE PROC sp_CreateAccount_DT
 	@ThanhPho nvarchar(50),
 	@Quan nvarchar(30),
 	@SoChiNhanh int,
-	@SoLuongDH int,
 	@LoaiHang nvarchar(100),
 	@DiaChi nvarchar(200),
-	@SDT varchar(10),
 	@Email varchar(30),
-	@PASS varchar(50),
-	@ROLE varchar(50),
-	@err int output
+	@SDT varchar(10)
 AS
 BEGIN
 	BEGIN TRANSACTION
 		BEGIN TRY
-			declare @ma_count bigint,@MaDT varchar(10)
-		
-			set @MaDT=(select TOP 1 (MaDT) from DoiTac  order by MaDT DESC)
-			
-			if (isnull(@MaDT,'false')<>'false')
-			begin
-				set @ma_count=cast (@MaDT as bigint)+1
-			end
-			else
-			begin
-				set @ma_count=1 
-			end
-			set @MaDT = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
-			
-			print @MaDT
-
-			DECLARE @SQL NVARCHAR(4000);
-			DECLARE @LGNAME VARCHAR(10)=@MaDT;
-			SET @SQL=('CREATE LOGIN ' + QUOTENAME(@LGNAME) + ' WITH PASSWORD = ' + quotename(@PASS, '''')+', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;')
-			EXEC(@SQL);
-
-			SET @SQL=('CREATE USER ' + QUOTENAME(@LGNAME) + ' FOR LOGIN ' + quotename(@LGNAME)+' WITH DEFAULT_SCHEMA=[dbo];')
-			EXEC(@SQL)
-
-			SET @SQL='ALTER ROLE ' + QUOTENAME(@ROLE)+ ' ADD MEMBER '+QUOTENAME(@LGNAME);
-			EXECUTE sp_executesql @SQL;
-
-			INSERT INTO DoiTac VALUES (@MaDT, @MSThue, @TenDT, @TenNgDaiDien, @ThanhPho, @Quan, @SoChiNhanh, @SoLuongDH, @LoaiHang, @DiaChi, @SDT, @Email); 
+			declare @MaDT varchar(10), @pword varchar(20)
+			set @MaDT=@SDT
+			set @pword=@SDT
+			INSERT INTO DoiTac VALUES (@MaDT, @pword,@MSThue, @TenDT, @TenNgDaiDien, @ThanhPho, @Quan, @SoChiNhanh,@LoaiHang, @DiaChi, @Email); 
 		COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
 		IF @@trancount>0
 			BEGIN	
-				set @err=@@trancount
 				print('loi')
 				ROLLBACK TRANSACTION 
 			END
@@ -63,40 +34,26 @@ GO
 
 CREATE PROC sp_CreateAccount_TX
 	@CMND varchar(12),
+	@SDT varchar(10),
+	@pword varchar(20),
 	@HoTen nvarchar(100),
-	@SDT varchar (10),
 	@DiaChi nvarchar(100),
 	@BienSoXe nvarchar(12),
 	@KVHoatDong nvarchar(30),
 	@Email varchar(30),
 	@STK varchar(15),
 	@NganHang nvarchar(30),
-	@ChiNhanh nvarchar(30),
-	@PASS varchar(50),
-	@ROLE varchar(50),
-	@err int output
+	@ChiNhanh nvarchar(30)
 AS
 BEGIN
 	BEGIN TRANSACTION
 		BEGIN TRY
-			DECLARE @SQL NVARCHAR(4000);
-			DECLARE @LGNAME VARCHAR(12)=@CMND;
-			SET @SQL=('CREATE LOGIN ' + QUOTENAME(@LGNAME) + ' WITH PASSWORD = ' + quotename(@PASS, '''')+', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;')
-			EXEC(@SQL);
-
-			SET @SQL=('CREATE USER ' + QUOTENAME(@LGNAME) + ' FOR LOGIN ' + quotename(@LGNAME)+' WITH DEFAULT_SCHEMA=[dbo];')
-			EXEC(@SQL)
-
-			SET @SQL='ALTER ROLE ' + QUOTENAME(@ROLE)+ ' ADD MEMBER '+QUOTENAME(@LGNAME);
-			EXECUTE sp_executesql @SQL;
-
-			INSERT INTO TaiXe VALUES (@CMND, @HoTen, @SDT, @DiaChi, @BienSoXe, @KVHoatDong, @Email, @STK, @NganHang, @ChiNhanh); 
+			INSERT INTO TaiXe VALUES (@CMND,@SDT,@pword, @HoTen, @DiaChi, @BienSoXe, @KVHoatDong, @Email, @STK, @NganHang, @ChiNhanh); 
 		COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
 		IF @@trancount>0
 			BEGIN	
-				set @err=@@trancount
 				print('loi')
 				ROLLBACK TRANSACTION 
 			END
@@ -107,35 +64,20 @@ GO
 
 CREATE PROC sp_CreateAccount_KH
 	@MaKH varchar(10),
+	@pword varchar(20),
 	@HoTen nvarchar(50),
-	@SDT varchar (10),
 	@DiaChi nvarchar(100),
-	@Email varchar(30),
-	@PASS varchar(50),
-	@ROLE varchar(50),
-	@err int output
+	@Email varchar(30)
 AS
 BEGIN
 	BEGIN TRANSACTION
 		BEGIN TRY
-			DECLARE @SQL NVARCHAR(4000);
-			DECLARE @LGNAME VARCHAR(10)=@MaKH;
-			SET @SQL=('CREATE LOGIN ' + QUOTENAME(@LGNAME) + ' WITH PASSWORD = ' + quotename(@PASS, '''')+', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;')
-			EXEC(@SQL);
-
-			SET @SQL=('CREATE USER ' + QUOTENAME(@LGNAME) + ' FOR LOGIN ' + quotename(@LGNAME)+' WITH DEFAULT_SCHEMA=[dbo];')
-			EXEC(@SQL)
-
-			SET @SQL='ALTER ROLE ' + QUOTENAME(@ROLE)+ ' ADD MEMBER '+QUOTENAME(@LGNAME);
-			EXECUTE sp_executesql @SQL;
-
-			INSERT INTO KhachHang VALUES (@MaKH, @HoTen, @SDT, @DiaChi, @Email); 
+			INSERT INTO KhachHang VALUES (@MaKH,@pword, @HoTen,@DiaChi, @Email); 
 		COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
 		IF @@trancount>0
 			BEGIN	
-				set @err=@@trancount
 				print('loi')
 				ROLLBACK TRANSACTION 
 			END
@@ -143,12 +85,11 @@ BEGIN
 END;
 GO
 --DROP PROC sp_CreateAccount_KH
-
+/*
 CREATE PROC sp_CreateAccount_NV
 	@MaNV varchar(10),
 	@PASS varchar(50),
-	@ROLE varchar(50),
-	@err int output
+	@ROLE varchar(50)
 AS
 BEGIN
 	BEGIN TRANSACTION
@@ -169,7 +110,6 @@ BEGIN
 		BEGIN CATCH
 		IF @@trancount>0
 			BEGIN	
-				set @err=@@trancount
 				print('loi')
 				ROLLBACK TRANSACTION 
 			END
@@ -177,13 +117,12 @@ BEGIN
 END;
 GO
 --DROP PROC sp_CreateAccount_NV
---
+--*/
 --CẬP NHẬT TÀI KHOẢN KHÁCH HÀNG
 --
 create procedure sp_CapNhatTKKhachHang
 	(@MaKH varchar(10), 
 	@HoTen nvarchar(100),
-	@SDT varchar(10),
 	@DiaChi nvarchar(100),
 	@Email varchar(30))
 as
@@ -200,12 +139,6 @@ begin
 			begin
 				update KhachHang
 				set HoTen = @HoTen
-				where MaKH = @MaKH
-			end
-			if (@SDT != '')
-			begin
-				update KhachHang
-				set SDT = @SDT
 				where MaKH = @MaKH
 			end
 			if (@DiaChi != '')

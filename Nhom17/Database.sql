@@ -10,17 +10,18 @@ drop database HT_DHCH_ONLINE
 */
 
 create table DoiTac (
-	MaDT varchar(10) primary key,
+	MaDT varchar(10) primary key,--username-> SDT
+	pword varchar(20) not null,--password
 	MSThue varchar(10) unique not null,
 	TenDT nvarchar(100),
 	TenNgDaiDien nvarchar(100),
 	ThanhPho nvarchar(50),
 	Quan nvarchar(30),
 	SoChiNhanh int,
-	SoLuongDH int,
+	--SoLuongDH int,
 	LoaiHang nvarchar(100),
 	DiaChi nvarchar(200),
-	SDT varchar(10),
+	--SDT varchar(10),
 	Email varchar(30)
 )
 create table HopDong (
@@ -64,9 +65,10 @@ create table CN_SP (
 )
 
 create table KhachHang (
-	MaKH varchar(10) primary key,
+	MaKH varchar(10) primary key,--username là SDT 
+	pword  varchar (20) not null,--password
 	HoTen nvarchar(100),
-	SDT varchar(10),
+	--SDT varchar(10),
 	DiaChi nvarchar(100),
 	Email varchar(30)
 )
@@ -101,9 +103,10 @@ create table CT_DonHang (
 )
 
 create table TaiXe (
-	CMND varchar(12) primary key,
+	CMND varchar(12) unique not null,
+	SDT varchar(10) primary key,--username
+	pword varchar(20) not null,--password
 	HoTen nvarchar(100),
-	SDT varchar (10),
 	DiaChi nvarchar(100),
 	BienSoXe nvarchar(12),
 	KVHoatDong nvarchar(30),

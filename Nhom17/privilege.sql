@@ -1,11 +1,11 @@
 ﻿use HT_DHCH_ONLINE
 GO
---ROLE
+-------------ROLE----------------------------
 --Đối tác:
 create role [DOITAC] authorization [dbo]
 go
 		--cấp quyền
-	--được quyền sửa thông tin cá nhân
+	--được quyền xem,sửa thông tin cá nhân
 	grant select, update on DoiTac to [DOITAC]
 	--được xem,thêm, xóa, sửa thông tin sản phẩm
 	grant select, insert, delete, update on SanPham to [DOITAC]
@@ -24,28 +24,28 @@ go
 create role [KHACHHANG] authorization [dbo]
 go
 		--cấp quyền
-	--được quyền sửa thông tin cá nhân
-	grant select, update on KhachHang to [KHACHHANG] 
+	--được quyền xem,sửa, đăng ký thông tin cá nhân
+	grant select, update,insert on KhachHang to [KHACHHANG] 
 	--Xem danh sách đối tác, danh sách chi nhánh, danh sách sản phẩm
 	grant select on DoiTac to [KHACHHANG]
 	grant select on ChiNhanh to [KHACHHANG]
 	grant select on SanPham to [KHACHHANG]
 	grant select on CN_SP to[KHACHHANG]
 	--Xem tình trạng đơn hàng và chi tiết đơn hàng, thông tin đơn hàng của mình
-	--Được thêm đơn hàng
-	grant select,insert on DonHang to [KHACHHANG]
-	grant select,insert on CT_DonHang to [KHACHHANG]
+	--Được thêm,hủy đơn hàng
+	grant select,insert,delete on DonHang to [KHACHHANG]
+	grant select,insert,delete on CT_DonHang to [KHACHHANG]
 	grant select on TinhTrangDH to [KHACHHANG]
 	grant select on CT_TTDH to [KHACHHANG]
 
 --Tài xế: 
-			--Sửa thông tin cá nhân
+			--Sửa,xem,đăng ký thông tin cá nhân
 			--Xem danh sách đơn hàng
 			--Cập nhật tình trạng đơn hàng
 			--Xem danh sách thu nhập của mình
 CREATE ROLE [TAIXE] AUTHORIZATION [dbo]
 GO
-GRANT SELECT,UPDATE ON TaiXe TO [TAIXE]
+GRANT SELECT,UPDATE,INSERT ON TaiXe TO [TAIXE]
 GRANT SELECT,UPDATE ON TinhTrangDH TO [TAIXE]
 GRANT SELECT ON DonHang TO [TAIXE]
 GRANT SELECT, INSERT,DELETE ON ThuNhapTX TO [TAIXE]
@@ -73,6 +73,33 @@ CREATE ROLE [roleDBA] AUTHORIZATION dbo;
 ALTER ROLE [db_owner] ADD MEMBER [roleDBA]
 ALTER ROLE [db_accessadmin] ADD MEMBER [roleDBA]
 ALTER ROLE [db_securityadmin] ADD MEMBER [roleDBA]
+GO
+
+-----------------------LOGIN-----------------------------
+--DBA
+CREATE LOGIN [dba1] WITH PASSWORD='dba1', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+CREATE USER [dba1] FOR LOGIN [dba1] WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [roleDBA] ADD MEMBER [dba1]
+GO
+--DOI TAC
+CREATE LOGIN [dt] WITH PASSWORD='dt', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+CREATE USER [dt] FOR LOGIN [dt] WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [DOITAC] ADD MEMBER [dt]
+GO
+--TAI XE
+CREATE LOGIN [tx] WITH PASSWORD='tx', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+CREATE USER [tx] FOR LOGIN [tx] WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [TAIXE] ADD MEMBER [tx]
+GO
+--KHACH HANG
+CREATE LOGIN [kh] WITH PASSWORD='kh', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+CREATE USER [kh] FOR LOGIN [kh] WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [KHACHHANG] ADD MEMBER [kh]
+GO
+--NHAN VIEN
+CREATE LOGIN [nv1] WITH PASSWORD='nv1', DEFAULT_DATABASE=[HT_DHCH_ONLINE], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+CREATE USER [nv1] FOR LOGIN [nv1] WITH DEFAULT_SCHEMA=[dbo];
+ALTER ROLE [NHANVIEN] ADD MEMBER [nv1]
 GO
 
 
