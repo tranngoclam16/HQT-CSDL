@@ -37,6 +37,14 @@ router.route('/KH/login/:username').get((request,response)=>{
         response.json(result);
     })
 })
+router.route('/SignUpKH').post((request,response)=>{
+    
+    let dkn = {...request.body};
+    console.log(request.body)
+     dboperator.addCustomer(dkn).then(result => {
+        response.status(201).json(result);
+     }) 
+ })
 /*
 router.route('/billinfo').get((request,response)=>{
     var MaHD = request.query['MaHD']

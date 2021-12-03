@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript"></script>
+   
     <link rel="stylesheet" href="css/SignUp.css">
 </head>
 <body>
+    
+    
     <title>SignUp_KH</title>
    
     <div class="login">
@@ -18,29 +21,23 @@
                 <br>
                 <h1>ĐĂNG KÝ CHO KHÁCH HÀNG</h1>
             </div>
-            <form id="registerKH-form"class="input-group">
+            <form id="registerKH-form"class="input-group" action="addStudent" method="post">
                 <input id="MaKH" type="text" class="input-field" placeholder="Tên đăng nhập" required>
                 <input id="HoTen" type="text"  class="input-field" placeholder="Họ và Tên" required>
-                <input id="SDT" type="text" class="input-field" placeholder="Số điện thoại" required>
                 <input id="DiaChi" type="text"  class="input-field" placeholder="Địa chỉ" required>
                 <input id="Email" type="text"  class="input-field" placeholder="Email" required>
                 <input id="Password" type="text" class="input-field" placeholder="Mật khẩu" required>
                 <br><br><br>
-                <input id="registerKH-btn" class="submit-btn" type="button" value="Đăng ký">
+                <input id="registerKH_btn" class="submit-btn" type="button" value="Đăng ký">
             </form> 
             
            
         </div>     
     </div>
 
-    <script>
-       
-    </script>
-	
-	
-	
-	
-	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
+    
+
+    <script src="KhachHang/SignUp_KH.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </body>

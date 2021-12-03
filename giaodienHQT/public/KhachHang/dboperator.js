@@ -14,7 +14,24 @@ async function getKH(MaKH){
         console.log(error);
     }
 }
+async function addCustomer(dkn){
+    try{
+        let pool = await sql.connect(config);
+        let insertProduct = await pool.request()
+        .input('MaKH', sql.VarChar(10), dkn.MaKH)
+        .input('Hoten', sql.NVarChar(100), dkn.HoTen)
+        .input('DiaChi', sql.NVarChar(100), dkn.DiaChi)
+        .input('Email', sql.VarChar(30), dkn.Email)
+        .input('Password', sql.VarChar(20), dkn.Password)
+        .query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");
+        return insertProduct.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
 module.exports={
-    getKH:getKH
+    getKH:getKH,
+    addCustomer:addCustomer
 }
