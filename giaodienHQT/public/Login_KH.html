@@ -6,6 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript"></script>
     <link rel="stylesheet" href="css/Login.css">
+
+    <script>
+        function checkLogin(uname,pass){
+	        
+            $.getJSON("http://localhost:3000/api/KH/login/"+uname,checkData);
+            
+            function checkData(data) {
+	            if (data.length>0){
+                    if (uname==data[0].MaKH)
+                        if (pass==data[0].pword){
+                            //console.log(data[0]);
+                            alert("Login successfully")
+                            window.location="index1.html";
+                        }
+                        else{
+                            console.log("password is false");
+                            alert("Password is wrong")
+                        }
+                }
+                else {
+                    console.log("username false")
+                    alert("Username is wrong")
+                }
+                
+	            
+            }
+        }
+    
+    </script>
 </head>
 <body>
     <title>LOGIN</title>
@@ -19,15 +48,13 @@
                 <button type="button" class="toggle-btn" onclick=login()>Login</button>
                 <button type="button" class="toggle-btn" onclick=register()>Register</button>
             </div>
-            <form id="login-form"class="input-group">
+            <form id="login_form"class="input-group">
                 <input id="username" type="text" class="input-field" placeholder="Username" required>
                 <input id="password" type="text"  class="input-field" placeholder="Password" required>
-                <input id="submit" class="submit-btn" type="button" value="Login">
+                <input id="login_submit" class="submit-btn" type="button" value="Login">
             </form> 
-            <form id="register-form" class="input-group">
-                <a class="submit-btn" href="SignUp_DT.html" role="button">
-                    Register for Bussiness
-                </a>
+            <form id="register_form" class="input-group">
+               
                 <br><br>
                 <br><br>
                 <a class="submit-btn" href="SignUp_KH.html" role="button">
@@ -35,16 +62,14 @@
                 </a>
                 <br><br>
                 <br><br>
-                <a class="submit-btn" href="SignUp_TX.html" role="button">
-                    Register for Driver
-                </a>
+                
             </form>
         </div>     
     </div>
 
     <script>
-        var x=document.getElementById("login-form");
-        var y= document.getElementById("register-form");
+        var x=document.getElementById("login_form");
+        var y= document.getElementById("register_form");
         var z=document.getElementById("btn");
 
         function register(){
@@ -59,6 +84,21 @@
             z.style.left="0px";
         }
     </script>
+
+    <script>
+     login_submit.addEventListener('click', function(){
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        console.log(username);
+        console.log(password);
+        if (username!="" && password!=""){
+            checkLogin(username,password);
+        }
+    
+    });
+    </script>
+    
 	
 	
 	
@@ -68,3 +108,4 @@
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 </body>
 </html>
+

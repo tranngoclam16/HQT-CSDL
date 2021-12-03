@@ -31,11 +31,11 @@ router.use((request,response,next)=>{
 })
 // call  function
 
-router.route('/bill').get((request,response)=>{
-    dboperator.getHD().then(result => {
-       response.json(result);
+router.route('/KH/login/:username').get((request,response)=>{
+    dboperator.getKH(request.params.username).then(result =>{
+        console.log(result[0]);
+        response.json(result);
     })
-
 })
 /*
 router.route('/billinfo').get((request,response)=>{

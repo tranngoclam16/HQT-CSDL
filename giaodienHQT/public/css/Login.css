@@ -74,11 +74,11 @@
     color: rgb(15, 15, 15);
     text-decoration: none;
 }
-#login-form{
+#login_form{
     left:50px;
 
 }
-#register-form{
+#register_form{
     left:450px;
 
 }
