@@ -46,8 +46,31 @@ app.post('/SignUpKH', (req, res) => {
         res.status(201).json(result);
      }) 
 })
+app.get('/KH/ProductList', (req, res) => {
+    var start = request.query['start']
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(start)
+    dboperator.getProductList(start,num=100).then(result => {
+       response.json(result);
+    })
+})
 
-/* router.route('/KH/login/:username').get((request,response)=>{
+/*router.route('/KH/ProductList').get((request,response)=>{
+    var start = request.query['start']
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(start)
+    dboperator.getProductList(start,num=100).then(result => {
+       response.json(result);
+    })
+
+})
+ router.route('/KH/login/:username').get((request,response)=>{
     dboperator.getKH(request.params.username).then(result =>{
         console.log(result[0]);
         response.json(result);

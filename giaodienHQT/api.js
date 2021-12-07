@@ -50,6 +50,18 @@ router.route('/SignUpKH').post((request,response)=>{
         response.status(201).json(result);
      }) 
  })
+ router.route('/KH/ProductList').get((request,response)=>{
+    var start = request.query['start']
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(start)
+    dboperator.getProductList(start,num=100).then(result => {
+       response.json(result);
+    })
+
+})
 /*
 router.route('/billinfo').get((request,response)=>{
     var MaHD = request.query['MaHD']
