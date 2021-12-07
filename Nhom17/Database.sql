@@ -128,26 +128,26 @@ create table ThuNhapTX (
 )
 
 
-create table CT_TTDH (
+create table TinhTrangDH (
 	MaTinhTrang int primary key,
 	Mota nvarchar(100)
 )
 
-create table TinhTrangDH (
+create table CT_TTDH (
 	NgayCapNhat datetime,
 	MaDH varchar(10),
 	MaTT int ,
 	primary key (NgayCapNhat, MaDH),
-	CONSTRAINT FK__TinhTrangD__MaDH
+	CONSTRAINT FK__CTTTDH__MaDH
 	FOREIGN KEY (MaDH) references DonHang(MaDH),
-	CONSTRAINT FK__TinhTrangD__MaTT
-	FOREIGN KEY (MaTT) references CT_TTDH (MaTinhTrang)
+	CONSTRAINT FK__CTTTDH__MaTT
+	FOREIGN KEY (MaTT) references TinhTrangDH (MaTinhTrang)
 )
 go
 
 --delete from CT_TTDH
 
-insert into CT_TTDH values
+insert into TinhTrangDH values
 (0, N'Đơn hàng đã hủy.'),
 (1, N'Đơn hàng được tiếp nhận.'),
 (2, N'Đơn hàng đang đóng gói.'),

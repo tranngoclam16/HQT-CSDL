@@ -1,4 +1,5 @@
-registerKH_btn.addEventListener('click', function(){
+
+registerKH_btn.addEventListener('click',() => {
     let objToPost = { 
         MaKH: $('#MaKH').val(),
         HoTen: $('#HoTen').val(),
@@ -6,18 +7,16 @@ registerKH_btn.addEventListener('click', function(){
         Email: $('#Email').val(),
         Password: $('#Password').val()
     }
-    $.ajax({
-        url: 'http://localhost:3000/api/SignUpKH',
-        type: 'POST',
-        data: JSON.stringify(objToPost),
-        timeout: 10000,
-        contentType: "application/json"
-    }).done(function (data){
-        alert('Đăng ký thành công');
-    }).fail(function (xhr, textStatus, error){
-        console.log(textStatus);
-        console.log(error);
-        alert(error);
-        console.log(xhr);
-    });
+    senData('/SignUpKH', objToPost)
 })
+
+const senData = (path, data) => {
+    fetch(path, {
+        method: 'post',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify(data)
+    }).then ((res)=>res.json)
+    .then (response => {
+        console.log(response)
+    })
+}

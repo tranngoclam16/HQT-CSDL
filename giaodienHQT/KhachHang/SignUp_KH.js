@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 registerKH_btn.addEventListener('click', function(){
     let objToPost = { 
         MaKH: $('#MaKH').val(),
@@ -20,4 +22,5 @@ registerKH_btn.addEventListener('click', function(){
         alert(error);
         console.log(xhr);
     });
-})
+}) 
+ 

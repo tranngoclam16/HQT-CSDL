@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-/* app.use(express.json());
-app.use('/api', router); */
+app.use(express.json());
+/*app.use('/api', router); */
 
 
 
@@ -34,11 +34,20 @@ app.get('/',(reg,res)=>{
     res.sendFile(path.join(staticPath,"index1.html"));
 })
 
-app.get('/SignUp', (req, res) => {
+//signup route
+app.get('/SignUpKH', (req, res) => {
     res.sendFile(path.join(staticPath,"SignUp_KH.html"));
 })
 
-router.route('/KH/login/:username').get((request,response)=>{
+app.post('/SignUpKH', (req, res) => {
+    let dkn = {...req.body};
+    console.log(req.body)
+     dboperator.addCustomer(dkn).then(result => {
+        res.status(201).json(result);
+     }) 
+})
+
+/* router.route('/KH/login/:username').get((request,response)=>{
     dboperator.getKH(request.params.username).then(result =>{
         console.log(result[0]);
         response.json(result);
@@ -51,7 +60,7 @@ router.route('/SignUpKH').post((request,response)=>{
      dboperator.addCustomer(dkn).then(result => {
         response.status(201).json(result);
      }) 
- })
+ }) */
 /*
 router.route('/billinfo').get((request,response)=>{
     var MaHD = request.query['MaHD']
