@@ -3,7 +3,7 @@ const createNav = () => {
 
     nav.innerHTML = `
     <div class="navbar-wrapper container-wrapper">
-    <img src="img/logo.png" class="brand-logo" alt="">  
+    <img src="../img/logo.png" class="brand-logo" alt="">  
   </div>
   <div class="header">
     <div class="container-fluid">
@@ -31,8 +31,8 @@ const createNav = () => {
             <a class="fas fa-user" role="button" href="SignUp_KH.html">
             </a>
             </i>
-              <!-- <a href="#"><img src="img/user.png" alt=""></a>
-              <a href="#"><img src="img/shopping-cart.png" alt=""></a>   -->
+              <!-- <a href="#"><img src="../img/user.png" alt=""></a>
+              <a href="#"><img src="../img/shopping-cart.png" alt=""></a>   -->
           </li>
       </div>
       <div class="search ml-auto">

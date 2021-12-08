@@ -31,15 +31,15 @@ async function addCustomer(dkn){
     }
 }
 async function getProductList(start, num=100){
+    console.log(start)
     try{
         let pool=await sql.connect(config);
-        length = await pool.request().query("SELECT COUNT(*) FROM SANPHAM")
+        length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
         let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
-        console.log(start)
-        console.log((parseInt(start)+parseInt(num)))
-        //let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= 0 AND T.ROWNUMBER <100")
+        //console.log(start)
+        //console.log(products.recordsets[0])
+        //console.log(length.recordsets[0][0][""])
         return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
-  
     }
     catch(error){
         console.log(error);

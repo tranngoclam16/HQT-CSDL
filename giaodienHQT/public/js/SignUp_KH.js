@@ -1,4 +1,3 @@
-
 registerKH_btn.addEventListener('click',() => {
     let objToPost = { 
         MaKH: $('#MaKH').val(),

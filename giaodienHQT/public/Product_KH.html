@@ -7,8 +7,8 @@
   <title>ProductList_DT</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/BillList_TX.css">
-  <script src="js/product_list.js"></script>
+    <link rel="stylesheet" href="../css/BillList_TX.css">
+  <script src="../js/product_list.js"></script>
   <script>
   var currentPage = 0;
   function goToPage(value){
@@ -17,7 +17,7 @@
           fetchTable(currentPage*100);
   }
   </script>
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
 
 <style>
     .badge-notify{
@@ -58,7 +58,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
         <div class="container">
-          <img src="img/logo.png" class="brand-logo" alt="">
+          <img src="../img/logo.png" class="brand-logo" alt="">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span>
               <i id="bar" class="fas fa-bars"></i>
@@ -67,7 +67,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent" style="float: right; cursor: pointer;" >
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index1.html">Trang chủ</a>
+                    <a class="nav-link" href="/">Trang chủ</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="BillList_KH.html">Đơn hàng</a>
@@ -100,10 +100,10 @@
               <tr>
                 <th class="text-center" scope="col">#</th>
                 <th scope="col">Image</th>
-                <th scope="col">Mã hóa đơn</th>
-                <th scope="col">Mã khách hàng</th>
-                <th scope="col">Ngày lập</th>
-                <th scope="col">Tổng tiền</th>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá bán</th>
+                <th scope="col">Số lượng tồn</th>
                 <th scope="col">&nbsp;</th>
               </tr>
             </thead>
@@ -128,7 +128,7 @@
     {{#each this}}
     <tr>
         <th scope="row">{{ROWNUMBER}}</th>
-        <td><img src="img/product image 3.png"width="50" height="50"></td>
+        <td><img src="../img/product image 3.png"width="50" height="50"></td>
         <td>{{MaSP}}</td>
         <td>{{TenSP}}</td>
         <td>{{GiaBan}}</td>
@@ -154,9 +154,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
 
 
-  <script src="js/jquery-2.2.3.min.js"></script>
-  <script type='text/javascript' src="js/bootstrap.min.js"></script>
-  <script type='text/javascript' src="js/jquery.mycart.js"></script>
+  <script src="../js/jquery-2.2.3.min.js"></script>
+  <script type='text/javascript' src="../js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="../js/jquery.mycart.js"></script>
   <script type="text/javascript">
   $(function () {
 
