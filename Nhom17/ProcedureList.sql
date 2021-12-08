@@ -176,12 +176,14 @@ CREATE PROCEDURE sp_ThemDonHang
 	@Tinh nvarchar(30),
 	@TenNguoiNhan nvarchar(100),
 	@SDT varchar(10),
-	@NgayLap datetime
+	@ThanhToan nvarchar(100),
+	@MaDonHang varchar (10) output
 AS
 BEGIN
 	BEGIN TRAN
 		BEGIN TRY
-			declare @ma_count bigint,@MaDH varchar(10)
+			declare @ma_count bigint,@MaDH varchar(10),@NgayLap DATETIME
+			set @NgayLap=GETDATE()
 		
 			set @MaDH=(select TOP 1 (MaDH) from DonHang  order by MaDH DESC)
 			
@@ -194,10 +196,13 @@ BEGIN
 				set @ma_count=1 
 			end
 			set @MaDH = RIGHT('000000000'+CAST(@ma_count AS VARCHAR(10)), 10)
-
+			
 			print @MaDH
-			INSERT INTO DonHang (MaDH, MaKH, DiaChi, Phuong, Quan,Tinh, TenNguoiNhan, SDT, NgayLap) 
-			VALUES (@MaDH, @MaKH, @DiaChi, @Phuong, @Quan,@Tinh,  @TenNguoiNhan, @SDT, @NgayLap)
+			INSERT INTO DonHang (MaDH, MaKH, DiaChi, Phuong, Quan,Tinh, TenNguoiNhan, SDT, NgayLap,ThanhToan) 
+			VALUES (@MaDH, @MaKH, @DiaChi, @Phuong, @Quan,@Tinh,  @TenNguoiNhan, @SDT, @NgayLap,@ThanhToan)
+			
+			select @MaDonHang=@MaDH
+			select @MaDH
 		COMMIT TRAN
 		END TRY
 		BEGIN CATCH
@@ -346,7 +351,8 @@ GO
 CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
-	@SoLuong int)
+	@SoLuong int,
+	@error int output)
 AS
 BEGIN 
 	BEGIN TRAN
@@ -376,6 +382,7 @@ BEGIN
 			else
 			begin
 				print('2')
+				set @error=2
 				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
 			end
 		COMMIT TRAN
