@@ -1,4 +1,4 @@
- function fetchTable (value) {
+ /*function fetchTable (value) {
   var url = 'http://localhost:3000/api/KH/ProductList?start='+value;
   /*fetch('/KH/ProductList?start='+value)
     .then(data => {
@@ -10,7 +10,7 @@
       var html = template(data);
       $('#listProduct').html(html);
       document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
-    })*/
+    })
     $.ajax(url)
     .done(function (data) {
       length = data['tableLength']
@@ -23,9 +23,9 @@
     }).fail(function (err) {
       console.log(err);
     });
-} 
+} */
 
-/*const setData = (data) => {
+const setData = (data) => {
   length = data['tableLength']
   data = data['data']
   var source = document.getElementById('entry-template').innerHTML;
@@ -54,5 +54,5 @@ function fetchTable (value) {
   $('#listProduct').html(html);
   document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
 })
-}*/
+}
 
