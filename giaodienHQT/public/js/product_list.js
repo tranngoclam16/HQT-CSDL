@@ -23,9 +23,9 @@
     }).fail(function (err) {
       console.log(err);
     });
-}  */
+}  
 
-/*const setData = (data) => {
+const setData = (data) => {
   length = data['tableLength']
   data = data['data']
   var source = document.getElementById('entry-template').innerHTML;
