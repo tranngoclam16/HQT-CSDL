@@ -9,11 +9,11 @@ BEGIN
   BEGIN TRAN
     BEGIN TRY
 	  DECLARE @ttdh int, @mota nvarchar(100)
-	  Set @ttdh = (SELECT MaTT FROM TinhTrangDH ttd1 
+	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 
           WHERE ttd1.MaDH = @MaDH 
             AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM TinhTrangDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
-		SET @mota = (select Mota from CT_TTDH where @ttdh = MaTinhTrang)
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
+		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
 		print(@mota)
       IF @ttdh <> 3
         BEGIN
@@ -34,7 +34,7 @@ BEGIN
 		begin
 		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-        INSERT INTO TinhTrangDH VALUES (GETDATE(), @MaDH, 4)
+        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
 		end
         END
     COMMIT TRAN
@@ -50,7 +50,7 @@ END
 GO
 --DROP PROCEDURE sp_TaiXeNhanDonHang_TC
 --TEST DATA
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM TaiXe
@@ -66,7 +66,7 @@ INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES ('000001', N'Áo thun Mi
 GO
 INSERT INTO CT_DonHang (MaDH, MaSP, SoLuong) VALUES ('0000000001', '000001', 30);
 GO
-INSERT INTO TinhTrangDH (NgayCapNhat, MaDH, MaTT) VALUES (GETDATE(), '0000000001', 3);
+INSERT INTO CT_TTDH (NgayCapNhat, MaDH, MaTT) VALUES (GETDATE(), '0000000001', 3);
 GO
 INSERT INTO TaiXe (CMND, HoTen) VALUES
 	('012317983262', N'Huỳnh Bá Vỹ'),

@@ -1,4 +1,6 @@
-﻿-- TẠO TÀI KHOẢN ĐỐI TÁC, TÀI XẾ, KHÁCH HÀNG, NHÂN VIÊN
+﻿USE HT_DHCH_ONLINE
+GO
+-- TẠO TÀI KHOẢN ĐỐI TÁC, TÀI XẾ, KHÁCH HÀNG, NHÂN VIÊN
 --
 CREATE PROC sp_CreateAccount_DT
 	@MSThue varchar(10),
@@ -407,10 +409,10 @@ AS
 BEGIN
   BEGIN TRAN
     BEGIN TRY
-      IF (SELECT MaTT FROM TinhTrangDH ttd1 
+      IF (SELECT MaTT FROM CT_TTDH ttd1 
           WHERE ttd1.MaDH = @MaDH 
             AND ttd1.NgayCapNhat > ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM TinhTrangDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 3
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 3
         BEGIN
           PRINT('1')
           RAISERROR(N'Đơn hàng đang không được chờ vận chuyển',15,1)
@@ -421,7 +423,7 @@ BEGIN
         SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
         INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-        INSERT INTO TinhTrangDH VALUES (GETDATE(), @MaDH, 4)
+        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
         END
     COMMIT TRAN
     END TRY
@@ -528,12 +530,12 @@ as
 begin
 	begin tran
 		begin try
-			if not exists (select * from TinhTrangDH where MaDH= @MaDH)
+			if not exists (select * from CT_TTDH where MaDH= @MaDH)
 				begin
 					print('1')
 					raiserror(N'Không tồn tại đơn hàng',15,1)
 				end
-			insert into TinhTrangDH
+			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
 			ROLLBACK TRANSACTION 
 		end try
@@ -611,10 +613,10 @@ AS
 BEGIN
   BEGIN TRAN
     BEGIN TRY
-      IF (SELECT MaTT FROM TinhTrangDH ttd1 
+      IF (SELECT MaTT FROM CT_TTDH ttd1 
           WHERE ttd1.MaDH = @MaDH 
             AND ttd1.NgayCapNhat > ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM TinhTrangDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 4
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 4
         BEGIN
           PRINT('1')
           RAISERROR(N'Đơn hàng đang không được vận chuyển',15,1)
@@ -623,7 +625,7 @@ BEGIN
         BEGIN
         DELETE FROM ThuNhapTX WHERE MaDH = @MaDH AND MaTX = @MaTX
 
-        INSERT INTO TinhTrangDH VALUES (GETDATE(), @MaDH, 3)
+        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 3)
         END
     COMMIT TRAN
     END TRY
@@ -676,11 +678,11 @@ begin
 				raiserror(N'Không tồn tại sản phẩm',15,1)
 			declare @MaTT int
 			select @MaTT = MaTT
-			from TinhTrangDH
+			from CT_TTDH
 			where MaDH = @MaDH and CAST(NgayCapNhat as datetime) >= All(select CAST (NgayCapNhat as datetime)
-																from TinhTrangDH
+																from CT_TTDH
 																where MaDH = @MaDH)
-			select @TTDH =  Mota from CT_TTDH where MaTinhTrang = @MaTT
+			select @TTDH =  Mota from TinhTrangDH where MaTinhTrang = @MaTT
 		end try
 		begin catch
 			IF @@trancount>0
