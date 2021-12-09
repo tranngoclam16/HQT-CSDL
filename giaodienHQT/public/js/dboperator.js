@@ -45,8 +45,58 @@ async function getProductList(start, num=100){
         console.log(error);
     }
 }
+
+async function addBill(bill){
+    try{
+        let pool = await sql.connect(config);
+        let insertBill = await pool.request()
+        .input('MaKH', sql.VarChar(10), bill.MaKH)
+        .input('DiaChi', sql.NVarChar(30), bill.DiaChi)
+        .input('Phuong', sql.NVarChar(30), bill.Phuong)
+        .input('Quan', sql.NVarChar(30), bill.Quan)
+        .input('Tinh', sql.NVarChar(30), bill.Tinh)
+        .input('TenNguoiNhan', sql.NVarChar(100), bill.TenNguoiNhan)
+        .input('SDT', sql.VarChar(10), bill.SDT)
+        .input('ThanhToan', sql.NVarChar(100), bill.ThanhToan)
+        .output('MaDonHang')
+        .execute('sp_ThemDonHang',async(err,result)=>{
+            if (err) {
+                
+              } else {
+                MaDH=result.output.MaDonHang;
+                console.log('MaDH:',MaDH)
+               
+                for (i=0;i<bill.Products.length;i++){
+                    var SL=bill.Products[i].quantity;
+                    var MaSP=bill.Products[i].id;
+                   // console.log('sp: ',MaSP)
+                    let insertP= await pool.request()
+                    .input('MaDH',sql.VarChar(10),MaDH)
+                    .input('MaSP',sql.VarChar(6),MaSP)
+                    .input('SoLuong',sql.Int,SL)
+                    .output('error',sql.Int)
+                    .execute('sp_ThemChiTietDonHang')
+                    
+                    //console.log(insertP.output.error)
+                    if (insertP.output.error==2){
+                        console.log('out of stock');
+                        let de=await pool.request()
+                        .input('MaDH',sql.VarChar(10),MaDH)
+                        .execute('sp_XoaDonHang')
+                        break;
+                    }               
+                }
+            }
+    })
+        return 1;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
-    getProductList:getProductList
+    getProductList:getProductList,
+    addBill:addBill
 }

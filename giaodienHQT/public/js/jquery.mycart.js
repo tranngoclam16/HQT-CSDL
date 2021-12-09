@@ -19,6 +19,7 @@
       classProductQuantity: 'my-product-quantity',
       classProductRemove: 'my-product-remove',
       classCheckoutCart: 'my-cart-checkout',
+      classCheckoutForm: 'my-checkout-form',
       affixCartIcon: true,
       showCheckoutModal: true,
       numberOfDecimals: 2,
@@ -178,6 +179,12 @@
       });
       return total;
     };
+    var getShipping = function () {
+      var total = getTotalPrice();
+      var shipping=total*0.05;
+      shipping=MathHelper.getRoundedNumber(shipping)*1;
+      return shipping;
+    };
 
     objToReturn.getAllProducts = getAllProducts;
     objToReturn.updatePoduct = updatePoduct;
@@ -186,6 +193,7 @@
     objToReturn.removeProduct = removeProduct;
     objToReturn.getTotalQuantity = getTotalQuantity;
     objToReturn.getTotalPrice = getTotalPrice;
+    objToReturn.getShipping=getShipping;
     return objToReturn;
   }());
 
@@ -198,6 +206,7 @@
     var classProductQuantity = options.classProductQuantity;
     var classProductRemove = options.classProductRemove;
     var classCheckoutCart = options.classCheckoutCart;
+    var classCheckoutForm=options.classCheckoutForm;
 
     var idCartModal = 'my-cart-modal';
     var idCartTable = 'my-cart-table';
@@ -206,6 +215,7 @@
     var idDiscountPrice = 'my-cart-discount-price';
     var classProductTotal = 'my-product-total';
     var classAffixMyCartIcon = 'my-cart-icon-affix';
+    var idCheckoutModal= 'my-checkout-modal';
 
 
     if (options.cartItems && options.cartItems.constructor === Array) {
@@ -231,7 +241,58 @@
         '</div>' +
         '<div class="modal-footer">' +
         '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
-        '<button type="button" class="btn btn-primary ' + classCheckoutCart + '">Checkout</button>' +
+        '<button type="button" class="btn btn-primary ' + classCheckoutForm + '">Checkout</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+      );
+    }
+
+    if (!$("#" + idCheckoutModal).length) {
+      $('body').append(
+        '<div class="modal fade" id="' + idCheckoutModal + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">' +
+        '<div class="modal-dialog" role="document">' +
+        '<div class="modal-content">' +
+        '<div class="modal-header">' +
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+        '<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-gift"></span> My Check out</h4>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        '<form id="checkout_form">'+        
+        '<div>'+
+            '<label for="MaKH">Mã Khách hàng</label>'+
+            '<input type="text" class="input-group" name="MaKH" id="MaKH" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="DiaChi">Địa chỉ</label>'+
+            '<input type="text" class="input-group" name="DiaChi" id="DiaChi" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="Phuong">Phường</label>'+
+            '<input type="text" class="input-group" name="Phuong" id="Phuong" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="Quan">Quận</label>'+
+            '<input type="text" class="input-group"  name="Quan" id="Quan" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="Tinh">Tỉnh</label>'+
+            '<input type="text" class="input-group" name="Tinh" id="Tinh" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="TenNguoiNhan">Tên người nhận </label>'+
+            '<input type="text" class="input-group" name="TenNguoiNhan" id="TenNguoiNhan" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '<div>'+
+            '<label for="SDT">Số điện thoại người nhận </label>'+
+            '<input type="text" class="input-group" name="SDT" id="SDT" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
+          '</form>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
+        '<button type="button" class="btn btn-primary ' + classCheckoutCart + '">Save</button>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -287,10 +348,17 @@
       showGrandTotal();
       showDiscountPrice();
     };
+
     var showModal = function () {
       drawTable();
       $("#" + idCartModal).modal('show');
     };
+
+    var showCheckOutModal = function () {
+    
+      $("#" + idCheckoutModal).modal('show');
+    };
+
     var updateCart = function () {
       $.each($("." + classProductQuantity), function () {
         var id = $(this).closest("tr").data("id");
@@ -348,6 +416,14 @@
         $cartBadge.text(ProductManager.getTotalQuantity());
       });
     });
+    $(document).on('click', "." + classCheckoutForm, function () {
+      var products = ProductManager.getAllProducts();
+      if (!products.length) {
+        $("#" + idEmptyCartMessage).fadeTo('fast', 0.5).fadeTo('fast', 1.0);
+        return;
+      }
+      showCheckOutModal();
+    });
 
     $(document).on('click', "." + classCheckoutCart, function () {
       var products = ProductManager.getAllProducts();
@@ -355,12 +431,45 @@
         $("#" + idEmptyCartMessage).fadeTo('fast', 0.5).fadeTo('fast', 1.0);
         return;
       }
+
+      let objToPost = {
+        MaKH: $('#MaKH').val(),
+        DiaChi: $('#DiaChi').val(),
+        Phuong: $('#Phuong').val(),
+        Quan: $('#Quan').val(),
+        Tinh: $('#Tinh').val(),
+        TenNguoiNhan: $('#TenNguoiNhan').val(),
+        SDT: $('SDT').val(),
+        ThanhToan: $('#ThanhToan').val(),
+        Products: ProductManager.getAllProducts(),
+        TongHang: ProductManager.getTotalPrice()
+    }
+   // alert($("#MaHD").attr('value'))
+   $.ajax({
+        url: 'http://localhost:3000/api/KH/bill',
+        type: 'POST',
+        data: JSON.stringify(objToPost),
+        timeout: 10000,
+        contentType: "application/json"
+    }).done(function (result){
+        console.log(result);
+        alert('Thêm hóa đơn thành công!');
+    }).fail(function (xhr, textStatus, error){
+        console.log(textStatus);
+        console.log(error);
+        alert(error);
+        console.log(xhr);
+    });
+
+
+      console.log(1)
       updateCart();
       var isCheckedOut = options.checkoutCart(ProductManager.getAllProducts(), ProductManager.getTotalPrice(), ProductManager.getTotalQuantity());
       if (isCheckedOut !== false) {
         ProductManager.clearProduct();
         $cartBadge.text(ProductManager.getTotalQuantity());
         $("#" + idCartModal).modal("hide");
+        $("#" + idCheckoutModal).modal("hide");
       }
     });
 

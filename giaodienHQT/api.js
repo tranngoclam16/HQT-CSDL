@@ -62,6 +62,14 @@ router.route('/SignUpKH').post((request,response)=>{
     })
 
 })
+router.route('/KH/bill').post((request,response)=>{
+    let bill = {...request.body};
+    console.log("body")
+    console.log(request.body)
+     dboperator.addBill(bill).then(result => {
+        response.status(201).json(result);
+     }) 
+ })
 /*
 router.route('/billinfo').get((request,response)=>{
     var MaHD = request.query['MaHD']

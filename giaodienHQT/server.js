@@ -64,6 +64,15 @@ app.post('/KH/ProductList', (req, res) => {
     })
 })
 
+app.post('/KH/bill',(req,res)=>{
+    let bill = {...req.body};
+    console.log("body")
+    console.log(req.body)
+     dboperator.addBill(bill).then(result => {
+        response.status(201).json(result);
+     }) 
+ })
+
 /*router.route('/KH/ProductList').get((request,response)=>{
     var start = request.query['start']
     if (!start || start<0)
