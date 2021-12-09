@@ -445,11 +445,9 @@
         TongHang: ProductManager.getTotalPrice()
     }
    // alert($("#MaHD").attr('value'))
-   $.ajax({
-        url: 'http://localhost:3000/api/KH/bill',
+   $.ajax('/KH/bill',{
         type: 'POST',
         data: JSON.stringify(objToPost),
-        timeout: 10000,
         contentType: "application/json"
     }).done(function (result){
         console.log(result);
