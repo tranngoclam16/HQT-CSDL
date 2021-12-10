@@ -69,7 +69,7 @@ app.post('/KH/bill',(req,res)=>{
     console.log("body")
     console.log(req.body)
      dboperator.addBill(bill).then(result => {
-        response.status(201).json(result);
+        res.status(201).json(result);
      }) 
  })
 
