@@ -1,3 +1,6 @@
+//const { is } = require("express/lib/request")
+//const { response } = require("express");
+
 registerKH_btn.addEventListener('click',() => {
     let objToPost = { 
         MaKH: $('#MaKH').val(),
@@ -6,11 +9,13 @@ registerKH_btn.addEventListener('click',() => {
         Email: $('#Email').val(),
         Password: $('#Password').val()
     }
+    console.log(objToPost)
     if (objToPost.MaKH.length != 10 || !Number(objToPost.MaKH.length))
         alert("Số điện thoại không hợp lệ")
     else if (objToPost.Password.length < 6)
         alert("Mật khẩu phải có ít nhất 6 kí tự!")
-    else senData('/SignUpKH', objToPost)
+    else 
+        senData('http://localhost:3000/SignUpKH', objToPost)
 })
 
 //alert function
@@ -28,8 +33,22 @@ const senData = (path, data) => {
         method: 'post',
         headers: new Headers({'Content-Type': 'application/json'}),
         body: JSON.stringify(data)
-    }).then ((res)=>res.json)
+    })
     .then (response => {
         console.log(response)
-    })
+        if(response.status==200){
+            console.log(response.status)
+            alert("Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!");
+        }
+        //console.log(response)
+        processData(response)
+    }).catch((res) =>{
+        console.log("error");
+    });
+}
+
+const processData = (data)=> {
+    if(data.alert){
+        alert(data.alert)
+    }
 }

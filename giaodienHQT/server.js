@@ -41,13 +41,62 @@ app.get('/SignUpKH', (req, res) => {
     res.sendFile(path.join(staticPath,"SignUp_KH.html"));
 })
 
+
+//let flag = true
 app.post('/SignUpKH', (req, res) => {
     let dkn = {...req.body};
-    console.log(req.body)
-    dboperator.addCustomer(dkn).then(result => {
+    dboperator.getKH(dkn.MaKH).then(result =>{
+        console.log(result[0]);
+        //console.log(flag)
+        if (dkn.MaKH!=result[0].MaKH){
+            console.log('valid')
+            dboperator.addCustomer(dkn).then(result => {
+                res.status(201).json(result);
+            })
+        }
+        else 
+        res.status(200).json(result);
+    })
+    /* let flag = true;
+    dboperator.getKH(dkn.MaKH).then(result =>{
+        //console.log(result[0]);
+        //console.log(flag)
+        if (dkn.MaKH.length==result[0].MaKH){
+            flag = false;
+            //res.json({'alert':'Mật khẩu phải có ít nhất 6 kí tự'})
+            //console.log(flag)
+        }
+    })
+    //if(!flag)
+        console.log(flag) */
+        /*
+    if (dkn.MaKH.length != 10 || !Number(dkn.MaKH.length))
+        return res.json({'alert':'Số điện thoại không hợp lệ'})
+    else if (dkn.Password.length < 6)
+        return res.json({'alert':'Mật khẩu phải có ít nhất 6 kí tự'})
+    else if(flag){
+        console.log('valid')
+        
+        })
+        return res.json({'alert':'Đăng ký tài khoản thành công!'})
+    } */
+    /* else
+        return res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số khác!'}) */
+
+    /* dboperator.addCustomer(dkn).then(result => {
         res.status(201).json(result);
-     }) 
+    }) */
 })
+
+//Sign In
+app.get('/LogInKH', (req, res) => {
+    res.sendFile(path.join(staticPath,"LogIn_KH.html"));
+})
+
+app.get('/LogInKH', (req, res) => {
+    res.sendFile(path.join(staticPath,"LogIn_KH.html"));
+})
+
 //View product
 app.get('/KH/ProductList', (req, res) => {
     res.sendFile(path.join(staticPath,"Product_KH.html"));

@@ -14,6 +14,7 @@ async function getKH(MaKH){
         console.log(error);
     }
 }
+
 async function addCustomer(dkn){
     try{
         let pool = await sql.connect(config);
@@ -42,7 +43,7 @@ async function getProductList(start, num=100){
         return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
     }
     catch(error){
-        console.log(error);
+        return error;
     }
 }
 

@@ -10,7 +10,7 @@
     <script>
         function checkLogin(uname,pass){
 	        
-            $.getJSON("http://localhost:3000/api/KH/login/"+uname,checkData);
+            $.getJSON("http://localhost:3000/LogIn_KH/"+uname,checkData);
             
             function checkData(data) {
 	            if (data.length>0){
@@ -18,7 +18,7 @@
                         if (pass==data[0].pword){
                             //console.log(data[0]);
                             alert("Login successfully")
-                            window.location="index1.html";
+                            window.location="index.html";
                         }
                         else{
                             console.log("password is false");
