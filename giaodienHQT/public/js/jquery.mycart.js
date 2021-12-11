@@ -451,7 +451,6 @@
         contentType: "application/json"
     }).done(function (result){
         console.log(result);
-        alert('Thêm hóa đơn thành công!');
     }).fail(function (xhr, textStatus, error){
         console.log(textStatus);
         console.log(error);

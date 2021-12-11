@@ -34,6 +34,8 @@ app.get('/',(reg,res)=>{
     res.sendFile(path.join(staticPath,"index1.html"));
 })
 
+
+//----------------------------KHÁCH HÀNG-----------------------------
 //signup route
 app.get('/SignUpKH', (req, res) => {
     res.sendFile(path.join(staticPath,"SignUp_KH.html"));
@@ -46,7 +48,7 @@ app.post('/SignUpKH', (req, res) => {
         res.status(201).json(result);
      }) 
 })
-
+//View product
 app.get('/KH/ProductList', (req, res) => {
     res.sendFile(path.join(staticPath,"Product_KH.html"));
 })
@@ -63,7 +65,7 @@ app.post('/KH/ProductList', (req, res) => {
         res.status(201).json(result);
     })
 })
-
+//Add bill
 app.post('/KH/bill',(req,res)=>{
     let bill = {...req.body};
     console.log("body")
@@ -72,6 +74,25 @@ app.post('/KH/bill',(req,res)=>{
         res.status(201).json(result);
      }) 
  })
+
+/*----------------------- ĐỐI TÁC---------------------------------*/
+//View Product
+ app.get('/DT/ProductList', (req, res) => {
+    res.sendFile(path.join(staticPath,"Product_DT.html"));
+})
+
+app.post('/DT/ProductList', (req, res) => {
+    let start = parseInt(JSON.stringify( req.body))
+    //res.json(start)
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(typeof start)
+    dboperator.getProductList(start,num=100).then(result => {
+        res.status(201).json(result);
+    })
+})
 
 /*router.route('/KH/ProductList').get((request,response)=>{
     var start = request.query['start']
