@@ -36,7 +36,6 @@ create table HopDong (
 )
 
 
-
 create table ChiNhanh (
 	MaCN varchar(10) primary key,
 	MaDT varchar(10) ,
@@ -50,7 +49,7 @@ create table ChiNhanh (
 create table SanPham (
 	MaSP varchar(6) primary key,
 	TenSP nvarchar(50),
-	GiaBan int,
+	GiaBan float,
 	SLTon int
 )
 
@@ -83,8 +82,8 @@ create table DonHang (
 	TenNguoiNhan nvarchar(100),
 	SDT varchar(10),
 	NgayLap datetime,
-	PhiVanChuyen int,
-	TongHang int,
+	PhiVanChuyen float,
+	TongHang float,
 	TongTien as (PhiVanChuyen+TongHang),
 	ThanhToan nvarchar(100)
 )
@@ -93,7 +92,7 @@ create table CT_DonHang (
 	MaDH varchar(10) ,
 	MaSP varchar(6),
 	SoLuong int,
-	GiaBan int,
+	GiaBan float,
 	ThanhTien int,
 	constraint PK_CTHD primary key (MaDH, MaSP),
 	CONSTRAINT FK__CT_DonHang__MaDH 

@@ -6,9 +6,23 @@ registerKH_btn.addEventListener('click',() => {
         Email: $('#Email').val(),
         Password: $('#Password').val()
     }
-    senData('/SignUpKH', objToPost)
+    if (objToPost.MaKH.length != 10 || !Number(objToPost.MaKH.length))
+        alert("Số điện thoại không hợp lệ")
+    else if (objToPost.Password.length < 6)
+        alert("Mật khẩu phải có ít nhất 6 kí tự!")
+    else senData('/SignUpKH', objToPost)
 })
 
+//alert function
+const showAlert = (msg) => {
+    let alertBox = document.querySelector('.alert-box')
+    let alertMsg = document.querySelector('alert-msg')
+    alertMsg.innerHTML = msg;
+    alertBox.classList.add('show');
+    setTimeout(()=> {
+        alertBox.classList.remove('show')
+    },3000)
+}
 const senData = (path, data) => {
     fetch(path, {
         method: 'post',
