@@ -96,9 +96,58 @@ async function addBill(bill){
         console.log(error);
     }
 }
+
+
+async function addProduct(dkn){
+    try{
+        let pool = await sql.connect(config);
+        let insertProduct = await pool.request()
+        .input('TenSP', sql.NVarChar(50), dkn.TenSP)
+        .input('GiaBan', sql.Float, dkn.GiaBan)
+        .input('SLTon', sql.Int, dkn.SLTon)
+        .execute('sp_ThemSanPham')
+        return insertProduct.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function updateProduct(dkn){
+    try{
+        let pool = await sql.connect(config);
+        let insertProduct = await pool.request()
+        .input('MaSP', sql.VarChar(6), dkn.MaSP)
+        .input('TenSP', sql.NVarChar(50), dkn.TenSP)
+        .input('GiaBan', sql.Float, dkn.GiaBan)
+        .input('SLTon', sql.Int, dkn.SLTon)
+        .execute('sp_CapNhatSanPham')
+        return insertProduct.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function addProductToAgent(dkn){
+    try{
+        let pool = await sql.connect(config);
+        let insertProduct = await pool.request()
+        /*.input('MaSP', sql.VarChar(6), dkn.MaSP)
+        .input('MaCN', sql.VarChar(10), dkn.MaCN)*/
+        .query("INSERT INTO CN_SP VALUES('" + dkn.MaCN + "', '" + dkn.MaSP + "')");
+        return insertProduct.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
     getProductList:getProductList,
-    addBill:addBill
+    addBill:addBill,
+    addProduct:addProduct,
+    updateProduct:updateProduct,
+    addProductToAgent: addProductToAgent
 }
