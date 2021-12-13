@@ -10,7 +10,16 @@
     <script>
         function checkLogin(uname,pass){
 	        
-            $.getJSON("http://localhost:3000/LogIn_KH/"+uname,checkData);
+            //$.getJSON("http://localhost:3000/LogIn_KH/"+uname,checkData);
+            $.ajax('/LogIn_KH', {
+                method: 'POST',
+                headers: {"Content-type": 'json/application'},
+                credentials: 'include',
+                body: JSON.stringify({username: uname})
+            })
+            .done(function(data) {
+                console.log(data)
+            })
             
             function checkData(data) {
 	            if (data.length>0){

@@ -45,10 +45,11 @@ app.get('/SignUpKH', (req, res) => {
 //let flag = true
 app.post('/SignUpKH', (req, res) => {
     let dkn = {...req.body};
+    console.log(dkn.MaKH)
     dboperator.getKH(dkn.MaKH).then(result =>{
         console.log(result[0]);
         //console.log(flag)
-        if (dkn.MaKH!=result[0].MaKH){
+        if (result[0]==null){
             console.log('valid')
             dboperator.addCustomer(dkn).then(result => {
                 res.status(201).json(result);
@@ -80,12 +81,6 @@ app.post('/SignUpKH', (req, res) => {
         })
         return res.json({'alert':'Đăng ký tài khoản thành công!'})
     } */
-    /* else
-        return res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số khác!'}) */
-
-    /* dboperator.addCustomer(dkn).then(result => {
-        res.status(201).json(result);
-    }) */
 })
 
 //Sign In

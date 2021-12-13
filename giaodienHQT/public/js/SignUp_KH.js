@@ -36,9 +36,13 @@ const senData = (path, data) => {
     })
     .then (response => {
         console.log(response)
-        if(response.status==200){
+        if(response.status!=201){
             console.log(response.status)
             alert("Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!");
+        }
+        else {
+            alert("Đăng ký thành công!");
+            window.location='http://localhost:3000'
         }
         //console.log(response)
         processData(response)

@@ -35,7 +35,7 @@ const setData = (data) => {
   document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
 }*/
 
-function fetchTable (value) {  
+function fetchTableKH (value) {  
   $.ajax('/KH/ProductList', {
   method: 'POST',
   headers: {

@@ -8,6 +8,7 @@ async function getKH(MaKH){
     try{
         let pool=await sql.connect(config);
         let products=await pool.request().query("SELECT * FROM KhachHang WHERE MaKH = '" + MaKH + "'");
+        console.log(products.recordset)
         return products.recordset;
     }
     catch(error){
