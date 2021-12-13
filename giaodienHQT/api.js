@@ -70,6 +70,28 @@ router.route('/KH/bill').post((request,response)=>{
         response.status(201).json(result);
      }) 
  })
+
+ router.route('/DT/ProductList').get((request,response)=>{
+    var start = request.query['start']
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(start)
+    dboperator.getProductList(start,num=100).then(result => {
+       response.json(result);
+    })
+
+})
+
+ router.route('/KH/bill').post((request,response)=>{
+    let bill = {...request.body};
+    console.log("body")
+    console.log(request.body)
+     dboperator.addBill(bill).then(result => {
+        response.status(201).json(result);
+     }) 
+ })
 /*
 router.route('/billinfo').get((request,response)=>{
     var MaHD = request.query['MaHD']

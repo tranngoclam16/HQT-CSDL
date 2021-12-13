@@ -305,7 +305,7 @@ GO
 --
 CREATE PROCEDURE sp_ThemSanPham
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int
 AS
 BEGIN
@@ -329,11 +329,11 @@ BEGIN
 
 			INSERT INTO SanPham values (@MaSP, @TenSP, @GiaBan, @SLTon)
 
-			if (@SLTon <0)
+			/*if (@SLTon <0)
 				begin
 					print('1')
 					raiserror(N'không được nhỏ hơn 0',15,1)
-				end
+				end*/
 
 		COMMIT TRAN
 		END TRY
@@ -443,7 +443,7 @@ GO
 CREATE PROCEDURE sp_CapNhatSanPham
 	(@MaSP varchar(6),
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int)
 AS
 BEGIN 

@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Thêm Sản Phẩm</title>
+  <title>Cập nhật sản phẩm Sản Phẩm</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/BillList_TX.css">
-   
 </head>
 
 <body style="display: block; background: #f3eced;">
@@ -41,14 +40,49 @@
           <div class="col-sm-12">
             <div class="card shadow mt-5">
               <h5 class="card-header">
-                Thêm Sản phẩm
+                Thêm Sản phẩm vào Chi nhánh
                 </h5>
-                <form action="addProduct" method="post">
+                <form action="addBill" method="post">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="TenSP">Tên sản phẩm</label>
-                        <input id="TenSP" type="text" class="form-control" placeholder="Tên sản phẩm" name='TenSP' autofocus>
+                        <label for="MaSP">Mã sản phẩm</label>
+                        <input id="MaSP" type="text" class="form-control" placeholder="Mã sản phẩm" name='MaSP' autofocus>
                     </div>
+                    <div class="form-group">
+                      <label for="MaCN">Mã chi nhánh</label>
+                      <input id="MaCN" type="text" class="form-control" placeholder="Mã Chi Nhánh" name='MaCN' autofocus>
+                </div>
+                </form>
+              <div class="card-footer text-muted">
+                <a id="btnSaveAddToAgent" class="btn btn-success add-btn" href="javascript:;" role="button">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Lưu
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card shadow mt-5">
+              <h5 class="card-header">
+                Cập nhật Sản phẩm
+                </h5>
+                <form action="addBill" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="MaSPupdate">Mã sản phẩm</label>
+                        <input id="MaSPupdate" type="text" class="form-control" placeholder="Mã sản phẩm" name='MaSPupdate' autofocus>
+                    </div>
+                    <div class="form-group">
+                      <label for="TenSP">Tên sản phẩm</label>
+                      <input id="TenSP" type="text" class="form-control" placeholder="Tên sản phẩm" name='TenSP' autofocus>
+                  </div>
                     <div class="form-group">
                         <label for="GiaBan">Gía bán</label>
                         <input id="GiaBan" type="number" class="form-control" placeholder="Gía bán" name='GiaBan'>
@@ -60,7 +94,7 @@
                 </div>
                 </form>
               <div class="card-footer text-muted">
-                <a id="btnSaveAdd" class="btn btn-success add-btn" href="javascript:;" role="button">
+                <a id="btnSaveUpdate" class="btn btn-success add-btn" href="javascript:;" role="button">
                     <i class="fa fa-check" aria-hidden="true"></i>
                     Lưu
                 </a>
@@ -70,7 +104,9 @@
         </div>
       </div>
 
-      <script src="../js/AddProduct.js"></script>
+    
+
+  <script src="../js/UpdateProduct.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

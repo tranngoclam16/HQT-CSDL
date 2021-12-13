@@ -143,6 +143,44 @@ app.post('/DT/ProductList', (req, res) => {
     })
 })
 
+//Add Product
+//Show Add Product Page
+app.get('/DT/AddProduct', (req, res) => {
+    res.sendFile(path.join(staticPath,"AddProduct.html"));
+})
+//Add Product
+app.post('/DT/AddProduct_add',(req,res)=>{
+    let product = {...req.body};
+    console.log("body")
+    console.log(req.body)
+     dboperator.addProduct(product).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
+
+ //Update Product
+ //Show Update Product Page
+app.get('/DT/UpdateProduct', (req, res) => {
+    res.sendFile(path.join(staticPath,"UpdateProduct.html"));
+})
+//Update Product
+app.post('/DT/UpdateProduct_update',(req,res)=>{
+    let product = {...req.body};
+    console.log("body")
+    console.log(req.body)
+     dboperator.updateProduct(product).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
+ //Add Product to agent
+app.post('/DT/UpdateProduct_agent',(req,res)=>{
+    let product = {...req.body};
+    console.log("body")
+    console.log(req.body)
+     dboperator.addProductToAgent(product).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
 /*router.route('/KH/ProductList').get((request,response)=>{
     var start = request.query['start']
     if (!start || start<0)
