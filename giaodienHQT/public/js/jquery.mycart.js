@@ -450,11 +450,11 @@
         data: JSON.stringify(objToPost),
         contentType: "application/json"
     }).done(function (result){
-        console.log(result);
+        console.log('result:',result);
     }).fail(function (xhr, textStatus, error){
         console.log(textStatus);
         console.log(error);
-        alert(error);
+        //alert(error);
         console.log(xhr);
     });
 

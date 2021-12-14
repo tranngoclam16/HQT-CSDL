@@ -64,10 +64,9 @@ async function addBill(bill){
         .execute('sp_ThemDonHang',async(err,result)=>{
             if (err) {
                 
-              } else {
+            } else {
                 MaDH=result.output.MaDonHang;
                 console.log('MaDH:',MaDH)
-               
                 for (i=0;i<bill.Products.length;i++){
                     var SL=bill.Products[i].quantity;
                     var MaSP=bill.Products[i].id;
@@ -86,7 +85,7 @@ async function addBill(bill){
                         .input('MaDH',sql.VarChar(10),MaDH)
                         .execute('sp_XoaDonHang')
                         break;
-                    }               
+                    }           
                 }
             }
     })
@@ -142,6 +141,48 @@ async function addProductToAgent(dkn){
         console.log(error);
     }
 }
+
+async function getBillList(start, num=100){
+    //console.log(start)
+    try{
+        let pool=await sql.connect(config);
+        length = await pool.request().query("SELECT COUNT(*) FROM DonHang")
+        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //console.log(start)
+        //console.log(products.recordsets[0])
+        //console.log(length.recordsets[0][0][""])
+        return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
+    }
+    catch(error){
+        return error;
+    }
+}
+
+async function getBill(MaDH){
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT * FROM DonHang WHERE MaDH = '" + MaDH + "'");
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function getDetailBill(MaDH){
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT  CTDH.* , SP.TenSP \
+            FROM CT_DonHang CTDH join SanPham SP on CTDH.MaSP=SP.MaSP \
+            WHERE CTDH.MaDH= '"+MaDH+"'") 
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -149,5 +190,8 @@ module.exports={
     addBill:addBill,
     addProduct:addProduct,
     updateProduct:updateProduct,
-    addProductToAgent: addProductToAgent
+    addProductToAgent: addProductToAgent,
+    getBillList:getBillList,
+    getBill:getBill,
+    getDetailBill:getDetailBill
 }

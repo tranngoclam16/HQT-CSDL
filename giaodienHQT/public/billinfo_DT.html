@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" convert="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin đơn hàng DT</title>
+
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="js/billinfo_DT.js"></script> 
+  <script>
+    function getParams() {
+        var idx = document.URL.indexOf('?');
+        var params = new Array();
+        if (idx != -1) {
+        var pairs = document.URL.substring(idx+1, document.URL.length).split('&');
+        for (var i=0; i<pairs.length; i++) {
+        nameVal = pairs[i].split('=');
+        params[nameVal[0]] = nameVal[1];
+           }
+        }
+        return params["MaDH"];
+        }
+    params = getParams();
+    fetchData(params);
+    fetchTable(params);
+  </script>
+</head>
+<body>
+    <ul>
+        <div class="form-checkbox">
+              <div class="text">
+                  <br>
+                  <h3>Tình Trạng Đơn hàng</h3>
+              </div>
+              <br>
+             <input type="checkbox" name="checklist"class="checkbox" id="1." onclick="return checkfun()">
+             <label for="1." class="label-checkbox">Đơn hàng được tiếp nhận</label>
+             <br>
+             <input type="checkbox" name="checklist"class="checkbox" id="2."onclick="return checkfun()">
+             <label for="2." class="label-checkbox">Đơn hàng đang đóng gói</label>
+             <br>
+             <input type="checkbox" name="checklist"class="checkbox" id="3." onclick="return checkfun()">
+             <label for="3." class="label-checkbox">Đơn hàng chờ giao hàng</label>
+             <br>
+             <button class="submit-btn">Cập nhật</button>
+        </div> 
+        
+    </ul>
+
+    <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
+        <div class="card">
+            <div class="card-header p-4">
+                <img src="img/logo1.png" class="logo" alt="" width="300" height="200" style="float: left;">
+                <div class="float-right">
+                    <div class="template">
+                    <h5 class="mb-0">Đơn hàng</h5>
+                    <h6>
+                     <div> Mã đơn hàng: <span id="template-MaDH"></span></div>
+                    <br>
+                    <div> Ngày lập: <span id="template-NgayLap"></span></div>
+                    </h6>
+                    </div>
+                </div>
+                <br></br><br><br>
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <div class="template">
+                            <h6>
+                                <div> Mã khách hàng: <span id="template-MaKH"></span></div>
+                                <div> Tên người nhận: <span id="template-TenNguoiNhan"></span></div>
+                                <div> Số điện thoại: <span id="template-SDT"></span></div>
+                            <br>
+                                <div> Địa chỉ: <span id="template-DiaChi"></span></div>
+                                <div> Phường: <span id="template-Phuong"></span></div>
+                                <div> Quận: <span id="template-Quan"></span></div>
+                                <div> Tỉnh: <span id="template-Tinh"></span></div>
+                            </h6>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+                
+            <div class="card-body">
+               
+                <!--<div class="table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th scope="col">Mã sản phẩm</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá Bán</th>
+                                <th scope="col">Số Lượng</th>
+                                <th scope="col">Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listBillDetail"></tbody>
+                    </table>
+                </div>-->
+                <div class="row">
+                    <div class="col-lg-4 col-sm-5">
+                    </div>
+                    <div class="col-lg-5 col-sm-5 ml-auto">
+                        <table class="table table-clear">
+                            <tbody>
+                                <div class="template">
+                                <tr>
+                                    <td class="left">
+                                        <strong class="text-dark">Tổng tiền hàng</strong>
+                                    </td>
+                                    <td class="right"><span id="template-TongHang"></span></td>                                      
+                                </tr>
+                                <tr>
+                                    <td class="left">
+                                        <strong class="text-dark">Phí vận chuyển</strong>
+                                    </td>
+                                    <td class="right"><span id="template-PhiVanChuyen"></span></td> 
+                                </tr>
+                                <tr>
+                                    <td class="left">
+                                        <strong class="text-dark">Tổng số tiền</strong> </td>
+                                    <td class="right">
+                                        <span id="template-TongTien"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="left">
+                                        <strong class="text-dark"><img src="img/shield.png" alt="" style="width:20px; height:auto;">Phương thức thanh toán</strong> </td>
+                                    <td class="right">
+                                        <span id="template-ThanhToan"></span>
+                                    </td>
+                                </tr>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white">
+                <p class="mb-0">Thanks for choosing us.</p>
+            </div>
+        </div>
+    </div>
+    <div class="tableFixHeight">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th  scope="col">Mã sản phẩm</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Giá Bán</th>
+                    <th scope="col">Số Lượng</th>
+                    <th scope="col">Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody id="listBillDetail"></tbody>
+        </table>
+    </div>
+    <script id="entry-template" type="text/x-handlebars-template">
+        {{#each this}}
+        <tr>
+            <th scope="row">{{ROWNUMBER}}</th>
+            <td>{{MaSP}}</td>
+            <td>{{TenSP}}</td>
+            <td>{{GiaBan}}</td>
+            <td>{{SoLuong}}</td>
+            <td>{{ThanhTien}}</td>
+        </tr>
+        {{/each}}   
+    </script>
+   
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+    
+    
+</body>
+</html>

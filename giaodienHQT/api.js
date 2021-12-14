@@ -92,53 +92,37 @@ router.route('/KH/bill').post((request,response)=>{
         response.status(201).json(result);
      }) 
  })
-/*
-router.route('/billinfo').get((request,response)=>{
-    var MaHD = request.query['MaHD']
-    dboperator.getBill(MaHD).then(result => {
-       response.json(result);
-    })
-})
 
-router.route('/bill_month/:year').get((request,response)=>{
-    dboperator.invoiceStatisticMonth(request.params.year).then(result =>{
-        console.log(result[0]);
-        response.json(result);
-    })
-})
-
-router.route('/bill').post((request,response)=>{
-    
-   let bill = {...request.body};
-   console.log(request.body)
-    dboperator.addBill(bill).then(result => {
-       response.status(201).json(result);
-    }) 
-})
-
-router.route('/detailBill').post((request,response)=>{
-    
-    let dbill = {...request.body};
-    console.log(request.body)
-     dboperator.addDetailBill(dbill).then(result => {
-        response.status(201).json(result);
-     }) 
- })
-
- router.route('/detailBill').get((request,response)=>{
-    
+// SỬA KHÚC NÀY NÈ LAM
+/*SHOW AND UPDATE LIST BILL, BILL DETAIL*/
+router.route('/DT/bill').get((request,response)=>{
     var start = request.query['start']
-    var MaHD = request.query['MaHD']
-    console.log(start)
-    console.log(MaHD)
     if (!start || start<0)
+    {
         start = 0
-    dboperator.getDetailBill(start, MaHD).then(result => {
+    }
+    console.log(start)
+    dboperator.getBillList(start,num=100).then(result => {
        response.json(result);
     })
- })
-*/
-//var port = process.env.PORT || 3000;
+
+})
+router.route('/billinfo').get((request,response)=>{
+    console.log(request)
+    var MaDH = request.query['MaDH']
+    console.log(MaDH)
+    dboperator.getBill(MaDH).then(result => {
+       response.json(result);
+    })
+})
+  router.route('/detailBill').get((request,response)=>{
+     var MaDH = request.query['MaDH']
+     dboperator.getDetailBill(MaDH).then(result => {
+        response.json(result);
+     })
+  })
+ 
+
 app.listen(3000, () => {
   console.log(`listenning on port 3000`);
 })

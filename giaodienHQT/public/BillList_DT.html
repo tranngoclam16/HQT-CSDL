@@ -4,157 +4,139 @@
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BillList_DT</title>
+    <title>Đơn hàng đối tác</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/BillList_TX.css">
+    <script src="js/bill_list_DT.js"></script>
+    <script>
+      var currentPage = 0;
+      function goToPage(value){
+               currentPage += value;
+               console.log(currentPage);
+              fetchTable(currentPage*100);
+      }
+      </script>
 
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
-    <div class="container">
-      <img src="img/logo.png" class="brand-logo" alt="">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span>
-          <i id="bar" class="fas fa-bars"></i>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Trang chủ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="BillList_DT.html">Đơn hàng</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="UpdateInfo_DT.html">Chỉnh sửa thông tin</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="UpdateInfo_TX.html">Sản Phẩm</a>
-              </li>
-              <li class="nav-item">
-                <i class="fa fa-user"></i>
-             
-         
-            <!-- <a href="#"><img src="img/user.png" alt=""></a>
-            <a href="#"><img src="img/shopping-cart.png" alt=""></a>   -->
-          </li>  
+<style>
+  .tableFixHeight {
+    overflow-y: auto;
+    height: 690px;
+  }
+  .tableFixHeight thead th {
+    position: sticky;
+    top: 0;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+  }
+  th {
+    background: #eee;
+  }
+</style>
+<body style="display: block; background: #f3eced;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+      <div class="container">
+        <img src="img/logo.png" class="brand-logo" alt="">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span>
+            <i id="bar" class="fas fa-bars"></i>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="BillList_DT.html">Đơn hàng</a>
+                </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="UpdateInfo_DT.html">Chỉnh sửa thông tin</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Product_DT.html">Sản Phẩm</a>
+                </li>
+          </ul>
+          </div>
+      </div>
+    </nav>
+  
+    <div class="container">
+      <div class="form-box-Info">
+          <div class="text">
+              <br>
+              <h1>Danh Sách Đơn hàng</h1>
+          </div>
+          
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card shadow mt-5">              
+        <div class="tableFixHeight">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">#</th>
+              <th scope="col">Mã Đơn hàng</th>
+              <th scope="col">Mã khách hàng</th>
+              <th scope="col">Ngày lập</th>
+              <th scope="col">Phí Vận chuyển</th>
+              <th scope="col">Tổng hàng</th>
+              <th scope="col">Tổng tiền</th>
+            </tr>
+          </thead>
+          <tbody id="listBill"></tbody>
+        </table>
+        </div>
+        <div class="card-footer text-muted">
+          <span style="float: right; padding-left: 50px" id="currentPage" ></span>
+          <Button onClick="goToPage(1)"  style="float: right">Trang kế</Button>
+          <Button onClick="goToPage(-1)" style="float: left" >Trang trước</Button>
+        </div>
       </div>
     </div>
-  </nav>
-  <br>
-  
-    <div class="container">
-        <div class="form-box-Info">
-            <div class="text">
-                <br>
-                <h1>Danh Sách Đơn Hàng</h1>
-            </div>
-            
-            <div class="row">
-                <div class="col-sm-12">
-                  <div class="card shadow mt-5">
-          
-                   
-                    <div class="tableFixHeight">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th class="text-center" scope="col">#</th>
-                          <th scope="col">Mã DH</th>
-                          <th scope="col">Mã KH</th>
-                          <th scope="col">Địa chỉ</th>
-                          <th scope="col">Phường</th>
-                          <th scope="col">Quận</th>
-                          <th scope="col">Tỉnh</th>
-                          <th scope="col">Tên Người Nhận</th>
-                          <th scope="col">Số điện thoại</th>
-                          <th scope="col">Ngày Lập</th>
-                          <th scope="col">Phí Vận Chuyển</th>
-                          <th scope="col">Tổng Tiền</th>
-                          <th scope="col">Thanh Toán</th>
-                          <th scope="col">Tình Trạng</th>
-                          <th scope="col">&nbsp;</th>
-                        </tr>
-                      </thead>
-                      <tbody id="listBill">
-                        <td></td>  
-                        <td>MaDH</td>
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td></td> 
-                        <td class="text-right">
-                            <a class="submit-view-btn" href="addDetailBill.html?MaHD={{MaHD}}" data-id="{{MaHD}}">
-                              <i class="fa fa-eye" aria-hidden="true"></i>
-                            </a>
-                            
-                          </td>
-                      </tbody>
-                    </table>
-                    </div>
-                    <div class="card-footer text-muted">
-                      <span style="float: right; padding-left: 50px" id="currentPage" ></span>
-                      <Button onClick="goToPage(1)" class="btn btn-dark" style="float: right">Trang kế</Button>
-                      <Button onClick="goToPage(-1)" style="float: left" >Trang trước</Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-           
-        </div> 
-        
-    </div>
-
-    <script id="entry-template" type="text/x-handlebars-template">
-  
-        {{#each this}}
-        <tr>
-            <th scope="row">{{ROWNUMBER}}</th>
-            <td>MaCN</td>
-            <td>TenQL</td>
-            <td>SDT</td>
-            <td>DiaChi</td>
-            <td class="text-right">
-              <a class="submit-btn" href="addDetailBill.html?MaHD={{MaHD}}" data-id="{{MaHD}}">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-              </a>
-              <a class="submit-btn" href="billinfo.html?MaHD={{MaHD}}" role="button" data-id="{{MaHD}}">
-                <i class="fa fa-eye" aria-hidden="true"></i>
-              </a>
-            </td>
-        </tr>
-        {{/each}}
-        
-      </script>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
-	
+  </div>
+</div>
+</div> 
       
-        
-      </script>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
-	
-	
-	
-	
-	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</div>
+
+<script id="entry-template" type="text/x-handlebars-template">
+
+  {{#each this}}
+  <tr>
+      <th scope="row">{{ROWNUMBER}}</th>
+      <td>{{MaDH}}</td>
+      <td>{{MaKH}}</td>
+      <td>{{NgayLap}}</td>
+      <td>{{PhiVanChuyen}}</td>
+      <td>{{TongHang}}</td>
+      <td>{{TongTien}}</td>
+      <td class="text-right">
+        <a class="submit-view-btn" href="billinfo_DT.html?MaDH={{MaDH}}" role="button" data-id="{{MaDH}}">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+        </a>
+      </td>
+  </tr>
+  </div>
+  {{/each}}
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
 </body>
 </html>
+
+<script>
+  $(document).ready(function(){  
+      goToPage(0)})
+</script>

@@ -192,6 +192,24 @@ app.post('/DT/UpdateProduct_agent',(req,res)=>{
         res.status(201).json(result);
      }) 
  })
+
+//View Bill List
+app.get('/DT/BillList', (req, res) => {
+    res.sendFile(path.join(staticPath,"BillList_DT.html"));
+})
+
+app.post('/DT/BillList', (req, res) => {
+    let start = parseInt(JSON.stringify( req.body))
+    //res.json(start)
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(typeof start)
+    dboperator.getBillList(start,num=100).then(result => {
+        res.status(201).json(result);
+    })
+})
 /*router.route('/KH/ProductList').get((request,response)=>{
     var start = request.query['start']
     if (!start || start<0)
