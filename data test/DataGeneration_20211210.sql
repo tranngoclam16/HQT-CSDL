@@ -20,19 +20,19 @@ GO
 --
 -- Create backup folder
 --
-IF OBJECT_ID('xp_create_subdir') IS NOT NULL
-  EXEC xp_create_subdir N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\Backup'
+--IF OBJECT_ID('xp_create_subdir') IS NOT NULL
+--  EXEC xp_create_subdir N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\Backup'
 --
 -- Backup database to the file with the name: <database_name>_<yyyy>_<mm>_<dd>_<hh>_<mi>.bak
 --
 DECLARE @db_name SYSNAME
 SET @db_name = N'HT_DHCH_ONLINE'
 
-DECLARE @filepath NVARCHAR(4000)
-SET @filepath =
-/*define base part*/ N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\Backup\' + @db_name + '_' +
-/*append date*/ REPLACE(CONVERT(NVARCHAR(10), GETDATE(), 102), '.', '_') + '_' +
-/*append time*/ REPLACE(CONVERT(NVARCHAR(5), GETDATE(), 108), ':', '_') + '.bak'
+--DECLARE @filepath NVARCHAR(4000)
+--SET @filepath =
+--/*define base part*/ N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\Backup\' + @db_name + '_' +
+--/*append date*/ REPLACE(CONVERT(NVARCHAR(10), GETDATE(), 102), '.', '_') + '_' +
+--/*append time*/ REPLACE(CONVERT(NVARCHAR(5), GETDATE(), 108), ':', '_') + '.bak'
 
 DECLARE @SQL NVARCHAR(MAX)
 SET @SQL = 

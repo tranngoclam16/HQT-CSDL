@@ -41,7 +41,6 @@ app.get('/SignUpKH', (req, res) => {
     res.sendFile(path.join(staticPath,"SignUp_KH.html"));
 })
 
-
 //let flag = true
 app.post('/SignUpKH', (req, res) => {
     let dkn = {...req.body};
@@ -88,8 +87,24 @@ app.get('/LogInKH', (req, res) => {
     res.sendFile(path.join(staticPath,"LogIn_KH.html"));
 })
 
-app.get('/LogInKH', (req, res) => {
-    res.sendFile(path.join(staticPath,"LogIn_KH.html"));
+/* app.post('/LogInKH', (req, res) => {
+    let username = {...req.body}
+    console.log(req.body)
+    console.log(username)
+   /*  dboperator.getKH(request.params.username).then(result =>{
+        console.log(result[0]);
+        response.json(result);
+    })
+}) */
+
+app.post('/LogInKH', (req, res) => {
+    let {username, password} = req.body;
+    //console.log(dkn.username)
+    //console.log(kh.username)
+    dboperator.getKH(username).then(result =>{
+        console.log(result);
+        return res.json(result)
+    })
 })
 
 //View product
@@ -149,6 +164,7 @@ app.post('/DT/AddProduct_add',(req,res)=>{
     console.log("body")
     console.log(req.body)
      dboperator.addProduct(product).then(result => {
+         console.log(result)
         res.status(201).json(result);
      }) 
  })

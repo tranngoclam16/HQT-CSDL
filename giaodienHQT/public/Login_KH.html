@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript"></script>
-    <link rel="stylesheet" href="css/Login.css">
+    <link rel="stylesheet" href="../css/Login.css">
 
-    <script>
+    <!-- <script>
         function checkLogin(uname,pass){
 	        
             //$.getJSON("http://localhost:3000/LogIn_KH/"+uname,checkData);
@@ -43,13 +43,13 @@
             }
         }
     
-    </script>
+    </script> -->
 </head>
 <body>
     <title>LOGIN</title>
    
     <div class="login">
-        <img src="img/logo.png" class="brand-logo" alt="">
+        <img src="../img/logo.png" class="brand-logo" alt="">
         <div class="form-box">
            
             <div class="button-box">
@@ -59,14 +59,14 @@
             </div>
             <form id="login_form"class="input-group">
                 <input id="username" type="text" class="input-field" placeholder="Username" required>
-                <input id="password" type="text"  class="input-field" placeholder="Password" required>
+                <input id="password" type="password"  class="input-field" placeholder="Password" required>
                 <input id="login_submit" class="submit-btn" type="button" value="Login">
             </form> 
             <form id="register_form" class="input-group">
                
                 <br><br>
                 <br><br>
-                <a class="submit-btn" href="SignUp_KH.html" role="button">
+                <a class="submit-btn" href="/SignUpKH" role="button">
                     Register for Shopping
                 </a>
                 <br><br>
@@ -94,7 +94,7 @@
         }
     </script>
 
-    <script>
+    <!-- <script>
      login_submit.addEventListener('click', function(){
         var username = $("#username").val();
         var password = $("#password").val();
@@ -104,17 +104,24 @@
         if (username!="" && password!=""){
             checkLogin(username,password);
         }
+        else alert("Vui lòng nhập đầy đủ thông tin!")
     
     });
-    </script>
-    
-	
-	
-	
-	
+    </script> -->
+
+    <script src="../js/LogIn_KH.js"></script>
 	<div id="chartContainer" style="height: 370px; width: 50%;"></div>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+
+
+  <script src="../js/jquery-2.2.3.min.js"></script>
+  <script type='text/javascript' src="../js/bootstrap.min.js"></script>
+  <script type='text/javascript' src="../js/jquery.mycart.js"></script>
+	<!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-</body>
+</body> -->
 </html>
 
