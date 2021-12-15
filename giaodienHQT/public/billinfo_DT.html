@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông tin đơn hàng DT</title>
 
-    <link rel="stylesheet" href="../css/billinfo.css">
+    <link rel="stylesheet" href="css/billinfo.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+  <script src="js/billinfo_DT.js"></script>
   <script>
     function getParams() {
         var idx = document.URL.indexOf('?');
@@ -23,16 +23,16 @@
         }
         return params["MaDH"];
         }
-   // params = getParams();
-    //fetchData(params);
-    //fetchTable(params);
-    //fetchTableTT(params);
+    params = getParams();
+    fetchData(params);
+    fetchTable(params);
+    fetchTableTT(params);
   </script>
 </head>
 <body style="display: block; background: #f3eced;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
         <div class="container">
-          <img src="../img/logo.png" class="brand-logo" alt="">
+          <img src="img/logo.png" class="brand-logo" alt="">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span>
               <i id="bar" class="fas fa-bars"></i>
@@ -220,10 +220,10 @@
                             </div>
                         </div>
                             </form>
-                            <a id="btnSaveStatus" class="submit-view-btn" href="javascript:;" role="button">
+                           <!-- <a id="btnSaveStatus" class="submit-view-btn" href="javascript:;" role="button">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                                 Lưu
-                            </a>
+                            </a>-->
                         </div>
                 </div>
                 </div>
@@ -252,7 +252,7 @@
         {{/each}}   
     </script>
     <!--Cái billinfo_DT.js này để ở head thì hiện cái bảng nhưng ko nhấn nút đc :)) ở đây thì ngược lại-->
-    <script src="../js/billinfo_DT.js"></script> 
+  
       <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

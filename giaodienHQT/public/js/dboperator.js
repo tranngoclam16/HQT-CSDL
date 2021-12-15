@@ -171,18 +171,18 @@ async function getBill(MaDH){
 }
 
 async function getDetailBill(MaDH){
-    try{
+   try{
         let pool=await sql.connect(config);
-        let products=await pool.request().query("SELECT  CTDH.* , SP.TenSP \
+        let products=await pool.request()
+        .query("SELECT  CTDH.* , SP.TenSP \
             FROM CT_DonHang CTDH join SanPham SP on CTDH.MaSP=SP.MaSP \
-            WHERE CTDH.MaDH= '"+MaDH+"'") 
-        //console.log(products.recordset)
+            WHERE CTDH.MaDH= '"+MaDH+"'")
         return products.recordset;
     }
     catch(error){
         console.log(error);
     }
-}
+} 
 
 async function getDetailBillStatus(MaDH){
     try{

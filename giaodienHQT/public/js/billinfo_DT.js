@@ -1,5 +1,5 @@
 //api
-/*function fetchData (value) {
+function fetchData (value) {
     var url = 'http://localhost:3000/api/billinfo?MaDH='+value;
    // console.log("url:",url)
     fetch(url)
@@ -88,11 +88,11 @@
         alert(error);
         console.log(xhr);
     });
-})*/
+})
 
 /*--------------------------------------------------------------------------------------------------------------*/
 //server
-btnSaveStatus.addEventListener('click',() => {
+/*btnSaveStatus.addEventListener('click',() => {
     console.log(1)
     let objToPost = { 
         MaDH: $('#MaDH_update').val(),
@@ -130,5 +130,5 @@ const processData = (data)=> {
     if(data.alert){
         alert(data.alert)
     }
-}
+}*/
   
