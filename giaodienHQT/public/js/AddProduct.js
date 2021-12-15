@@ -6,6 +6,8 @@ btnSaveAdd.addEventListener('click',() => {
     }
     console.log(objToPost)
     senData('http://localhost:3000/DT/AddProduct_add', objToPost)
+    alert('Thêm sản phẩm thành công.')
+    window.location='http://localhost:3000/DT/ProductList'
 })
 //alert function
 const showAlert = (msg) => {

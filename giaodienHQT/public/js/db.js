@@ -1,8 +1,8 @@
 const sql = require('mssql/msnodesqlv8')
 
 const config = {
-    /*user: 'sa',
-     password: '123456',*/
+    user: 'sa',
+     password: '123456',
      //db bên khách hàng
    /*   user: 'kh',
      password: 'kh', */
