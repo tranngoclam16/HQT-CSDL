@@ -51,11 +51,11 @@ app.post('/SignUpKH', (req, res) => {
         if (result[0]==null){
             console.log('valid')
             dboperator.addCustomer(dkn).then(result => {
-                res.status(201).json(result);
+                res.json(dkn);
             })
         }
         else 
-        res.status(200).json(result);
+        res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!'});
     })
     /* let flag = true;
     dboperator.getKH(dkn.MaKH).then(result =>{
@@ -103,9 +103,36 @@ app.post('/LogInKH', (req, res) => {
     //console.log(kh.username)
     dboperator.getKH(username).then(result =>{
         console.log(result);
-        return res.json(result)
-    })
-})
+        if (result.length>0){
+            if (username==result[0].MaKH)
+                if (password==result[0].pword){
+                    //console.log(data[0]);
+                    //return res.json({'alert':'Đăng nhập thành công'})
+                    return res.json(result)
+                    //alert("Đăng nhập thành công")
+                    //window.location='http://localhost:3000'
+                }
+                else{
+                    return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
+                    /* console.log("password is false");
+                    alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.") */
+                }
+            else{
+                return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
+                /* console.log("password is false");
+                alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.") */
+            }
+        }
+        else {
+            return res.json({'alert':'Tài khoản đăng nhập không tồn tại.'})
+            /* console.log("username false")
+            alert("Tài khoản đăng nhập không tồn tại.") */
+        }  
+          
+    });
+    
+});
+
 
 //View product
 app.get('/KH/ProductList', (req, res) => {

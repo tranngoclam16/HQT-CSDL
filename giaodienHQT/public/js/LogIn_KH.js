@@ -7,7 +7,7 @@ login_submit.addEventListener('click', function(){
     }
 
     console.log(objToPost);
-    senData('http://localhost:3000/LogInKH', objToPost)
+    //senData('http://localhost:3000/LogInKH', objToPost)
     /* $.ajax('http://localhost:3000/LogInKH', {
         method: 'POST',
         headers: {'Content-Type': 'text/csv'},
@@ -18,38 +18,7 @@ login_submit.addEventListener('click', function(){
         console.log(data)
       }) */
     if (username!="" && password!=""){
-        //senData('http://localhost:3000/LogInKH', objToPost)
-        fetch('/LogInKH', {
-            method: 'POST',
-            headers: new Headers({'Content-Type': 'application/json'}),
-            credentials: 'include',
-            body: JSON.stringify(objToPost)
-        })
-        .then (response => {
-            response.json().then((data) => {
-                if (data.length>0){
-                    if (uname==data[0].MaKH)
-                        if (pass==data[0].pword){
-                            //console.log(data[0]);
-                            alert("Đăng nhập thành công")
-                            window.location='http://localhost:3000'
-                        }
-                        else{
-                            console.log("password is false");
-                            alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.")
-                        }
-                    else{
-                        console.log("password is false");
-                        alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.")
-                    }
-                }
-                else {
-                    console.log("username false")
-                    alert("Tài khoản đăng nhập không tồn tại.")
-                }    
-            });
-            
-        });
+        senData('http://localhost:3000/LogInKH', objToPost)
     }
     else alert("Vui lòng nhập đầy đủ thông tin!")
 
@@ -63,7 +32,8 @@ const senData = (path, data) => {
     })
     .then (response => {
         response.json().then((data) => {
-            processData(response)
+            console.log(data)
+            processData(data[0])
         });
         
     });
@@ -72,10 +42,14 @@ const senData = (path, data) => {
 const processData = (data)=> {
     if(data.alert){
         alert(data.alert)
+    } else if (data.MaKH){
+        alert('Đăng nhập thành công!')
+        sessionStorage.user = JSON.stringify(data)
+        location.replace('/')
     }
 }
 
-function checkData(data) {
+/* function checkData(data) {
     if (data.length>0){
         if (uname==data[0].MaKH)
             if (pass==data[0].pword){
@@ -126,4 +100,4 @@ function checkLogin(uname,pass){
             alert("Username is wrong")
         }    
     }
-}
+} */

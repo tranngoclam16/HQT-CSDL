@@ -35,7 +35,10 @@ const senData = (path, data) => {
         body: JSON.stringify(data)
     })
     .then (response => {
-        console.log(response)
+        response.json().then(data => {
+            processData(data)
+        })
+       /*  console.log(response)
         if(response.status!=201){
             console.log(response.status)
             alert("Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!");
@@ -43,16 +46,18 @@ const senData = (path, data) => {
         else {
             alert("Đăng ký thành công!");
             window.location='http://localhost:3000'
-        }
+        } */
         //console.log(response)
-        processData(response)
-    }).catch((res) =>{
-        console.log("error");
-    });
+        
+    })
 }
 
 const processData = (data)=> {
     if(data.alert){
         alert(data.alert)
+    }
+    else if (data.MaKH){
+        sessionStorage.user = JSON.stringify(data)
+        location.replace('/')
     }
 }
