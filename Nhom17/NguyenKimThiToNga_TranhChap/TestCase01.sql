@@ -6,7 +6,8 @@ GO
 CREATE PROCEDURE sp_ThemChiTietDonHang_TC
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
-	@SoLuong int)
+	@SoLuong int,
+	@error int output)
 AS
 BEGIN 
 	BEGIN TRAN
@@ -42,6 +43,7 @@ BEGIN
 			else
 			begin
 				print('2')
+				set @error=2
 				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
 			end
 		COMMIT TRAN
