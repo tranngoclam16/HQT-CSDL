@@ -537,7 +537,7 @@ begin
 				end
 			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
-			ROLLBACK TRANSACTION 
+			commit tran
 		end try
 		begin catch
 			IF @@trancount>0

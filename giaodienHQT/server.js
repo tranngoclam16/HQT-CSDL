@@ -210,80 +210,21 @@ app.post('/DT/BillList', (req, res) => {
         res.status(201).json(result);
     })
 })
-/*router.route('/KH/ProductList').get((request,response)=>{
-    var start = request.query['start']
-    if (!start || start<0)
-    {
-        start = 0
-    }
-    console.log(start)
-    dboperator.getProductList(start,num=100).then(result => {
-       response.json(result);
-    })
-
+/*SỬA MẤY CÁI NÀY TRONG API*/
+//show page billinfo
+app.get('/DT/billinfo', (req, res) => {
+    res.sendFile(path.join(staticPath,"billinfo_DT.html"));
 })
-*/
-
-/* router.route('/KH/login/:username').get((request,response)=>{
-    dboperator.getKH(request.params.username).then(result =>{
-        console.log(result[0]);
-        response.json(result);
-    })
-})
-router.route('/SignUpKH').post((request,response)=>{
-    
-    let dkn = {...request.body};
-    console.log(request.body)
-     dboperator.addCustomer(dkn).then(result => {
-        response.status(201).json(result);
-     }) 
- }) */
-/*
-router.route('/billinfo').get((request,response)=>{
-    var MaHD = request.query['MaHD']
-    dboperator.getBill(MaHD).then(result => {
-       response.json(result);
-    })
-})
-
-router.route('/bill_month/:year').get((request,response)=>{
-    dboperator.invoiceStatisticMonth(request.params.year).then(result =>{
-        console.log(result[0]);
-        response.json(result);
-    })
-})
-
-router.route('/bill').post((request,response)=>{
-    
-   let bill = {...request.body};
-   console.log(request.body)
-    dboperator.addBill(bill).then(result => {
-       response.status(201).json(result);
-    }) 
-})
-
-router.route('/detailBill').post((request,response)=>{
-    
-    let dbill = {...request.body};
-    console.log(request.body)
-     dboperator.addDetailBill(dbill).then(result => {
-        response.status(201).json(result);
+//View bill info
+//View bill detail
+//View bill status
+//Update bill status
+app.post('/DT/billStatusUpdate',(req,res)=>{
+    let bill = {...req.body};
+     dboperator.addBillStatus(bill).then(result => {
+        res.status(201).json(result);
      }) 
  })
-
- router.route('/detailBill').get((request,response)=>{
-    
-    var start = request.query['start']
-    var MaHD = request.query['MaHD']
-    console.log(start)
-    console.log(MaHD)
-    if (!start || start<0)
-        start = 0
-    dboperator.getDetailBill(start, MaHD).then(result => {
-       response.json(result);
-    })
- })
-*/
 
 app.listen(3000, () => {
   console.log(`listenning on port 3000`);

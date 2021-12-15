@@ -183,6 +183,36 @@ async function getDetailBill(MaDH){
         console.log(error);
     }
 }
+
+async function getDetailBillStatus(MaDH){
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT  NgayCapNhat,MaTT \
+            FROM CT_TTDH\
+            WHERE CT_TTDH.MaDH= '"+MaDH+"'") 
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function addBillStatus(bill){
+    try{
+        let pool = await sql.connect(config);
+        console.log(bill)
+        let insertStatus = await pool.request()
+        .input('MaDH', sql.VarChar(10), bill.MaDH)
+        .input('MaTT', sql.Int, bill.MaTT)
+        .execute("sp_CapNhatTinhTrangDonHang");
+        console.log(insertStatus)
+        return insertStatus.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -193,5 +223,7 @@ module.exports={
     addProductToAgent: addProductToAgent,
     getBillList:getBillList,
     getBill:getBill,
-    getDetailBill:getDetailBill
+    getDetailBill:getDetailBill,
+    getDetailBillStatus:getDetailBillStatus,
+    addBillStatus:addBillStatus
 }

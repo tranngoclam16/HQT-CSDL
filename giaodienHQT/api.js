@@ -121,7 +121,21 @@ router.route('/billinfo').get((request,response)=>{
         response.json(result);
      })
   })
+
+ router.route('/detailBillStatus').get((request,response)=>{
+    var MaDH = request.query['MaDH']
+    dboperator.getDetailBillStatus(MaDH).then(result => {
+       response.json(result);
+    })
+ })
  
+ router.route('/billStatusUpdate').post((request,response)=>{
+   let bill = {...request.body};
+   console.log(request.body)
+    dboperator.addBillStatus(bill).then(result => {
+       response.json(result);
+    }) 
+})
 
 app.listen(3000, () => {
   console.log(`listenning on port 3000`);
