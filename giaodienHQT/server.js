@@ -346,3 +346,30 @@ app.post('/TX/AddShipping',(req,res)=>{
 app.get('/TX/Info', (req, res) => {
     res.sendFile(path.join(staticPath,"Info_TX.html"));
 })
+app.post('/TX/Info', (req, res) => {
+    let start = (req.body['start'])
+    //console.log("start: ",start)
+    dboperator.getTX(start).then(result => {
+       // console.log(result)
+       res.status(201).json(result);
+    })
+})
+app.post('/TX/InfoBill', (req, res) => {
+    let start = (req.body['start'])
+    let matx = (req.body['MaTX'])
+    //res.json(start)
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    dboperator.getDriverBillList(start,matx).then(result => {
+        res.status(201).json(result);
+    })
+})
+//Update bill status
+app.post('/TX/billStatusUpdate',(req,res)=>{
+    let bill = {...req.body};
+     dboperator.addBillStatus(bill).then(result => {
+        res.status(201).json(result);
+     }) 
+ })

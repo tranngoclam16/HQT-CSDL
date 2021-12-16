@@ -214,7 +214,7 @@ async function addBillStatus(bill){
     console.log('dboperator')
     try{
         let pool = await sql.connect(config);
-        console.log(bill)
+        console.log("bill: ",bill)
         let insertStatus = await pool.request()
         .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTT', sql.Int, bill.MaTT)
@@ -289,6 +289,32 @@ async function addShipping(bill){
         console.log(error);
     }
 }
+async function getTX(MaTX){
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE CMND = '" + MaTX + "'");
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+async function getDriverBillList(start,MaTX, num=100){
+    //console.log(start)
+    try{
+        let pool=await sql.connect(config);
+        length = await pool.request().query("SELECT COUNT(*) FROM ThuNhapTX WHERE ThuNhapTX.MaTX='"+MaTX+"'")
+        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM ThuNhapTX WHERE ThuNhapTX.MaTX='"+MaTX+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //console.log(start)
+        //console.log(products.recordsets[0])
+        //console.log(length.recordsets[0][0][""])
+        return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
+    }
+    catch(error){
+        return error;
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -305,6 +331,8 @@ module.exports={
     getCustomerBillList:getCustomerBillList,
     checkProductSLT:checkProductSLT,
     checkProductPrice:checkProductPrice,
-    addShipping:addShipping
+    addShipping:addShipping,
+    getTX:getTX,
+    getDriverBillList:getDriverBillList
 }
 
