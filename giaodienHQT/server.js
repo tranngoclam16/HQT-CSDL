@@ -146,7 +146,7 @@ app.post('/KH/ProductList', (req, res) => {
     {
         start = 0
     }
-    console.log(typeof start)
+    //console.log(typeof start)
     dboperator.getProductList(start,num=100).then(result => {
         res.status(201).json(result);
     })
@@ -160,6 +160,32 @@ app.post('/KH/bill',(req,res)=>{
         res.status(201).json(result);
      }) 
  })
+
+//View Bill List
+app.get('/KH/Info', (req, res) => {
+    res.sendFile(path.join(staticPath,"BillList_KH.html"));
+})
+app.post('/KH/Info', (req, res) => {
+    let start = (req.body['start'])
+    dboperator.getKH(start).then(result => {
+       res.status(201).json(result);
+    })
+})
+app.post('/KH/InfoBill', (req, res) => {
+    let start = (req.body['start'])
+    let makh = (req.body['MaKH'])
+    //res.json(start)
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    dboperator.getCustomerBillList(start,makh).then(result => {
+        res.status(201).json(result);
+    })
+})
+app.get('/KH/billinfo', (req, res) => {
+    res.sendFile(path.join(staticPath,"billinfo_KH.html"));
+})
 
 /*----------------------- ĐỐI TÁC---------------------------------*/
 //View Product
@@ -249,6 +275,28 @@ app.get('/DT/billinfo', (req, res) => {
 app.post('/DT/billStatusUpdate',(req,res)=>{
     let bill = {...req.body};
      dboperator.addBillStatus(bill).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
+
+//Check Product Page
+ app.get('/DT/CheckProduct', (req, res) => {
+    res.sendFile(path.join(staticPath,"CheckProduct_DT.html"));
+})
+//Check SLTon
+app.post('/DT/CheckProduct',(req,res)=>{
+    let start = parseInt(req.body['start'])
+    //console.log(req.body['start'])
+    //console.log("product:",start)
+     dboperator.checkProductSLT(start).then(result => {
+         //console.log(result)
+        res.status(201).json(result);
+     }) 
+ })
+ //Check Price
+app.post('/DT/CheckProductPrice',(req,res)=>{
+    let start = parseInt(req.body['start'])
+     dboperator.checkProductPrice(start).then(result => {
         res.status(201).json(result);
      }) 
  })

@@ -1,10 +1,10 @@
 const sql = require('mssql/msnodesqlv8')
 
 const config = {
-    user: 'sa',
+    /*user: 'sa',
      password: '123456',
      //db bên khách hàng
-   /*   user: 'kh',
+      user: 'kh',
      password: 'kh', */
      server: 'localhost',
      driver: 'msnodesqlv8',

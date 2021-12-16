@@ -8,7 +8,7 @@ async function getKH(MaKH){
     try{
         let pool=await sql.connect(config);
         let products=await pool.request().query("SELECT * FROM KhachHang WHERE MaKH = '" + MaKH + "'");
-        console.log(products.recordset)
+        //console.log(products.recordset)
         return products.recordset;
     }
     catch(error){
@@ -231,6 +231,37 @@ async function getCustomerBillList(start,MaKH, num=100){
         return error;
     }
 }
+async function checkProductSLT(slt){
+    try{
+        let pool = await sql.connect(config);
+        //console.log("slt:",slt)
+        let products = await pool.request()
+        .input('slt', sql.Int,slt)
+        /*.input('start', sql.Int,start)
+        .input('num', sql.Int,num)*/
+        .output('Tong', sql.Int)
+        .execute("sp_KiemTraSLTon");
+        //console.log(products)
+        return products;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+async function checkProductPrice(price){
+    try{
+        let pool = await sql.connect(config);
+        let products = await pool.request()
+        .input('gb', sql.Float,price)
+        .output('Tong', sql.Int)
+        .execute("sp_KiemTraGiaBan");
+        //console.log(products)
+        return products;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -244,5 +275,7 @@ module.exports={
     getDetailBill:getDetailBill,
     getDetailBillStatus:getDetailBillStatus,
     addBillStatus:addBillStatus,
-    getCustomerBillList:getCustomerBillList
+    getCustomerBillList:getCustomerBillList,
+    checkProductSLT:checkProductSLT,
+    checkProductPrice:checkProductPrice
 }

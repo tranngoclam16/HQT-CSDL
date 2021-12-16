@@ -67,7 +67,7 @@ GO
 CREATE PROC sp_CreateAccount_KH
 	@MaKH varchar(10),
 	@pword varchar(20),
-	@HoTen nvarchar(50),
+	@HoTen nvarchar(100),
 	@DiaChi nvarchar(100),
 	@Email varchar(30)
 AS
@@ -697,5 +697,34 @@ END
 GO
 --DROP PROCEDURE sp_XemTinhTrangDonHang
 --=======================================================================================================================
+--KIỂM TRA CÁC SẢN PHẨM CÓ SLTON <N
+--
+create procedure sp_KiemTraSLTon
+	@slt int,
+	@start int,
+	@num int,
+	@Tong int output
+as
+begin
+	begin tran
+		begin try
+			select @Tong= count(MaSP) from SanPham where SanPham.SLTon<@slt
 
+			SELECT T.ROWNUMBER, T.MaSP,T.TenSP,T.GiaBan,T.SLTon
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt)  AS T 
+			WHERE T.ROWNUMBER >= @start AND T.ROWNUMBER < @start+@num
+			
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+--DROP PROCEDURE sp_KiemTraSP
+--
 
