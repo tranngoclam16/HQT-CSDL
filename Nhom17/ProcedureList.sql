@@ -409,22 +409,31 @@ AS
 BEGIN
   BEGIN TRAN
     BEGIN TRY
-      IF (SELECT MaTT FROM CT_TTDH ttd1 
+	  DECLARE @ttdh int, @mota nvarchar(100)
+	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 --with (XLOCK, ROWLOCK)
           WHERE ttd1.MaDH = @MaDH 
-            AND ttd1.NgayCapNhat > ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 3
+            AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
+		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
+		print(@mota)
+      IF @ttdh < 3
         BEGIN
-          PRINT('1')
-          RAISERROR(N'Đơn hàng đang không được chờ vận chuyển',15,1)
+          PRINT(N'Đơn hàng chưa sẵn sàng để giao')
+          RAISERROR('1',15,1)
         END
-      ELSE
+      ELSE IF @ttdh = 3
         BEGIN
         DECLARE @PhiVanChuyen int
         SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-        INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
         INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
         END
+	  ELSE 
+		begin
+			print(N'Đơn hàng đã có người nhận')
+			raiserror('2',15,1);
+		end
     COMMIT TRAN
     END TRY
   BEGIN CATCH
@@ -719,7 +728,7 @@ go
 --DROP PROCEDURE sp_KiemTraSLTon
 --
 
---KIỂM TRA CÁC SẢN PHẨM CÓ SLTON <N
+--KIỂM TRA CÁC SẢN PHẨM CÓ GIABAN <N
 --
 create procedure sp_KiemTraGiaBan
 	@gb float,

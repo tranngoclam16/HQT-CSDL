@@ -4,5 +4,5 @@ GO
 --Transaction 2
 begin tran
 	waitfor delay '00:00:09'
-	select * from SanPham with (nolock)
+	select * from SanPham 
 COMMIT

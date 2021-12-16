@@ -2,14 +2,15 @@
 GO
 --TestCase11
 --Transaction 1
-create procedure sp_KiemTraSP_TC
+alter procedure sp_KiemTraSP_TC
 	@MaSP varchar(6),
 	@TenSP nvarchar(50)
 as
 begin
+	--SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
 	begin tran
 		begin try
-			if not exists (select * from SanPham where @MaSP=MaSP and @TenSP= TenSP) 
+			if not exists (select * from SanPham with (XLOCK, ROWLOCK) where @MaSP=MaSP and @TenSP= TenSP) 
 				raiserror(N'Không tồn tại sản phẩm',15,1)
 
 			waitfor delay '00:00:08'
@@ -73,7 +74,7 @@ GO
 --drop procedure sp_CapNhatSanPham_TC
 --=========================================
 --DATATEST
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang

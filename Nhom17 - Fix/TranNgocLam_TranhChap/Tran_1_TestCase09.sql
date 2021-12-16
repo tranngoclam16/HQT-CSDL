@@ -3,29 +3,6 @@ go
 
 --TestCase09
 --Transaction 1
-begin tran
-	begin try
-		select *
-		from SanPham
-		where GiaBan < 100000
-		select count(*)
-		from SanPham
-		where GiaBan < 100000
-		waitfor delay '00:00:05'
-		select *
-		from SanPham
-		where GiaBan < 100000
-		select count(*)
-		from SanPham
-		where GiaBan < 100000
-	commit tran
-	end try
-	begin catch
-	IF @@trancount>0
-	BEGIN	
-		print(N'Lỗi')
-		ROLLBACK TRANSACTION 
-	END
-end catch
-
---select* from KhachHang where MaKH = '0000000001'
+declare @sum int
+exec sp_KiemTraGiaBan_TC 100000, @Tong = @sum output
+select @sum as NumberOfColumn

@@ -9,10 +9,10 @@ as
 begin
 	begin tran
 		begin try
-			insert into TinhTrangDH
+			insert into CT_TTDH 
 			values (GETDATE(), @MaDH, @MaTT)
 			waitfor delay '00:00:07'
-			ROLLBACK TRANSACTION 
+			ROLLBACK TRANSACTION
 		end try
 		begin catch
 			IF @@trancount>0
@@ -31,15 +31,14 @@ as
 begin
 	begin tran
 		begin try
-			SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 			declare @MaTT int
 			select @MaTT = MaTT 
-			from TinhTrangDH
+			from CT_TTDH
 			where MaDH = @MaDH and CAST(NgayCapNhat as datetime) >= All(select CAST (NgayCapNhat as datetime)
-																from TinhTrangDH
+																from CT_TTDH
 																where MaDH = @MaDH)
 			print (@MaTT)
-			select @TTDH =  Mota from CT_TTDH where MaTinhTrang = @MaTT
+			select @TTDH =  Mota from TinhTrangDH where MaTinhTrang = @MaTT
 		end try
 		begin catch
 			IF @@trancount>0
@@ -57,8 +56,8 @@ drop procedure sp_XemTinhTrangDonHang_TC
 drop procedure sp_ThemTinhTrangDonHang_TC
 */
 	
-
-truncate table TinhTrangDH
+go
+truncate table CT_TTDH
 truncate table ThuNhapTX
 delete from TaiXe
 truncate table CT_DonHang
@@ -75,11 +74,10 @@ insert into KhachHang
 values ('0909123450', N'Trần Văn A', '0909123450', N'34 Trần Văn Giáp', 'abc@gmail.com')
 insert into DonHang (MaDH, MaKH, TenNguoiNhan, SDT, NgayLap)
 values ('0000000001', '0909123450', N'Trần Văn A', '0909123450', '2021-11-10')
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-11', '0000000001', 1)
-waitfor delay '00:00:02'
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-13', '0000000001', 2)
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-14', '0000000001', 3)
 
