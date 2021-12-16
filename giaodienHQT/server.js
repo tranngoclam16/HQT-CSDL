@@ -304,3 +304,32 @@ app.post('/DT/CheckProductPrice',(req,res)=>{
 app.listen(3000, () => {
   console.log(`listenning on port 3000`);
 })
+/*---------------------------------------TÀI XẾ------------------------------------------*/
+//View Bill List
+app.get('/TX/BillList', (req, res) => {
+    res.sendFile(path.join(staticPath,"BillList_TX.html"));
+})
+
+app.post('/TX/BillList', (req, res) => {
+    let start = parseInt(JSON.stringify( req.body))
+    //res.json(start)
+    if (!start || start<0)
+    {
+        start = 0
+    }
+    console.log(typeof start)
+    dboperator.getBillList(start,num=100).then(result => {
+        res.status(201).json(result);
+    })
+})
+//Add Shipping
+app.post('/TX/AddShipping',(req,res)=>{
+    let bill = {...req.body};
+     dboperator.addShipping(bill).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
+ //View Info
+app.get('/TX/Info', (req, res) => {
+    res.sendFile(path.join(staticPath,"Info_TX.html"));
+})

@@ -262,6 +262,22 @@ async function checkProductPrice(price){
         console.log(error);
     }
 }
+
+async function addShipping(bill){
+    try{
+        let pool = await sql.connect(config);
+        console.log(bill)
+        let insertStatus = await pool.request()
+        .input('MaDH', sql.VarChar(10), bill.MaDH)
+        .input('MaTX', sql.VarChar(12), bill.MaTX)
+        .execute("sp_TaiXeNhanDonHang");
+        console.log(insertStatus)
+        return insertStatus.recordsets;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -277,5 +293,7 @@ module.exports={
     addBillStatus:addBillStatus,
     getCustomerBillList:getCustomerBillList,
     checkProductSLT:checkProductSLT,
-    checkProductPrice:checkProductPrice
+    checkProductPrice:checkProductPrice,
+    addShipping:addShipping
 }
+

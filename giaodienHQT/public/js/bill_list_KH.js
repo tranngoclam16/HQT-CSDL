@@ -37,7 +37,7 @@ function fetchData (value) {
         var template = Handlebars.compile(source);
         var html = template(data);
         $('#listBill').html(html);
-        //document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
+        document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
         //console.log(currentPage + '/' + length/100)
       })});
   }
