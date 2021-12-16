@@ -137,6 +137,25 @@ router.route('/billinfo').get((request,response)=>{
     }) 
 })
 
+router.route('/KH/Info').get((request,response)=>{
+   dboperator.getKH(request.query['MaKH']).then(result =>{
+       console.log(result[0]);
+       response.json(result);
+   })
+})
+router.route('/KH/BillList').get((request,response)=>{
+    
+   var start = request.query['start']
+   var MaKH = request.query['MaKH']
+   console.log(start)
+   console.log(MaKH)
+   if (!start || start<0)
+       start = 0
+   dboperator.getCustomerBillList(start, MaKH).then(result => {
+      response.json(result);
+   })
+})
+
 app.listen(3000, () => {
   console.log(`listenning on port 3000`);
 })

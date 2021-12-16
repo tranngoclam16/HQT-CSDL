@@ -21,11 +21,13 @@ async function addCustomer(dkn){
         let pool = await sql.connect(config);
         let insertProduct = await pool.request()
         .input('MaKH', sql.VarChar(10), dkn.MaKH)
+        .input('pword', sql.VarChar(20), dkn.Password)
         .input('Hoten', sql.NVarChar(100), dkn.HoTen)
         .input('DiaChi', sql.NVarChar(100), dkn.DiaChi)
         .input('Email', sql.VarChar(30), dkn.Email)
-        .input('Password', sql.VarChar(20), dkn.Password)
-        .query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");
+        
+        /*.query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");*/
+        .execute("sp_CreateAccount_KH")
         return insertProduct.recordsets;
     }
     catch(error){
@@ -213,6 +215,22 @@ async function addBillStatus(bill){
         console.log(error);
     }
 }
+
+async function getCustomerBillList(start,MaKH, num=100){
+    //console.log(start)
+    try{
+        let pool=await sql.connect(config);
+        length = await pool.request().query("SELECT COUNT(*) FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"'")
+        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //console.log(start)
+        //console.log(products.recordsets[0])
+        //console.log(length.recordsets[0][0][""])
+        return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
+    }
+    catch(error){
+        return error;
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -225,5 +243,6 @@ module.exports={
     getBill:getBill,
     getDetailBill:getDetailBill,
     getDetailBillStatus:getDetailBillStatus,
-    addBillStatus:addBillStatus
+    addBillStatus:addBillStatus,
+    getCustomerBillList:getCustomerBillList
 }
