@@ -701,8 +701,6 @@ GO
 --
 create procedure sp_KiemTraSLTon
 	@slt int,
-	@start int,
-	@num int,
 	@Tong int output
 as
 begin
@@ -710,9 +708,7 @@ begin
 		begin try
 			select @Tong= count(MaSP) from SanPham where SanPham.SLTon<@slt
 
-			SELECT T.ROWNUMBER, T.MaSP,T.TenSP,T.GiaBan,T.SLTon
-			FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt)  AS T 
-			WHERE T.ROWNUMBER >= @start AND T.ROWNUMBER < @start+@num
+			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt
 			
 		commit tran
 		end try
@@ -725,6 +721,33 @@ begin
 		END CATCH
 end
 go
---DROP PROCEDURE sp_KiemTraSP
+--DROP PROCEDURE sp_KiemTraSLTon
+--
+
+--KIỂM TRA CÁC SẢN PHẨM CÓ SLTON <N
+--
+create procedure sp_KiemTraGiaBan
+	@gb float,
+	@Tong int output
+as
+begin
+	begin tran
+		begin try
+			select @Tong= count(MaSP) from SanPham where SanPham.GiaBan<@gb
+
+			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE GiaBan<@gb
+			
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+--DROP PROCEDURE sp_KiemTraGiaBan
 --
 
