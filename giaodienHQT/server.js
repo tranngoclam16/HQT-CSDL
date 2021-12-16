@@ -278,18 +278,19 @@ app.post('/DT/detailBill', (req,res)=>{
 app.post('/DT/detailBillStatus',(req,res)=>{
     let MaDH = {...req.body}
    dboperator.getDetailBillStatus(MaDH.MaDH).then(result => {
-       console.log('bill status')
-       console.log(result)
+       //console.log('bill status')
+       //console.log(result)
       res.json(result);
    })
 })
 //Update bill status
-/* app.post('/DT/billStatusUpdate',(req,res)=>{
+app.post('/DT/billStatusUpdate',(req,res)=>{
     let bill = {...req.body};
+    console.log(bill)
      dboperator.addBillStatus(bill).then(result => {
         res.status(201).json(result);
      }) 
- }) */
+ })
 
 //Check Product Page
  app.get('/DT/CheckProduct', (req, res) => {

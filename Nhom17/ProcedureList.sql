@@ -524,7 +524,7 @@ GO
 --
 --CẬP NHẬT TÌNH TRẠNG ĐƠN HÀNG
 --
-CREATE PROCEDURE sp_CapNhatTinhTrangDonHang
+create PROCEDURE sp_CapNhatTinhTrangDonHang
 	(@MaDH varchar(10), @MaTT int)
 as
 begin

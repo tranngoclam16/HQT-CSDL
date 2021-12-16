@@ -79,7 +79,7 @@ function fetchData (value) {
       })
   }
 
-  btnSaveStatus.addEventListener('click',() => {
+ /*  btnSaveStatus.addEventListener('click',() => {
     let objToPost = { 
         MaDH: $('#MaDH_update').val(),
         MaTT: $('#MaTT_update').val()
@@ -97,8 +97,8 @@ function fetchData (value) {
         console.log(error);
         alert(error);
         console.log(xhr);
-    }); */
-})
+    }); 
+}) */
 
 /*--------------------------------------------------------------------------------------------------------------*/
 //server

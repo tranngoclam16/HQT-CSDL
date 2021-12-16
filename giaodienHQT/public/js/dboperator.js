@@ -201,8 +201,8 @@ async function getDetailBillStatus(MaDH){
         let products=await pool.request().query("SELECT  CONVERT(varchar, NgayCapNhat, 113) as NgayCapNhat,MaTT \
             FROM CT_TTDH\
             WHERE CT_TTDH.MaDH= '"+MaDH+"'") 
-        console.log('dboperator')
-        console.log(products.recordset)
+        //console.log('dboperator')
+        //console.log(products.recordset)
         return products.recordset;
     }
     catch(error){
@@ -211,6 +211,7 @@ async function getDetailBillStatus(MaDH){
 }
 
 async function addBillStatus(bill){
+    console.log('dboperator')
     try{
         let pool = await sql.connect(config);
         console.log(bill)

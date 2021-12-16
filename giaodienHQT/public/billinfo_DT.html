@@ -253,6 +253,31 @@
         </tr>
         {{/each}}   
     </script>
+
+    <script>
+        btnSaveStatus.addEventListener('click',() => {
+            let objToPost = { 
+                MaDH: $('#MaDH_update').val(),
+                MaTT: $('#MaTT_update').val()
+            }
+            console.log(objToPost)
+            $.ajax({
+                url: 'http://localhost:3000/DT/billStatusUpdate',
+                type: 'POST',
+                data: JSON.stringify(objToPost),
+                timeout: 10000,
+                contentType: "application/json"
+            }).done(function (data){
+                alert('Thêm tình trạng thành công!');
+                location.reload(location.href)
+            }).fail(function (xhr, textStatus, error){
+                console.log(textStatus);
+                console.log(error);
+                alert(error);
+                console.log(xhr);
+            });
+        })
+    </script>
     <!--Cái billinfo_DT.js này để ở head thì hiện cái bảng nhưng ko nhấn nút đc :)) ở đây thì ngược lại-->
   
       <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
