@@ -61,4 +61,7 @@
   })
 }
   
+const billInfoDT = (MaHD) => {
+  console.log(MaHD)
+}
   

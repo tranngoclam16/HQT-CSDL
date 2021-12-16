@@ -1,16 +1,21 @@
 //api
 function fetchData (value) {
-    var url = 'http://localhost:3000/api/billinfo?MaDH='+value;
+    console.log(value)
    // console.log("url:",url)
-    fetch(url)
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error(response.statusText);
-          }
-      })
-      .then(data => {
+    fetch('/DT/billinfo', {
+            method: 'POST',
+            headers: new Headers({'Content-Type': 'application/json'}),
+            credentials: 'include',
+            body: JSON.stringify({MaDH: value})
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(data => {
         data = data[0];
         //console.log(data)
         document.getElementById('template-MaDH').innerHTML = data["MaDH"];
@@ -30,43 +35,48 @@ function fetchData (value) {
       });
   }
   
- function fetchTable (MaDH) {
-    var url = 'http://localhost:3000/api/detailBill?MaDH='+MaDH;
-    fetch(url)
+ function fetchTable (value) {
+    //var url = 'http://localhost:3000/api/detailBill?MaDH='+MaDH;
+    fetch('../../DT/detailBill', {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        credentials: 'include',
+        body: JSON.stringify({MaDH: value})
+    })
       .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error(response.statusText);
-          }
-      })
-      .then(data => {
-        
-        console.log(data)
-        var source = document.getElementById('entry-template').innerHTML;
-        var template = Handlebars.compile(source);
-        var html = template(data);
-        $('#listBillDetail').html(html);
+          response.json().then(data =>{
+            console.log(data)
+            length = data['tableLength']
+            data = data['data']
+            var source = document.getElementById('entry-template').innerHTML;
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            /* console.log(data[0][0])
+            data = data[0][0]
+            var source = document.getElementById('entry-template').innerHTML;
+            var template = Handlebars.compile(source);
+            var html = template(data); */
+            $('#listBillDetail').html(html);
+          })
       });
   }
-  function fetchTableTT (MaDH) {
-    var url = 'http://localhost:3000/api/detailBillStatus?MaDH='+MaDH;
-    fetch(url)
+  function fetchTableTT (value) {
+    //var url = 'http://localhost:3000/api/detailBillStatus?MaDH='+MaDH;
+    fetch('../../DT/detailBillStatus', {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        credentials: 'include',
+        body: JSON.stringify({MaDH: value})
+    })
       .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw new Error(response.statusText);
-          }
+            response.json().then(data =>{
+                console.log(data)
+                var source = document.getElementById('entry-template_1').innerHTML;
+                var template = Handlebars.compile(source);
+                var html = template(data);
+                $('#listBillStatus').html(html);
+            })
       })
-      .then(data => {
-        
-        console.log(data)
-        var source = document.getElementById('entry-template_1').innerHTML;
-        var template = Handlebars.compile(source);
-        var html = template(data);
-        $('#listBillStatus').html(html);
-      });
   }
 
   btnSaveStatus.addEventListener('click',() => {
@@ -74,20 +84,20 @@ function fetchData (value) {
         MaDH: $('#MaDH_update').val(),
         MaTT: $('#MaTT_update').val()
     }
-    $.ajax({
-        url: 'http://localhost:3000/api/billStatusUpdate',
+    /* $.ajax({
+        url: 'http://localhost:3000/DT/billStatusUpdate',
         type: 'POST',
         data: JSON.stringify(objToPost),
         timeout: 10000,
         contentType: "application/json"
     }).done(function (data){
-        alert('Thêm tình trạng!');
+        alert('Thêm tình trạng thành công!');
     }).fail(function (xhr, textStatus, error){
         console.log(textStatus);
         console.log(error);
         alert(error);
         console.log(xhr);
-    });
+    }); */
 })
 
 /*--------------------------------------------------------------------------------------------------------------*/

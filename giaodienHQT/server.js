@@ -99,34 +99,22 @@ app.get('/LogInKH', (req, res) => {
 
 app.post('/LogInKH', (req, res) => {
     let {username, password} = req.body;
-    //console.log(dkn.username)
-    //console.log(kh.username)
     dboperator.getKH(username).then(result =>{
         console.log(result);
         if (result.length>0){
             if (username==result[0].MaKH)
                 if (password==result[0].pword){
-                    //console.log(data[0]);
-                    //return res.json({'alert':'Đăng nhập thành công'})
                     return res.json(result)
-                    //alert("Đăng nhập thành công")
-                    //window.location='http://localhost:3000'
                 }
                 else{
                     return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
-                    /* console.log("password is false");
-                    alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.") */
                 }
             else{
                 return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
-                /* console.log("password is false");
-                alert("Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.") */
             }
         }
         else {
             return res.json({'alert':'Tài khoản đăng nhập không tồn tại.'})
-            /* console.log("username false")
-            alert("Tài khoản đăng nhập không tồn tại.") */
         }  
           
     });
@@ -265,19 +253,43 @@ app.post('/DT/BillList', (req, res) => {
 })
 /*SỬA MẤY CÁI NÀY TRONG API*/
 //show page billinfo
-app.get('/DT/billinfo', (req, res) => {
+app.get('/DT/billinfo/:MaDH', (req, res) => {
     res.sendFile(path.join(staticPath,"billinfo_DT.html"));
 })
+
 //View bill info
+app.post('/DT/billinfo',(req,res)=>{
+    let MaDH = {...req.body}
+    dboperator.getBill(MaDH.MaDH).then(result => {
+       res.json(result);
+    })
+})
+
 //View bill detail
+app.post('/DT/detailBill', (req,res)=>{
+    let MaDH = {...req.body}
+    dboperator.getDetailBill(MaDH.MaDH).then(result => {
+        //console.log('Detail bill')
+        //console.log(result)
+        res.json(result);
+    })
+ })
 //View bill status
+app.post('/DT/detailBillStatus',(req,res)=>{
+    let MaDH = {...req.body}
+   dboperator.getDetailBillStatus(MaDH.MaDH).then(result => {
+       console.log('bill status')
+       console.log(result)
+      res.json(result);
+   })
+})
 //Update bill status
-app.post('/DT/billStatusUpdate',(req,res)=>{
+/* app.post('/DT/billStatusUpdate',(req,res)=>{
     let bill = {...req.body};
      dboperator.addBillStatus(bill).then(result => {
         res.status(201).json(result);
      }) 
- })
+ }) */
 
 //Check Product Page
  app.get('/DT/CheckProduct', (req, res) => {
