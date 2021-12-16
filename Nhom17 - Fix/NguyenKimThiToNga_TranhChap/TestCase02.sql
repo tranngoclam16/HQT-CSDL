@@ -17,28 +17,25 @@ BEGIN
                                       FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
 		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
 		print(@mota)
-      IF @ttdh <> 3
+      IF @ttdh < 3
         BEGIN
-          PRINT(N'Đơn hàng đang không được chờ vận chuyển')
+          PRINT(N'Đơn hàng chưa sẵn sàng để giao')
           RAISERROR('1',15,1)
         END
-      ELSE
+      ELSE IF @ttdh = 3
         BEGIN
         WAITFOR DELAY '00:00:05'
         DECLARE @PhiVanChuyen int
         SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-        if exists (select MaDH from ThuNhapTX where @MaDH = MaDH)
+		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+
+        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+        END
+	  ELSE 
 		begin
 			print(N'Đơn hàng đã có người nhận')
 			raiserror('2',15,1);
 		end
-		else
-		begin
-		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
-
-        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-		end
-        END
     COMMIT TRAN
     END TRY
   BEGIN CATCH

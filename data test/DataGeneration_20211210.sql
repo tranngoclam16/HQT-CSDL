@@ -240,12 +240,13 @@ GO
 --
 -- Inserting data into table dbo.TinhTrangDH
 --
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (0, N'Đang chờ giao hàng.')
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (1, N'Đơn hàng đã hủy.')
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (2, N'Đơn hàng đang đóng gói.')
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (3, N'Đơn hàng đang giao.')
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (4, N'Đơn hàng được tiếp nhận.')
-INSERT dbo.TinhTrangDH(MaTinhTrang, Mota) VALUES (5, N'Đơn hàng giao thành công.')
+insert into TinhTrangDH values
+(0, N'Đơn hàng đã hủy.'),
+(1, N'Đơn hàng được tiếp nhận.'),
+(2, N'Đơn hàng đang đóng gói.'),
+(3, N'Đang chờ giao hàng.'),
+(4, N'Đơn hàng đang giao.'),
+(5, N'Đơn hàng giao thành công.')
 GO
 
 --
