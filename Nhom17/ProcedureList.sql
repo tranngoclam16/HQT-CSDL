@@ -530,11 +530,6 @@ as
 begin
 	begin tran
 		begin try
-			if not exists (select * from CT_TTDH where MaDH= @MaDH)
-				begin
-					print('1')
-					raiserror(N'Không tồn tại đơn hàng',15,1)
-				end
 			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
 			commit tran
