@@ -25,3 +25,26 @@ function fetchTable (choice,value) {
             document.getElementById("template-Tong").innerHTML= data.output['Tong'];
   })
   })}
+
+
+  function fetchTableKH (ma,ten) {  
+    console.log("ma:",ma)
+    console.log(ten)   
+      fetch("http://localhost:3000/KH/CheckProduct", {
+          method: 'POST',
+          headers: {
+            "Content-type":'application/json'
+          },
+          //credentials: 'include',
+          body: JSON.stringify({MaSP:ma, TenSP:ten})
+        })
+        .then (response => {response.json().then((data) => {
+              //var dataT = data.recordset
+              console.log("data:",data)
+              var source = document.getElementById('entry-template').innerHTML;
+              var template = Handlebars.compile(source);
+              var html = template(data);
+              $('#listProduct').html(html);
+             
+    })
+    })}

@@ -317,6 +317,22 @@ async function getDriverBillList(start,MaTX, num=100){
         return error;
     }
 }
+async function CheckProductKH(MaSP,TenSP){
+    try{
+        let pool = await sql.connect(config);
+       console.log(MaSP)
+       console.log(TenSP)
+        let insertStatus = await pool.request()
+        .input('MaSP', sql.VarChar(6), MaSP)
+        .input('TenSP', sql.NVarChar(50), TenSP)
+        .execute("sp_KiemTraSP");
+        console.log(insertStatus)
+        return insertStatus.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -335,6 +351,7 @@ module.exports={
     checkProductPrice:checkProductPrice,
     addShipping:addShipping,
     getTX:getTX,
-    getDriverBillList:getDriverBillList
+    getDriverBillList:getDriverBillList,
+    CheckProductKH:CheckProductKH
 }
 
