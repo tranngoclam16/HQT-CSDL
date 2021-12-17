@@ -5,7 +5,7 @@ GO
 GO
 DECLARE @error int
 
-exec sp_ThemChiTietDonHang_TC '0000000001', '000001', 20, @error = @error output
+exec sp_ThemChiTietDonHang '0000000001', '000001', 20, @error = @error output
 GO
 --ENABLE TRIGGER slt_dathang ON CT_DonHang
 GO

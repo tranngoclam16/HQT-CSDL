@@ -2,4 +2,4 @@
 GO
 --TestCase04
 --Transaction 2
-EXEC  sp_ThemSanPham_TC N'Xà bông tắm',500,6
+EXEC  sp_ThemSanPham N'Xà bông tắm',500,6

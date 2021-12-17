@@ -3,7 +3,7 @@ GO
 --TestCase04
 CREATE PROCEDURE sp_ThemSanPham_TC
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int
 AS
 BEGIN
@@ -50,9 +50,10 @@ END
 GO
 --==============
 --DATATEST
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
+TRUNCATE TABLE CN_SP
 DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang

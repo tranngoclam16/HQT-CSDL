@@ -8,35 +8,32 @@ AS
 BEGIN
   BEGIN TRAN
     BEGIN TRY
-	  DECLARE @ttdh int, @mota nvarchar(100)
-	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 
+	 DECLARE @ttdh int, @mota nvarchar(100)
+	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1
           WHERE ttd1.MaDH = @MaDH 
             AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
                                       FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
 		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
 		print(@mota)
-      IF @ttdh <> 3
+      IF @ttdh < 3
         BEGIN
-          PRINT('1')
-          RAISERROR(N'Đơn hàng đang không được chờ vận chuyển',15,1)
+          PRINT(N'Đơn hàng chưa sẵn sàng để giao')
+          RAISERROR('1',15,1)
         END
-      ELSE
+      ELSE IF @ttdh = 3
         BEGIN
         WAITFOR DELAY '00:00:05'
         DECLARE @PhiVanChuyen int
         SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-        if exists (select MaDH from ThuNhapTX where @MaDH = MaDH)
-		begin
-			print('2')
-			raiserror(N'Đơn hàng đã có người nhận',15,1);
-		end
-		else
-		begin
 		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
         INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-		end
         END
+	  ELSE 
+		begin
+			print(N'Đơn hàng đã có người nhận')
+			raiserror('2',15,1);
+		end
     COMMIT TRAN
     END TRY
   BEGIN CATCH
@@ -58,7 +55,7 @@ DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang
 GO
-INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123450', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
+INSERT KhachHang (MaKH, pword, HoTen, DiaChi, Email) VALUES ('0930123450', '123', N'Huỳnh Tuấn Khoa', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
 GO
 INSERT INTO DonHang(MaDH, MaKH) VALUES ('0000000001','0930123450')
 GO
@@ -68,6 +65,6 @@ INSERT INTO CT_DonHang (MaDH, MaSP, SoLuong) VALUES ('0000000001', '000001', 30)
 GO
 INSERT INTO CT_TTDH (NgayCapNhat, MaDH, MaTT) VALUES (GETDATE(), '0000000001', 3);
 GO
-INSERT INTO TaiXe (CMND, HoTen) VALUES
-	('012317983262', N'Huỳnh Bá Vỹ'),
-	('047733459124', N'Tô Huy Thành')
+INSERT INTO TaiXe (CMND, SDT, pword, HoTen) VALUES
+	('012317983262', '012456781', '12345', N'Huỳnh Bá Vỹ'),
+	('047733459124', '012456782', '123456', N'Tô Huy Thành')

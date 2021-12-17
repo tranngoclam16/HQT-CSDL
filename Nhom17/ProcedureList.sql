@@ -329,11 +329,11 @@ BEGIN
 
 			INSERT INTO SanPham values (@MaSP, @TenSP, @GiaBan, @SLTon)
 
-			/*if (@SLTon <0)
+			if (@SLTon <0)
 				begin
 					print('1')
 					raiserror(N'không được nhỏ hơn 0',15,1)
-				end*/
+				end
 
 		COMMIT TRAN
 		END TRY
@@ -468,7 +468,7 @@ BEGIN
 			set TenSP= @TenSP, GiaBan= @GiaBan, SLTon= @SLTon
 			where MaSP= @MaSP
 			
-			select * from SanPham
+			--select * from SanPham
 
 			if (@SLTon <0)
 				begin

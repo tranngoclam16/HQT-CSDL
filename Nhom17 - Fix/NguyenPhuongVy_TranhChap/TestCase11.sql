@@ -2,7 +2,7 @@
 GO
 --TestCase11
 --Transaction 1
-alter procedure sp_KiemTraSP_TC
+create procedure sp_KiemTraSP
 	@MaSP varchar(6),
 	@TenSP nvarchar(50)
 as
@@ -26,15 +26,15 @@ begin
 		END CATCH
 end
 go
---drop procedure sp_KiemTraSP_TC
+--drop procedure sp_KiemTraSP
 
 --Transaction 2
 USE HT_DHCH_ONLINE
 GO
-CREATE PROCEDURE sp_CapNhatSanPham_TC
+CREATE PROCEDURE sp_CapNhatSanPham
 	(@MaSP varchar(6),
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int)
 AS
 BEGIN 
@@ -51,7 +51,7 @@ BEGIN
 			set TenSP= @TenSP, GiaBan= @GiaBan, SLTon= @SLTon
 			where MaSP= @MaSP
 			
-			select * from SanPham
+			--select * from SanPham
 
 			waitfor delay '00:00:02'
 			if (@SLTon <0)
@@ -71,7 +71,7 @@ BEGIN
 END
 GO
 --
---drop procedure sp_CapNhatSanPham_TC
+--drop procedure sp_CapNhatSanPham
 --=========================================
 --DATATEST
 TRUNCATE TABLE CT_TTDH

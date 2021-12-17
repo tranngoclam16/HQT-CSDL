@@ -1,9 +1,9 @@
 ﻿USE HT_DHCH_ONLINE
 GO
 --TestCase04
-CREATE PROCEDURE sp_ThemSanPham_TC
+CREATE PROCEDURE sp_ThemSanPham
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int
 AS
 BEGIN
@@ -49,12 +49,13 @@ BEGIN
 		END CATCH
 END
 GO
---drop procedure sp_ThemSanPham_TC
+--drop procedure sp_ThemSanPham
 --==============
 --DATATEST
 TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
+TRUNCATE TABLE CN_SP
 DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang

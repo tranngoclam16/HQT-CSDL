@@ -147,6 +147,19 @@ app.get('/KH/billinfo/:MaDH', (req, res) => {
     res.sendFile(path.join(staticPath,"billinfo_KH.html"));
 })
 
+//Check Product Page
+app.get('/KH/CheckProduct', (req, res) => {
+    res.sendFile(path.join(staticPath,"CheckProduct_KH.html"));
+})
+//Check 
+app.post('/KH/CheckProduct',(req,res)=>{
+    let MaSP = (req.body['MaSP'])
+    let TenSP = (req.body['TenSP'])
+     dboperator.CheckProductKH(MaSP,TenSP).then(result => {
+        res.status(201).json(result);
+     }) 
+ })
+
 /*----------------------- ĐỐI TÁC---------------------------------*/
 //View Product
  app.get('/DT/ProductList', (req, res) => {

@@ -39,7 +39,9 @@ async function getProductList(start, num=100){
     try{
         let pool=await sql.connect(config);
         length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
-        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham )  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //TestCase5
+        let products=await pool.request().query("waitfor delay '00:00:09'; SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham with(NOLOCK))  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
@@ -106,7 +108,7 @@ async function addProduct(dkn){
         .input('TenSP', sql.NVarChar(50), dkn.TenSP)
         .input('GiaBan', sql.Float, dkn.GiaBan)
         .input('SLTon', sql.Int, dkn.SLTon)
-        .execute('sp_ThemSanPham')
+        .execute('sp_ThemSanPham_TC')
         return insertProduct.recordsets;
     }
     catch(error){
@@ -315,6 +317,22 @@ async function getDriverBillList(start,MaTX, num=100){
         return error;
     }
 }
+async function CheckProductKH(MaSP,TenSP){
+    try{
+        let pool = await sql.connect(config);
+       console.log(MaSP)
+       console.log(TenSP)
+        let insertStatus = await pool.request()
+        .input('MaSP', sql.VarChar(6), MaSP)
+        .input('TenSP', sql.NVarChar(50), TenSP)
+        .execute("sp_KiemTraSP");
+        console.log(insertStatus)
+        return insertStatus.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 module.exports={
     getKH:getKH,
     addCustomer:addCustomer,
@@ -333,6 +351,6 @@ module.exports={
     checkProductPrice:checkProductPrice,
     addShipping:addShipping,
     getTX:getTX,
-    getDriverBillList:getDriverBillList
+    getDriverBillList:getDriverBillList,
+    CheckProductKH:CheckProductKH
 }
-

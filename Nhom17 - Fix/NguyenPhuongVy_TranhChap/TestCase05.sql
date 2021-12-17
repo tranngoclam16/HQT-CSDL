@@ -1,9 +1,9 @@
 ﻿USE HT_DHCH_ONLINE
 GO
 --TestCase05
-CREATE PROCEDURE sp_ThemSanPham_TC
+CREATE PROCEDURE sp_ThemSanPham
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int
 AS
 BEGIN
