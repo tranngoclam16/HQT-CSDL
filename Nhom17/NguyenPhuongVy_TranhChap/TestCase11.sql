@@ -4,14 +4,15 @@ GO
 --Transaction 1
 create procedure sp_KiemTraSP_TC
 	@MaSP varchar(6),
-	@TenSP nvarchar(50)
+	@TenSP nvarchar(50),
+	@result int output
 as
 begin
 	begin tran
 		begin try
 			if not exists (select * from SanPham where @MaSP=MaSP and @TenSP= TenSP) 
 				raiserror(N'Không tồn tại sản phẩm',15,1)
-
+			set @result=1
 			waitfor delay '00:00:08'
 			select * from SanPham where MaSP= @MaSP and TenSP= @TenSP 
 		commit tran
@@ -78,7 +79,7 @@ TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang
 DELETE FROM SanPham
-DELETE FROM KhachHang
+--DELETE FROM KhachHang
 GO
 INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES 
 	('000001', N'Nước hoa', 50000, 32),

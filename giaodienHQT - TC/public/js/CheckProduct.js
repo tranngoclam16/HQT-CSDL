@@ -39,12 +39,13 @@ function fetchTable (choice,value) {
           body: JSON.stringify({MaSP:ma, TenSP:ten})
         })
         .then (response => {response.json().then((data) => {
-              //var dataT = data.recordset
-              console.log("data:",data)
-              var source = document.getElementById('entry-template').innerHTML;
-              var template = Handlebars.compile(source);
-              var html = template(data);
-              $('#listProduct').html(html);
+          var dataT = data.recordsets[0]
+          console.log(dataT)
+          var source = document.getElementById('entry-template').innerHTML;
+          var template = Handlebars.compile(source);
+          var html = template(dataT);
+          $('#listProduct').html(html);
+          document.getElementById("template-Tong").innerHTML= data.output['result'];
              
     })
     })}

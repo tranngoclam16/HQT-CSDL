@@ -3,7 +3,7 @@ Go
 
 --TestCase07
 --Transaction 1
-create procedure sp_ThemTinhTrangDonHang
+create procedure sp_CapNhatTinhTrangDonHang
 	(@MaDH varchar(10), @MaTT int)
 as
 begin
@@ -71,7 +71,7 @@ delete from DoiTac
 
 --Insert data for TestCase03's testing
 insert into KhachHang 
-values ('0909123450', N'Trần Văn A', '0909123450', N'34 Trần Văn Giáp', 'abc@gmail.com')
+values ('0909123450', '0909123450', N'Trần Văn A', N'34 Trần Văn Giáp', 'abc@gmail.com')
 insert into DonHang (MaDH, MaKH, TenNguoiNhan, SDT, NgayLap)
 values ('0000000001', '0909123450', N'Trần Văn A', '0909123450', '2021-11-10')
 Insert into CT_TTDH values

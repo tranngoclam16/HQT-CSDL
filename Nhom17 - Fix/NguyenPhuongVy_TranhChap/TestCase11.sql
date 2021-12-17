@@ -4,7 +4,8 @@ GO
 --Transaction 1
 create procedure sp_KiemTraSP
 	@MaSP varchar(6),
-	@TenSP nvarchar(50)
+	@TenSP nvarchar(50),
+	@result int output
 as
 begin
 	--SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
@@ -12,7 +13,7 @@ begin
 		begin try
 			if not exists (select * from SanPham with (XLOCK, ROWLOCK) where @MaSP=MaSP and @TenSP= TenSP) 
 				raiserror(N'Không tồn tại sản phẩm',15,1)
-
+			set @result=1
 			waitfor delay '00:00:08'
 			select * from SanPham where MaSP= @MaSP and TenSP= @TenSP 
 		commit tran

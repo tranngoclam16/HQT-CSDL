@@ -40,6 +40,8 @@ async function getProductList(start, num=100){
         let pool=await sql.connect(config);
         length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
         let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //TestCase5
+        //let products=await pool.request().query("waitfor delay '00:00:09'; SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham with (nolock))  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
@@ -64,7 +66,7 @@ async function addBill(bill){
         .input('SDT', sql.VarChar(10), bill.SDT)
         .input('ThanhToan', sql.NVarChar(100), bill.ThanhToan)
         .output('MaDonHang')
-        .execute('sp_ThemDonHang',async(err,result)=>{
+        .execute('sp_ThemDonHang_TC',async(err,result)=>{
             if (err) {
                 
             } else {
@@ -80,7 +82,7 @@ async function addBill(bill){
                     .input('MaSP',sql.VarChar(6),MaSP)
                     .input('SoLuong',sql.Int,SL)
                     .output('error',sql.Int)
-                    .execute('sp_ThemChiTietDonHang')
+                    .execute('sp_ThemChiTietDonHang_TC')
                     
                     //console.log(insertP.output.error)
                     if (insertP.output.error==2){
@@ -108,7 +110,8 @@ async function addProduct(dkn){
         .input('TenSP', sql.NVarChar(50), dkn.TenSP)
         .input('GiaBan', sql.Float, dkn.GiaBan)
         .input('SLTon', sql.Int, dkn.SLTon)
-        .execute('sp_ThemSanPham')
+        //.execute('sp_ThemSanPham')
+        .execute('sp_ThemSanPham_TC')
         return insertProduct.recordsets;
     }
     catch(error){
@@ -124,7 +127,7 @@ async function updateProduct(dkn){
         .input('TenSP', sql.NVarChar(50), dkn.TenSP)
         .input('GiaBan', sql.Float, dkn.GiaBan)
         .input('SLTon', sql.Int, dkn.SLTon)
-        .execute('sp_CapNhatSanPham')
+        .execute('sp_CapNhatSanPham_TC')
         return insertProduct.recordsets;
     }
     catch(error){
@@ -200,7 +203,11 @@ async function getDetailBill(MaDH){
 async function getDetailBillStatus(MaDH){
     try{
         let pool=await sql.connect(config);
-        let products=await pool.request().query("SELECT  CONVERT(varchar, NgayCapNhat, 113) as NgayCapNhat,MaTT \
+        /*let products=await pool.request().query("SELECT  CONVERT(varchar, NgayCapNhat, 113) as NgayCapNhat,MaTT \
+            FROM CT_TTDH\
+            WHERE CT_TTDH.MaDH= '"+MaDH+"'") */
+        //TestCase7
+        let products=await pool.request().query("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; SELECT  CONVERT(varchar, NgayCapNhat, 113) as NgayCapNhat,MaTT \
             FROM CT_TTDH\
             WHERE CT_TTDH.MaDH= '"+MaDH+"'") 
         //console.log('dboperator')
@@ -220,7 +227,7 @@ async function addBillStatus(bill){
         let insertStatus = await pool.request()
         .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTT', sql.Int, bill.MaTT)
-        .execute("sp_CapNhatTinhTrangDonHang");
+        .execute("sp_CapNhatTinhTrangDonHang_TC");
         console.log(insertStatus)
         return insertStatus.recordsets;
     }
@@ -254,7 +261,7 @@ async function checkProductSLT(slt){
         /*.input('start', sql.Int,start)
         .input('num', sql.Int,num)*/
         .output('Tong', sql.Int)
-        .execute("sp_KiemTraSLTon");
+        .execute("sp_KiemTraSLTon_TC");
         //console.log(products)
         return products;
     }
@@ -268,7 +275,7 @@ async function checkProductPrice(price){
         let products = await pool.request()
         .input('gb', sql.Float,price)
         .output('Tong', sql.Int)
-        .execute("sp_KiemTraGiaBan");
+        .execute("sp_KiemTraGiaBan_TC");
         //console.log(products)
         return products;
     }
@@ -284,7 +291,7 @@ async function addShipping(bill){
         let insertStatus = await pool.request()
         .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTX', sql.VarChar(12), bill.MaTX)
-        .execute("sp_TaiXeNhanDonHang");
+        .execute("sp_TaiXeNhanDonHang_TC");
         console.log(insertStatus)
         return insertStatus.recordsets;
     }
@@ -323,12 +330,12 @@ async function CheckProductKH(MaSP,TenSP){
         let pool = await sql.connect(config);
        console.log(MaSP)
        console.log(TenSP)
-        let insertStatus = await pool.request()
+        let products = await pool.request()
         .input('MaSP', sql.VarChar(6), MaSP)
         .input('TenSP', sql.NVarChar(50), TenSP)
-        .execute("sp_KiemTraSP");
-        console.log(insertStatus)
-        return insertStatus.recordset;
+        .output('result',sql.Int)
+        .execute("sp_KiemTraSP_TC");
+        return products;
     }
     catch(error){
         console.log(error);

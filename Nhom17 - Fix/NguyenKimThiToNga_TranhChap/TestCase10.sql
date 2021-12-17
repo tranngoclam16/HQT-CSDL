@@ -8,7 +8,7 @@ begin
 	begin tran
 		begin try
 			select @Tong= count(MaSP) from SanPham WITH (TABLOCK, HOLDLOCK) where SanPham.SLTon<@slt
-			waitfor delay '00:00:10'
+			waitfor delay '00:00:12'
 			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt
 			
 		commit tran
