@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Thêm Sản Phẩm</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/BillList_TX.css">
+   
+</head>
+
+<body style="display: block; background: #f3eced;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <div class="container">
+          <img src="../img/logo.png" class="brand-logo" alt="">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span>
+              <i id="bar" class="fas fa-bars"></i>
+            </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/BillList">Đơn hàng</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/ProductList">Sản Phẩm</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/CheckProduct">Quản lý</a>
+              </li>
+        </ul>
+            </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card shadow mt-5">
+              <h5 class="card-header">
+                Thêm Sản phẩm
+                </h5>
+                <form action="addProduct" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="TenSP">Tên sản phẩm</label>
+                        <input id="TenSP" type="text" class="form-control" placeholder="Tên sản phẩm" name='TenSP' autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="GiaBan">Gía bán</label>
+                        <input id="GiaBan" type="number" class="form-control" placeholder="Gía bán" name='GiaBan'>
+                    </div>
+                    <div class="form-group">
+                        <label for="SLTon">Số lượng tồn</label>
+                        <input id="SLTon" type="number" class="form-control" placeholder="Số lượng tồn" name='SLTon'>
+                    </div>
+                </div>
+                </form>
+              <div class="card-footer text-muted">
+                <a id="btnSaveAdd" class="btn btn-success add-btn" href="javascript:;" role="button">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Lưu
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="../js/AddProduct.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+
+
+ 
+</body>
+</html>
+
+
+
+
+  

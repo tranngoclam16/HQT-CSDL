@@ -52,6 +52,7 @@ async function getProductList(start, num=100){
 
 async function addBill(bill){
     try{
+        console.log("bill:", bill)
         let pool = await sql.connect(config);
         let insertBill = await pool.request()
         .input('MaKH', sql.VarChar(10), bill.MaKH)
@@ -67,6 +68,7 @@ async function addBill(bill){
             if (err) {
                 
             } else {
+                console.log(result)
                 MaDH=result.output.MaDonHang;
                 console.log('MaDH:',MaDH)
                 for (i=0;i<bill.Products.length;i++){

@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya&family=Bitter:wght@200&family=Work+Sans:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lora', serif;
+}
+
+.brand-logo{
+    height: 90px;
+}
+
+h1{
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+h3{
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+h4{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+h5{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1d1d1d;
+}
+
+h6{
+    color: #d8d8d8;
+}
+
+button{
+    font-size: 1.2rem;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    background-color: #1d1d1d;
+    color: aliceblue;
+    padding: 13px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+}
+
+button:hover{
+    background-color: #f8c3c3 ;
+}
+
+
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    -ms-transform: translate(50%, 50%);
+    transform: translate(-400%, -100%);
+}
+
+.navbar{
+    font-size: 16px;
+    width: 100%;
+    top:0;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    padding: 0 20px;
+    color: #e29090;
+    transition: 0.3s ease ;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar i:hover,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar i.active {
+    color: rgb(247, 49, 49);
+}
+
+.navbar i{
+    font-size: 1.2rem;
+    padding: 0 7px;
+    color: #e29090;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+#bar{
+    font-size: 1.5rem;
+    padding: 7px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s ease;
+    color: black;
+}
+
+#bar:hover,
+#bar.active {
+    color: #fff;
+}
+
+@media only screen and (max-width: 991px){
+    body > nav > div > button:hover,
+    body > nav > div > button :focus{
+        background-color: #e29090;
+    }
+
+    body > nav > div > button:hover #bar,
+    body > nav > div > button :focus #bar{
+        color: #fff;
+    }
+
+    #navbarSupportedContent > ul {
+        margin: 1rem;
+        justify-content: flex-end;
+        align-content: flex-end;
+        text-align: right;
+    }
+
+    #navbarSupportedContent > ul > li:nth-child(n) > a{
+        padding: 10px 0;
+    }
+    .container form div ul {
+        justify-content: flex-end;
+        align-content: flex-end;
+        text-align: right;
+    
+    }
+}
+
+.navbar-light .navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+body{
+    background-image:linear-gradient(to right, #7c6969 0%, #f4f4f5 100%);
+    
+}
+
+.container form{
+    height:100%;
+    width: 100%;
+    background:transparent;
+    
+    flex-direction: row;
+
+}
+.container.form-content{
+    display:flex;
+   
+    width: 100%;
+}
+.info-form{
+    top:0;
+    float: left;
+    width: 60%;
+    height:750px;
+ 
+    background:#fff;
+    padding :5px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.form-checkbox{
+    width:30%;
+    height:230px;
+    float: right;
+    background:#fff;
+    padding :5px;
+
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+.label-checkbox{
+    font-size: 17px;
+}
+
+
+.submit-btn{
+    width:85%;
+    padding:10px 30px;
+    cursor:pointer;
+    margin:auto;
+    /*background:linear-gradient(to right, #c2739e,#f1cfdf);;*/
+    background: #ef7b8c;
+    border: 0;
+    outline:none;
+    border-radius: 30px;
+    text-align: center;
+    color: rgb(15, 15, 15);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.back-btn{
+    top:1000px;
+    width:70%;
+    padding:5px 10px;
+    cursor:pointer;
+    background: #ef7b8c;
+    border: 0;
+    outline:none;
+    border-radius: 5px;
+    text-align: center;
+    color: rgb(15, 15, 15);
+    font-size: 15px;
+}
+
+
+.text{
+    text-align: center;
+}
+.template{
+    text-align: left;
+    text-indent: 10px;
+    line-height: 100;
+}
+

@@ -288,6 +288,10 @@
             '<label for="SDT">Số điện thoại người nhận </label>'+
             '<input type="text" class="input-group" name="SDT" id="SDT" data-type="string" data-message="Không được bỏ trống phần này" />'+
           '</div>'+
+          '<div>'+
+            '<label for="ThanhToan">Hình thức thanh toán </label>'+
+            '<input type="text" class="input-group" name="ThanhToan" id="ThanhToan" data-type="string" data-message="Không được bỏ trống phần này" />'+
+          '</div>'+
           '</form>' +
         '</div>' +
         '<div class="modal-footer">' +

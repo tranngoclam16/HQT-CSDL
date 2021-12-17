@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Product_DT</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/BillList_TX.css">
+    <script src="../js/product_list.js"></script>
+ 
+  <script>
+  var currentPage = 0;
+  function goToPage(value){
+           currentPage += value;
+           console.log(currentPage);
+          fetchTable(currentPage*100);
+  }
+  </script>
+</head>
+  <style>
+      .tableFixHeight {
+        overflow-y: auto;
+        height: 690px;
+      }
+      .tableFixHeight thead th {
+        position: sticky;
+        top: 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+      }
+      th {
+        background: #eee;
+      }
+    </style>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <div class="container">
+          <img src="../img/logo.png" class="brand-logo" alt="">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span>
+              <i id="bar" class="fas fa-bars"></i>
+            </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/BillList">Đơn hàng</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/ProductList">Sản Phẩm</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/DT/CheckProduct">Quản lý</a>
+              </li>
+        </ul>
+            </div>
+        </div>
+      </nav>
+
+    <div class="container">
+        <div class="form-box-Info">
+            <div class="text">
+                <br>
+                <h1>Danh Sách Sản phẩm Của Đối Tác</h1>
+            </div>
+            
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card shadow mt-5">
+          <h5 class="card-header">
+            <a class="btn btn-outline-primary float-right add-btn" href="/DT/AddProduct" role="button" >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Thêm sản phẩm
+            </a> 
+            <a class="btn btn-outline-primary float-right add-btn" href="/DT/UpdateProduct" role="button" >
+              <i class="fa fa-asterisk" aria-hidden="true"></i>
+              Cập nhật sản phẩm
+            </a>
+          </h5>
+                 
+          <div class="tableFixHeight">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá bán</th>
+                <th scope="col">Số lượng tồn</th>
+              </tr>
+            </thead>
+            <tbody id="listProduct"></tbody>
+          </table>
+          </div>
+          <div class="card-footer text-muted">
+            <span style="float: right; padding-left: 50px" id="currentPage" ></span>
+            <Button onClick="goToPage(1)"  style="float: right">Trang kế</Button>
+            <Button onClick="goToPage(-1)" style="float: left" >Trang trước</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+        
+</div>
+
+  <script id="entry-template" type="text/x-handlebars-template">
+  
+    {{#each this}}
+    <tr>
+        <th scope="row">{{ROWNUMBER}}</th>
+        <td><img src="../img/product image 3.png"width="50" height="50"></td>
+        <td>{{MaSP}}</td>
+        <td>{{TenSP}}</td>
+        <td>{{GiaBan}}</td>
+        <td>{{SLTon}}</td>
+    </tr>
+    </div>
+    {{/each}}
+  </script>
+  
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
+
+
+ 
+</body>
+</html>
+
+<script>
+     $(document).ready(function(){  
+         goToPage(0)})
+</script>
+
+
+  
