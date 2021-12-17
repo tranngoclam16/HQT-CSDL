@@ -7,7 +7,8 @@ CREATE PROCEDURE sp_ThemChiTietDonHang_TC
 	@SoLuong int,
 	@error int output)
 AS
-BEGIN 
+BEGIN
+	EXEC('DISABLE TRIGGER slt_dathang ON CT_DonHang');
 	BEGIN TRAN
 		BEGIN TRY
 			if not exists (select * from DonHang where @MaDH= MaDH)
@@ -33,6 +34,9 @@ BEGIN
 					begin
 						waitfor delay '00:00:02'
 						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)
+						UPDATE SanPham
+						SET SLTon = @sl - @SoLuong
+						WHERE MaSP = @MaSP
 					end
 			end
 			else
@@ -50,6 +54,7 @@ BEGIN
 					ROLLBACK TRANSACTION 
 				END
 		END CATCH
+	EXEC('DISABLE TRIGGER slt_dathang ON CT_DonHang');
 END
 GO
 --

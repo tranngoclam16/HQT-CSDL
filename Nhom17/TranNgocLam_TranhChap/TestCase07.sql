@@ -9,7 +9,7 @@ as
 begin
 	begin tran
 		begin try
-			insert into TinhTrangDH
+			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
 			waitfor delay '00:00:07'
 			ROLLBACK TRANSACTION 
@@ -23,34 +23,6 @@ begin
 		end catch
 end
 go
-
--- Transaction 2
-/*create procedure sp_XemTinhTrangDonHang_TC
-	(@MaDH varchar(10), @TTDH nvarchar(100) output)
-as
-begin
-	begin tran
-		begin try
-			SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-			declare @MaTT int
-			select @MaTT = MaTT 
-			from TinhTrangDH
-			where MaDH = @MaDH and CAST(NgayCapNhat as datetime) >= All(select CAST (NgayCapNhat as datetime)
-																from TinhTrangDH
-																where MaDH = @MaDH)
-			print (@MaTT)
-			select @TTDH =  Mota from CT_TTDH where MaTinhTrang = @MaTT
-		end try
-		begin catch
-			IF @@trancount>0
-				BEGIN	
-					print(N'Lỗi')
-					ROLLBACK TRANSACTION 
-				END
-		end catch
-	commit tran
-	return
-end*/
 
 /*
 drop procedure sp_XemTinhTrangDonHang_TC
