@@ -84,6 +84,7 @@ function fetchTable (value, kh) {
       $('#listBill').html(html);
       document.getElementById("currentPage").innerHTML = currentPage + '/' + length/100
       //console.log(currentPage + '/' + length/100)
-    })});
+    })
+  });
 }
 

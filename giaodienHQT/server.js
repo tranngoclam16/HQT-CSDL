@@ -100,11 +100,11 @@ app.get('/LogInKH', (req, res) => {
 app.post('/LogInKH', (req, res) => {
     let {username, password} = req.body;
     dboperator.getKH(username).then(result =>{
-        console.log(result);
+        //console.log(result);
         if (result.length>0){
             if (username==result[0].MaKH)
                 if (password==result[0].pword){
-                    return res.json(result)
+                    return res.json(result[0])
                 }
                 else{
                     return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})

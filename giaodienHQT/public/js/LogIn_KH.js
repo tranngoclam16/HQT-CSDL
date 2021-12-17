@@ -32,14 +32,15 @@ const senData = (path, data) => {
     })
     .then (response => {
         response.json().then((data) => {
-            console.log(data)
-            processData(data[0])
+            //console.log(data)
+            processData(data)
         });
         
     });
 }
 
 const processData = (data)=> {
+    console.log(data)
     if(data.alert){
         alert(data.alert)
     } else if (data.MaKH){
