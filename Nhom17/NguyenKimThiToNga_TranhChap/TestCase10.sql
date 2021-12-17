@@ -8,7 +8,9 @@ begin
 	begin tran
 		begin try
 			select @Tong= count(MaSP) from SanPham where SanPham.SLTon<@slt
+
 			waitfor delay '00:00:12'
+
 			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt
 			
 		commit tran
@@ -39,7 +41,7 @@ BEGIN
 				end
 
 			declare @sl int
-			set @sl=(select SLTon from SanPham where MaSP=@MaSP)
+			set @sl=(select SLTon from SanPham with (XLOCK, ROWLOCK) where MaSP=@MaSP)
 			print(@sl)
 			if (@sl-@SoLuong>=0)
 			begin
@@ -51,7 +53,10 @@ BEGIN
 					end
 				else
 					begin
-						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)	
+						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)
+						UPDATE SanPham
+						SET SLTon = @sl - @SoLuong
+						WHERE MaSP = @MaSP
 					end
 			end
 			else
