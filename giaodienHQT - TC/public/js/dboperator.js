@@ -39,9 +39,7 @@ async function getProductList(start, num=100){
     try{
         let pool=await sql.connect(config);
         length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
-        //let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham )  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
-        //TestCase5
-        let products=await pool.request().query("waitfor delay '00:00:09'; SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham with(NOLOCK))  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
@@ -54,6 +52,7 @@ async function getProductList(start, num=100){
 
 async function addBill(bill){
     try{
+        console.log("bill:", bill)
         let pool = await sql.connect(config);
         let insertBill = await pool.request()
         .input('MaKH', sql.VarChar(10), bill.MaKH)
@@ -69,6 +68,7 @@ async function addBill(bill){
             if (err) {
                 
             } else {
+                console.log(result)
                 MaDH=result.output.MaDonHang;
                 console.log('MaDH:',MaDH)
                 for (i=0;i<bill.Products.length;i++){
@@ -108,7 +108,7 @@ async function addProduct(dkn){
         .input('TenSP', sql.NVarChar(50), dkn.TenSP)
         .input('GiaBan', sql.Float, dkn.GiaBan)
         .input('SLTon', sql.Int, dkn.SLTon)
-        .execute('sp_ThemSanPham_TC')
+        .execute('sp_ThemSanPham')
         return insertProduct.recordsets;
     }
     catch(error){
@@ -183,7 +183,7 @@ async function getDetailBill(MaDH){
         var query = "SELECT COUNT(*) FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"'"
         length = await pool.request().query("SELECT COUNT(*) FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"'")
         //console.log(length.recordsets[0][0][""])
-        query = "SELECT ROWNUMBER, T.MaDH, SP.TenSP, T.SoLuong, T.GiaBan, T.ThanhTien \
+        query = "SELECT ROWNUMBER, T.MaDH, T.MaSP, SP.TenSP, T.SoLuong, T.GiaBan, T.ThanhTien \
                 FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * \
 	            FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"')  AS T join SanPham SP on SP.MaSP=T.MaSP"
         //console.log(query)
@@ -230,11 +230,12 @@ async function addBillStatus(bill){
 }
 
 async function getCustomerBillList(start,MaKH, num=100){
-    //console.log(start)
+    //console.log('dboperator ', MaKH)
     try{
         let pool=await sql.connect(config);
-        length = await pool.request().query("SELECT COUNT(*) FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"'")
-        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        length = await pool.request().query("SELECT COUNT(*) FROM DonHang WHERE MAKH='"+MaKH+"'")
+        let products=await pool.request().query("SELECT MaDH, MaKH, convert(varchar, NgayLap, 113) as NgayLap, PhiVanChuyen, TongHang, TongTien, ThanhToan \
+         FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang WHERE MAKH='"+MaKH+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
@@ -354,3 +355,4 @@ module.exports={
     getDriverBillList:getDriverBillList,
     CheckProductKH:CheckProductKH
 }
+
