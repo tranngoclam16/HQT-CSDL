@@ -33,7 +33,7 @@ GO
 CREATE PROCEDURE sp_CapNhatSanPham_TC
 	(@MaSP varchar(6),
 	@TenSP nvarchar(50),
-	@GiaBan int,
+	@GiaBan float,
 	@SLTon int)
 AS
 BEGIN 
@@ -50,7 +50,7 @@ BEGIN
 			set TenSP= @TenSP, GiaBan= @GiaBan, SLTon= @SLTon
 			where MaSP= @MaSP
 			
-			select * from SanPham
+			--select * from SanPham
 
 			waitfor delay '00:00:02'
 			if (@SLTon <0)
@@ -73,7 +73,7 @@ GO
 --drop procedure sp_CapNhatSanPham_TC
 --=========================================
 --DATATEST
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang
@@ -85,3 +85,4 @@ INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES
 	('000002', N'Áo thun Minnie', 45000, 4),
 	('000003', N'Áo thun Donald', 46000, 7);
 GO
+

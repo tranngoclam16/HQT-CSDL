@@ -1,7 +1,30 @@
 ﻿Use HT_DHCH_ONLINE
 go
 
-truncate table TinhTrangDH
+create procedure sp_KiemTraGiaBan_TC
+	@gb float,
+	@Tong int output
+as
+begin
+	begin tran
+		begin try
+			select @Tong= count(MaSP) from SanPham where SanPham.GiaBan<@gb
+			waitfor delay '00:00:05'
+			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE GiaBan<@gb
+			
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+GO
+truncate table CT_TTDH
 truncate table ThuNhapTX
 delete from TaiXe
 truncate table CT_DonHang

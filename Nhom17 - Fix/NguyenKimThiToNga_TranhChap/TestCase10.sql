@@ -1,5 +1,5 @@
 ﻿--TEST CASE 10
-create procedure sp_KiemTraSLTon_TC
+create procedure sp_KiemTraSLTon
 	@slt int,
 	@Tong int output
 as
@@ -23,10 +23,11 @@ begin
 end
 go
 --
-CREATE PROCEDURE sp_ThemChiTietDonHang_TC
+CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
-	@SoLuong int)
+	@SoLuong int,
+	@error int output)
 AS
 BEGIN 
 	BEGIN TRAN
@@ -56,6 +57,7 @@ BEGIN
 			else
 			begin
 				print('2')
+				set @error=2
 				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
 			end
 		COMMIT TRAN
@@ -69,11 +71,12 @@ BEGIN
 		END CATCH
 END
 GO
---DROP PROCEDURE sp_ThemChiTietDonHang_TC
+--DROP PROCEDURE sp_ThemChiTietDonHang
 --TEST DATA
 TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
+TRUNCATE TABLE CN_SP
 DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang

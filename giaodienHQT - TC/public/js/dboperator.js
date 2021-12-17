@@ -39,6 +39,8 @@ async function getProductList(start, num=100){
     try{
         let pool=await sql.connect(config);
         length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
+        //let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham )  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //TestCase5
         let products=await pool.request().query("waitfor delay '00:00:09'; SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham with(NOLOCK))  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])

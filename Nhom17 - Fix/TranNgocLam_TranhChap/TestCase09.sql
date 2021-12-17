@@ -1,7 +1,7 @@
 ﻿Use HT_DHCH_ONLINE
 go
 
-alter procedure sp_KiemTraGiaBan_TC
+create procedure sp_KiemTraGiaBan
 	@gb float,
 	@Tong int output
 as

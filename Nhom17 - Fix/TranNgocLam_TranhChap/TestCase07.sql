@@ -3,7 +3,7 @@ Go
 
 --TestCase07
 --Transaction 1
-create procedure sp_ThemTinhTrangDonHang_TC
+create procedure sp_ThemTinhTrangDonHang
 	(@MaDH varchar(10), @MaTT int)
 as
 begin
@@ -25,7 +25,7 @@ end
 go
 
 -- Transaction 2
-create procedure sp_XemTinhTrangDonHang_TC
+/*create procedure sp_XemTinhTrangDonHang_TC
 	(@MaDH varchar(10), @TTDH nvarchar(100) output)
 as
 begin
@@ -49,7 +49,7 @@ begin
 		end catch
 	commit tran
 	return
-end
+end*/
 
 /*
 drop procedure sp_XemTinhTrangDonHang_TC

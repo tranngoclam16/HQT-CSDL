@@ -25,7 +25,7 @@ end
 go
 
 -- Transaction 2
-create procedure sp_XemTinhTrangDonHang_TC
+/*create procedure sp_XemTinhTrangDonHang_TC
 	(@MaDH varchar(10), @TTDH nvarchar(100) output)
 as
 begin
@@ -50,7 +50,7 @@ begin
 		end catch
 	commit tran
 	return
-end
+end*/
 
 /*
 drop procedure sp_XemTinhTrangDonHang_TC
@@ -58,7 +58,9 @@ drop procedure sp_ThemTinhTrangDonHang_TC
 */
 	
 
-truncate table TinhTrangDH
+	
+go
+truncate table CT_TTDH
 truncate table ThuNhapTX
 delete from TaiXe
 truncate table CT_DonHang
@@ -75,11 +77,10 @@ insert into KhachHang
 values ('0909123450', N'Trần Văn A', '0909123450', N'34 Trần Văn Giáp', 'abc@gmail.com')
 insert into DonHang (MaDH, MaKH, TenNguoiNhan, SDT, NgayLap)
 values ('0000000001', '0909123450', N'Trần Văn A', '0909123450', '2021-11-10')
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-11', '0000000001', 1)
-waitfor delay '00:00:02'
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-13', '0000000001', 2)
-Insert into TinhTrangDH values
+Insert into CT_TTDH values
 ('2021-11-14', '0000000001', 3)
 

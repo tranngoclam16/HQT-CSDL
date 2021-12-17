@@ -2,4 +2,4 @@
 GO
 --TestCase11
 --Transaction 2
-EXEC sp_CapNhatSanPham_TC '000001',N'Bông cải',300,3
+EXEC sp_CapNhatSanPham '000001',N'Bông cải',300,3

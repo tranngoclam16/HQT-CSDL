@@ -1,9 +1,7 @@
 ﻿--TEST CASE 01
 USE HT_DHCH_ONLINE
 GO
-DISABLE TRIGGER slt_dathang ON CT_DonHang
-GO
-CREATE PROCEDURE sp_ThemChiTietDonHang_TC
+CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
 	@SoLuong int,
@@ -35,9 +33,6 @@ BEGIN
 					begin
 						waitfor delay '00:00:02'
 						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)
-						--UPDATE SanPham
-						--SET SLTon = SLTon - @SoLuong
-						--WHERE MaSP = @MaSP
 					end
 			end
 			else
@@ -58,7 +53,7 @@ BEGIN
 END
 GO
 --
---drop procedure sp_ThemChiTietDonHang_TC
+--drop procedure sp_ThemChiTietDonHang
 --DATA TEST
 
 TRUNCATE TABLE CT_TTDH
