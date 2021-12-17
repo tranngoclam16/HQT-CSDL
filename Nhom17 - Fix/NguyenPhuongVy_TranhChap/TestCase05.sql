@@ -49,10 +49,10 @@ BEGIN
 END
 GO
 
---drop procedure sp_ThemSanPham
+--drop procedure sp_ThemSanPham_TC
 --=======================================
 --DATATEST
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang
