@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông tin đơn hàng KH</title>
 
-    <link rel="stylesheet" href="../css/billinfo.css">
+    <link rel="stylesheet" href="../../css/billinfo.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="../js/billinfo_DT.js"></script>
+  <script src="../../js/billinfo_DT.js"></script>
   <script>
     function getParams() {
-        var idx = document.URL.indexOf('?');
+        /* var idx = document.URL.indexOf('?');
         var params = new Array();
         if (idx != -1) {
         var pairs = document.URL.substring(idx+1, document.URL.length).split('&');
@@ -21,8 +21,10 @@
         params[nameVal[0]] = nameVal[1];
            }
         }
-        return params["MaDH"];
-        }
+        return params["MaDH"]; */
+        let MaDH = location.pathname.split('/').pop()
+        return MaDH
+    }
     params = getParams();
     fetchData(params);
     fetchTable(params);
@@ -32,7 +34,7 @@
 <body style="display: block; background: #f3eced;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
         <div class="container">
-          <img src="../img/logo.png" class="brand-logo" alt="">
+          <img src="../../img/logo.png" class="brand-logo" alt="">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span>
               <i id="bar" class="fas fa-bars"></i>
@@ -58,7 +60,7 @@
     <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
         <div class="card">
             <div class="card-header p-4">
-                <img src="../img/logo1.png" class="logo" alt="" width="300" height="200" style="float: left;">
+                <img src="../../img/logo1.png" class="logo" alt="" width="300" height="200" style="float: left;">
                 <div class="float-right">
                     <div class="template">
                     <h5 class="mb-0">Đơn hàng</h5>
@@ -134,7 +136,7 @@
                                 </tr>
                                 <tr>
                                     <td class="left">
-                                        <strong class="text-dark"><img src="../img/shield.png" alt="" style="width:20px; height:auto;">Phương thức thanh toán</strong> </td>
+                                        <strong class="text-dark"><img src="../../img/shield.png" alt="" style="width:20px; height:auto;">Phương thức thanh toán</strong> </td>
                                     <td class="right">
                                         <span id="template-ThanhToan"></span>
                                     </td>

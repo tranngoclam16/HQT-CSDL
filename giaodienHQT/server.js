@@ -57,29 +57,6 @@ app.post('/SignUpKH', (req, res) => {
         else 
         res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!'});
     })
-    /* let flag = true;
-    dboperator.getKH(dkn.MaKH).then(result =>{
-        //console.log(result[0]);
-        //console.log(flag)
-        if (dkn.MaKH.length==result[0].MaKH){
-            flag = false;
-            //res.json({'alert':'Mật khẩu phải có ít nhất 6 kí tự'})
-            //console.log(flag)
-        }
-    })
-    //if(!flag)
-        console.log(flag) */
-        /*
-    if (dkn.MaKH.length != 10 || !Number(dkn.MaKH.length))
-        return res.json({'alert':'Số điện thoại không hợp lệ'})
-    else if (dkn.Password.length < 6)
-        return res.json({'alert':'Mật khẩu phải có ít nhất 6 kí tự'})
-    else if(flag){
-        console.log('valid')
-        
-        })
-        return res.json({'alert':'Đăng ký tài khoản thành công!'})
-    } */
 })
 
 //Sign In
@@ -87,15 +64,7 @@ app.get('/LogInKH', (req, res) => {
     res.sendFile(path.join(staticPath,"LogIn_KH.html"));
 })
 
-/* app.post('/LogInKH', (req, res) => {
-    let username = {...req.body}
-    console.log(req.body)
-    console.log(username)
-   /*  dboperator.getKH(request.params.username).then(result =>{
-        console.log(result[0]);
-        response.json(result);
-    })
-}) */
+
 
 app.post('/LogInKH', (req, res) => {
     let {username, password} = req.body;
@@ -154,9 +123,11 @@ app.get('/KH/Info', (req, res) => {
     res.sendFile(path.join(staticPath,"BillList_KH.html"));
 })
 app.post('/KH/Info', (req, res) => {
-    let start = (req.body['start'])
-    dboperator.getKH(start).then(result => {
-       res.status(201).json(result);
+    let MaKH = req.body['MaKH']
+    console.log(MaKH)
+    dboperator.getKH(MaKH).then(result => {
+        console.log(result)
+        res.json(result);
     })
 })
 app.post('/KH/InfoBill', (req, res) => {
@@ -168,10 +139,11 @@ app.post('/KH/InfoBill', (req, res) => {
         start = 0
     }
     dboperator.getCustomerBillList(start,makh).then(result => {
-        res.status(201).json(result);
+        console.log(result)
+        res.json(result);
     })
 })
-app.get('/KH/billinfo', (req, res) => {
+app.get('/KH/billinfo/:MaDH', (req, res) => {
     res.sendFile(path.join(staticPath,"billinfo_KH.html"));
 })
 
@@ -300,9 +272,9 @@ app.post('/DT/billStatusUpdate',(req,res)=>{
 app.post('/DT/CheckProduct',(req,res)=>{
     let start = parseInt(req.body['start'])
     //console.log(req.body['start'])
-    //console.log("product:",start)
+    console.log("product:",start)
      dboperator.checkProductSLT(start).then(result => {
-         //console.log(result)
+        console.log(result)
         res.status(201).json(result);
      }) 
  })

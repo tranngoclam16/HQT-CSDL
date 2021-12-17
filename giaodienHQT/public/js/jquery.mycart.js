@@ -71,8 +71,11 @@
     /*
     PRIVATE
     */
+   let user = JSON.parse(sessionStorage.user)
+   user = user.MaKH
     const STORAGE_NAME = "__mycart";
-    localStorage[STORAGE_NAME] = localStorage[STORAGE_NAME] ? localStorage[STORAGE_NAME] : "";
+    //localStorage[STORAGE_NAME] = localStorage[STORAGE_NAME] ? localStorage[STORAGE_NAME] : "";
+    //sessionStorage.products = sessionStorage.products ? sessionStorage.products : "";
     var getIndexOfProduct = function (id) {
       var productIndex = -1;
       var products = getAllProducts();
@@ -85,7 +88,12 @@
       return productIndex;
     };
     var setAllProducts = function (products) {
-      localStorage[STORAGE_NAME] = JSON.stringify(products);
+      console.log('set products:', products)
+      
+      //localStorage[STORAGE_NAME] = JSON.stringify(products);
+      let user = JSON.parse(sessionStorage.user)
+      user = user.MaKH
+      sessionStorage.setItem(user,JSON.stringify(products))
     };
     var addProduct = function (id, name, summary, price, quantity, image) {
       var products = getAllProducts();
@@ -105,7 +113,12 @@
     */
     var getAllProducts = function () {
       try {
-        var products = JSON.parse(localStorage[STORAGE_NAME]);
+        let user = JSON.parse(sessionStorage.user)
+        user = user.MaKH
+        //sessionStorage.setItem(user,JSON.stringify(products))
+        var products = JSON.parse(sessionStorage.getItem(user));
+        //var products = JSON.parse(localStorage[STORAGE_NAME]);
+        //console.log('get products: ', products)
         return products;
       } catch (e) {
         return [];
@@ -260,10 +273,6 @@
         '</div>' +
         '<div class="modal-body">' +
         '<form id="checkout_form">'+        
-        '<div>'+
-            '<label for="MaKH">Mã Khách hàng</label>'+
-            '<input type="text" class="input-group" name="MaKH" id="MaKH" data-type="string" data-message="Không được bỏ trống phần này" />'+
-          '</div>'+
           '<div>'+
             '<label for="DiaChi">Địa chỉ</label>'+
             '<input type="text" class="input-group" name="DiaChi" id="DiaChi" data-type="string" data-message="Không được bỏ trống phần này" />'+
@@ -435,9 +444,11 @@
         $("#" + idEmptyCartMessage).fadeTo('fast', 0.5).fadeTo('fast', 1.0);
         return;
       }
-
+      let user = JSON.parse(sessionStorage.user)
+        user = user.MaKH
+        console.log('checkout', user)
       let objToPost = {
-        MaKH: $('#MaKH').val(),
+        MaKH: user,
         DiaChi: $('#DiaChi').val(),
         Phuong: $('#Phuong').val(),
         Quan: $('#Quan').val(),
@@ -449,6 +460,7 @@
         TongHang: ProductManager.getTotalPrice()
     }
    // alert($("#MaHD").attr('value'))
+   console.log(objToPost)
    $.ajax('/KH/bill',{
         type: 'POST',
         data: JSON.stringify(objToPost),

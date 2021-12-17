@@ -183,7 +183,7 @@ async function getDetailBill(MaDH){
         var query = "SELECT COUNT(*) FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"'"
         length = await pool.request().query("SELECT COUNT(*) FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"'")
         //console.log(length.recordsets[0][0][""])
-        query = "SELECT ROWNUMBER, T.MaDH, SP.TenSP, T.SoLuong, T.GiaBan, T.ThanhTien \
+        query = "SELECT ROWNUMBER, T.MaDH, T.MaSP, SP.TenSP, T.SoLuong, T.GiaBan, T.ThanhTien \
                 FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * \
 	            FROM CT_DonHang CTDH where CTDH.MaDH ='"+MaDH+"')  AS T join SanPham SP on SP.MaSP=T.MaSP"
         //console.log(query)
@@ -230,11 +230,12 @@ async function addBillStatus(bill){
 }
 
 async function getCustomerBillList(start,MaKH, num=100){
-    //console.log(start)
+    //console.log('dboperator ', MaKH)
     try{
         let pool=await sql.connect(config);
-        length = await pool.request().query("SELECT COUNT(*) FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"'")
-        let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang WHERE DONHANG.MAKH='"+MaKH+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        length = await pool.request().query("SELECT COUNT(*) FROM DonHang WHERE MAKH='"+MaKH+"'")
+        let products=await pool.request().query("SELECT MaDH, MaKH, convert(varchar, NgayLap, 113) as NgayLap, PhiVanChuyen, TongHang, TongTien, ThanhToan \
+         FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaDH) AS ROWNUMBER, * FROM DonHang WHERE MAKH='"+MaKH+"')  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
