@@ -23,7 +23,7 @@ begin
 end
 go
 --
-CREATE PROCEDURE sp_ThemChiTietDonHang_TC
+CREATE PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
 	@SoLuong int,
@@ -71,7 +71,7 @@ BEGIN
 		END CATCH
 END
 GO
---DROP PROCEDURE sp_ThemChiTietDonHang_TC
+--DROP PROCEDURE sp_ThemChiTietDonHang
 --TEST DATA
 TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang

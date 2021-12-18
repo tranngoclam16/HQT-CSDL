@@ -54,9 +54,9 @@ BEGIN
 				else
 					begin
 						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)
-						UPDATE SanPham
-						SET SLTon = @sl - @SoLuong
-						WHERE MaSP = @MaSP
+						--UPDATE SanPham
+						--SET SLTon = @sl - @SoLuong
+						--WHERE MaSP = @MaSP
 					end
 			end
 			else
