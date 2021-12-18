@@ -39,7 +39,8 @@ BEGIN
 				end
 
 			declare @sl int
-			set @sl=(select SLTon from SanPham where MaSP=@MaSP)
+			--set @sl=(select SLTon from SanPham where MaSP=@MaSP)
+			set @sl=(select SLTon from SanPham with (XLOCK, ROWLOCK) where MaSP=@MaSP)
 			print(@sl)
 			if (@sl-@SoLuong>=0)
 			begin
