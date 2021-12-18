@@ -141,14 +141,10 @@ create table CT_TTDH (
 )
 go
 
-create table #temp (
-	MaTinhTrang int primary key,
-	Mota nvarchar(100)
-)
 
 --delete from CT_TTDH
 --delete from TinhTrangDH
-insert into #temp values
+insert into TinhTrangDH values
 (0, N'Đơn hàng đã hủy.'),
 (1, N'Đơn hàng được tiếp nhận.'),
 (2, N'Đơn hàng đang đóng gói.'),
@@ -156,8 +152,4 @@ insert into #temp values
 (4, N'Đơn hàng đang giao.'),
 (5, N'Đơn hàng giao thành công.')
 
-select * from #temp
-
-update ttdh
-set ttdh.Mota = t.Mota from TinhTrangDH ttdh inner join #temp t on ttdh.MaTinhTrang = t.MaTinhTrang 
 
