@@ -410,7 +410,7 @@ BEGIN
   BEGIN TRAN
     BEGIN TRY
 	  DECLARE @ttdh int, @mota nvarchar(100)
-	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 --with (XLOCK, ROWLOCK)
+	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
           WHERE ttd1.MaDH = @MaDH 
             AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
                                       FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
