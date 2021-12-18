@@ -408,40 +408,42 @@ alter PROCEDURE sp_TaiXeNhanDonHang
 			@msg nvarchar(100) output)
 AS
 BEGIN
-  BEGIN TRAN
-    BEGIN TRY
-	  DECLARE @ttdh int, @mota nvarchar(100)
-	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
-          WHERE ttd1.MaDH = @MaDH 
-            AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
-		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
+	BEGIN TRAN
+		BEGIN TRY
+		DECLARE @ttdh int, @mota nvarchar(100)
+		SELECT @ttdh=MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
+        WHERE ttd1.MaDH = @MaDH 
+        AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)
+		select @mota = Mota from TinhTrangDH where @ttdh = MaTinhTrang
 		print(@mota)
 		select @ttdh as TTDH
-      IF @ttdh < 3
-        BEGIN
-			select @msg = N'Đơn hàng chưa sẵn sàng để giao'
-          PRINT(N'Đơn hàng chưa sẵn sàng để giao')
-          RAISERROR('1',15,1)
-        END
-      ELSE IF @ttdh = 3
-        BEGIN
-        DECLARE @PhiVanChuyen int
-        SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+		--IF @ttdh < 3
+		--	BEGIN
+		--		select @msg = N'Đơn hàng chưa sẵn sàng để giao'
+		--		PRINT(N'Đơn hàng chưa sẵn sàng để giao')
+  --        --RAISERROR('1',15,1)
+		--	END
+		--	ELSE 
+		IF @ttdh = 3
+			BEGIN
+				DECLARE @PhiVanChuyen int
+				SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
+				INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-		select @msg = N'Nhận đơn thành công'
-        END
-	  ELSE 
-		begin
-			select @msg = N'Đơn hàng đã có người nhận'
-			print(N'Đơn hàng đã có người nhận')
-			raiserror('2',15,1);
-		end
-    COMMIT TRAN
+				INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+				select @msg = N'Nhận đơn thành công'
+			END
+		COMMIT TRAN
+			--ELSE 
+			--begin
+			--	select @msg = N'Đơn hàng đã có người nhận'
+			--	print(N'Đơn hàng đã có người nhận')
+			----raiserror('2',15,1);
+			--end
+		
     END TRY
-  BEGIN CATCH
+	BEGIN CATCH
 			IF @@trancount>0
 				BEGIN	
 					print(N'Lỗi')
