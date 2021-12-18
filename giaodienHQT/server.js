@@ -303,6 +303,59 @@ app.listen(3000, () => {
   console.log(`listenning on port 3000`);
 })
 /*---------------------------------------TÀI XẾ------------------------------------------*/
+//
+app.get('/SigUpTX', (req, res) => {
+    res.sendFile(path.join(staticPath,"SignUp_TX.html"));
+})
+
+//let flag = true
+app.post('/SignUpTX', (req, res) => {
+    let dkn = {...req.body};
+    console.log(dkn.SDT)
+    dboperator.getTX(dkn.SDT).then(result =>{
+        console.log(result[0]);
+        //console.log(flag)
+        if (result[0]==null){
+            console.log('valid')
+            dboperator.addCustomer(dkn).then(result => {
+                res.json(dkn);
+            })
+        }
+        else 
+        res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!'});
+    })
+})
+
+//Sign In
+app.get('/LogInTX', (req, res) => {
+    res.sendFile(path.join(staticPath,"LogIn_TX.html"));
+})
+
+app.post('/LogInTX', (req, res) => {
+    let {username, password} = req.body;
+    //console.log(username)
+    dboperator.getTX(username).then(result =>{
+        console.log(result);
+        if (result.length>0){
+            if (username==result[0].SDT)
+                if (password==result[0].pword){
+                    return res.json(result[0])
+                }
+                else{
+                    return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
+                }
+            else{
+                return res.json({'alert':'Sai tên đăng nhập hoặc mật khẩu. Bạn vui lòng thử lại.'})
+            }
+        }
+        else {
+            return res.json({'alert':'Tài khoản đăng nhập không tồn tại.'})
+        }  
+          
+    });
+    
+});
+
 //View Bill List
 app.get('/TX/BillList', (req, res) => {
     res.sendFile(path.join(staticPath,"BillList_TX.html"));
@@ -316,7 +369,7 @@ app.post('/TX/BillList', (req, res) => {
         start = 0
     }
     console.log(typeof start)
-    dboperator.getBillList(start,num=100).then(result => {
+    dboperator.getBillForDelivery(start,num=100).then(result => {
         res.status(201).json(result);
     })
 })
@@ -332,10 +385,10 @@ app.get('/TX/Info', (req, res) => {
     res.sendFile(path.join(staticPath,"Info_TX.html"));
 })
 app.post('/TX/Info', (req, res) => {
-    let start = (req.body['start'])
-    //console.log("start: ",start)
-    dboperator.getTX(start).then(result => {
-       // console.log(result)
+    let MaTX = (req.body['MaTX'])
+    console.log("tx: ",MaTX)
+    dboperator.getTX(MaTX).then(result => {
+       console.log(result)
        res.status(201).json(result);
     })
 })

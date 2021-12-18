@@ -402,9 +402,10 @@ GO
 --
 --TÀI XẾ NHẬN ĐƠN HÀNG -> THÊM VÀO THU NHẬP TÀI XẾ
 --
-CREATE PROCEDURE sp_TaiXeNhanDonHang
+alter PROCEDURE sp_TaiXeNhanDonHang
             (@MaTX VARCHAR(12),
-            @MaDH VARCHAR(10))
+            @MaDH VARCHAR(10),
+			@msg nvarchar(100) output)
 AS
 BEGIN
   BEGIN TRAN
@@ -416,8 +417,10 @@ BEGIN
                                       FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
 		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
 		print(@mota)
+		select @ttdh as TTDH
       IF @ttdh < 3
         BEGIN
+			select @msg = N'Đơn hàng chưa sẵn sàng để giao'
           PRINT(N'Đơn hàng chưa sẵn sàng để giao')
           RAISERROR('1',15,1)
         END
@@ -428,9 +431,11 @@ BEGIN
 		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
         INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+		select @msg = N'Nhận đơn thành công'
         END
 	  ELSE 
 		begin
+			select @msg = N'Đơn hàng đã có người nhận'
 			print(N'Đơn hàng đã có người nhận')
 			raiserror('2',15,1);
 		end
