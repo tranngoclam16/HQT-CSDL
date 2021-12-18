@@ -400,11 +400,20 @@ begin
 	--SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
 	begin tran
 		begin try
-			if not exists (select * from SanPham with (XLOCK, ROWLOCK) where @MaSP=MaSP and @TenSP= TenSP) 
+			--declare @TenSP nvarchar(50), @MaSP varchar(6)
+			--set @TenSP = N'áo'
+			--set @MaSP = ' '
+			Set @TenSP = '%'+@TenSP+'%'
+
+			--select * 
+			--from SanPham --with (XLOCK, ROWLOCK) 
+			--where MaSP like @MaSP and  TenSP like @TenSP
+
+			if not exists (select * from SanPham with (XLOCK, ROWLOCK) where MaSP like @MaSP or  TenSP like @TenSP) 
 				raiserror(N'Không tồn tại sản phẩm',15,1)
 			set @result=1
 			
-			select * from SanPham where MaSP= @MaSP and TenSP= @TenSP 
+			select * from SanPham where MaSP like @MaSP or TenSP like @TenSP
 		commit tran
 		end try
 	BEGIN CATCH

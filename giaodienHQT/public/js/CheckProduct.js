@@ -15,14 +15,17 @@ function fetchTable (choice,value) {
         //credentials: 'include',
         body: JSON.stringify({start:value})
       })
-      .then (response => {response.json().then((data) => {
-            var dataT = data.recordsets[0]
-            console.log(dataT)
+      .then (response => {response.json().then(data => {
+        if(data==null){
+          alert('Không tồn tại sản phẩm thỏa yêu cầu')
+        } else{
+            console.log(data)
             var source = document.getElementById('entry-template').innerHTML;
             var template = Handlebars.compile(source);
-            var html = template(dataT);
+            var html = template(data);
             $('#listProduct').html(html);
             document.getElementById("template-Tong").innerHTML= data.output['Tong'];
+        }
   })
   })}
 
@@ -38,14 +41,17 @@ function fetchTable (choice,value) {
           //credentials: 'include',
           body: JSON.stringify({MaSP:ma, TenSP:ten})
         })
-        .then (response => {response.json().then((data) => {
-          var dataT = data.recordsets[0]
-          console.log(dataT)
-          var source = document.getElementById('entry-template').innerHTML;
-          var template = Handlebars.compile(source);
-          var html = template(dataT);
-          $('#listProduct').html(html);
-          document.getElementById("template-Tong").innerHTML= data.output['result'];
+        .then (response => {response.json().then(data => {
+          if(data==null){
+            alert('Không tồn tại sản phẩm thỏa yêu cầu')
+          } else{
+            console.log(data)
+            var source = document.getElementById('entry-template').innerHTML;
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            $('#listProduct').html(html);
+            document.getElementById("template-Tong").innerHTML= data.output['result'];
+          }
              
     })
     })}

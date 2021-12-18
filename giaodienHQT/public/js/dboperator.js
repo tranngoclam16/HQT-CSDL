@@ -297,11 +297,24 @@ async function addShipping(bill){
         console.log(error);
     }
 }
-async function getTX(TX){
+async function chechDriverExist(TX){
     //console.log('dboperator',MaTX)
     try{
         let pool=await sql.connect(config);
         let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + TX.SDT + "' or CMND= '" + TX.CMND+"'");
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+async function getDriver(TX){
+    //console.log('dboperator',MaTX)
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + TX + "'");
         //console.log(products.recordset)
         return products.recordset;
     }
@@ -371,6 +384,11 @@ async function getBillForDelivery(start, num=100){
 async function CheckProductKH(MaSP,TenSP){
     try{
         let pool = await sql.connect(config);
+        if (MaSP == null)
+            MaSP=' '
+
+        if (TenSP == null)
+            TenSP=' '
         console.log(MaSP)
         console.log(TenSP)
          let products = await pool.request()
@@ -378,7 +396,8 @@ async function CheckProductKH(MaSP,TenSP){
          .input('TenSP', sql.NVarChar(50), TenSP)
          .output('result',sql.Int)
          .execute("sp_KiemTraSP");
-         return products;
+         console.log(products.recordset)
+         return products.recordset
     }
     catch(error){
         console.log(error);
@@ -401,7 +420,8 @@ module.exports={
     checkProductSLT:checkProductSLT,
     checkProductPrice:checkProductPrice,
     addShipping:addShipping,
-    getTX:getTX,
+    getDriver:getDriver,
+    chechDriverExist:chechDriverExist,
     addTX:addTX,
     getDriverBillList:getDriverBillList,
     getBillForDelivery: getBillForDelivery,

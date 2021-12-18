@@ -312,7 +312,7 @@ app.get('/SignUpTX', (req, res) => {
 app.post('/SignUpTX', (req, res) => {
     let dkn = {...req.body};
     console.log(dkn.SDT)
-    dboperator.getTX(dkn).then(result =>{
+    dboperator.chechDriverExist(dkn).then(result =>{
         console.log(result);
         if (result[0]==null){
             console.log('valid')
@@ -388,7 +388,7 @@ app.get('/TX/Info', (req, res) => {
 app.post('/TX/Info', (req, res) => {
     let MaTX = (req.body['MaTX'])
     console.log("tx: ",MaTX)
-    dboperator.getTX(MaTX).then(result => {
+    dboperator.getDriver(MaTX).then(result => {
        console.log(result)
        res.status(201).json(result);
     })
