@@ -48,15 +48,21 @@ BEGIN
 		END CATCH
 END
 GO
---==============
+
+--drop procedure sp_ThemSanPham_TC
+--=======================================
 --DATATEST
 TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
-TRUNCATE TABLE CN_SP
 DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang
 GO
+insert into KhachHang 
+values ('0903041422','123' N'Trần Văn A', N'34 Trần Văn Giáp', 'abc@gmail.com')
 INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES 
-	('000001', N'Nước hoa', 50000, 32)
+	('000001', N'Áo thun Mickey', 50000, 32),
+	('000002', N'Áo thun Minnie', 45000, 4),
+	('000003', N'Áo thun Donald', 46000, 7);
+GO

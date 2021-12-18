@@ -1,18 +1,18 @@
 ﻿USE HT_DHCH_ONLINE
 Go
 
---TestCase07
+--TestCase05
 --Transaction 1
-create procedure sp_CapNhatTinhTrangDonHang
+create procedure sp_CapNhatTinhTrangDonHang_TC
 	(@MaDH varchar(10), @MaTT int)
 as
 begin
 	begin tran
 		begin try
-			insert into CT_TTDH 
+			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
 			waitfor delay '00:00:07'
-			ROLLBACK TRANSACTION
+			ROLLBACK TRANSACTION 
 		end try
 		begin catch
 			IF @@trancount>0
@@ -24,37 +24,12 @@ begin
 end
 go
 
--- Transaction 2
-/*create procedure sp_XemTinhTrangDonHang_TC
-	(@MaDH varchar(10), @TTDH nvarchar(100) output)
-as
-begin
-	begin tran
-		begin try
-			declare @MaTT int
-			select @MaTT = MaTT 
-			from CT_TTDH
-			where MaDH = @MaDH and CAST(NgayCapNhat as datetime) >= All(select CAST (NgayCapNhat as datetime)
-																from CT_TTDH
-																where MaDH = @MaDH)
-			print (@MaTT)
-			select @TTDH =  Mota from TinhTrangDH where MaTinhTrang = @MaTT
-		end try
-		begin catch
-			IF @@trancount>0
-				BEGIN	
-					print(N'Lỗi')
-					ROLLBACK TRANSACTION 
-				END
-		end catch
-	commit tran
-	return
-end*/
-
 /*
 drop procedure sp_XemTinhTrangDonHang_TC
 drop procedure sp_ThemTinhTrangDonHang_TC
 */
+	
+
 	
 go
 truncate table CT_TTDH

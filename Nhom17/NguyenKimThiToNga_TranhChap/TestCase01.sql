@@ -1,4 +1,4 @@
-﻿--TEST CASE 01
+﻿--TEST CASE 01 Tranh chấp
 USE HT_DHCH_ONLINE
 GO
 CREATE PROCEDURE sp_ThemChiTietDonHang_TC
@@ -54,7 +54,7 @@ BEGIN
 					ROLLBACK TRANSACTION 
 				END
 		END CATCH
-	EXEC('DISABLE TRIGGER slt_dathang ON CT_DonHang');
+	EXEC('ENABLE TRIGGER slt_dathang ON CT_DonHang');
 END
 GO
 --

@@ -1,5 +1,5 @@
-USE HT_DHCH_ONLINE
+﻿USE HT_DHCH_ONLINE
 GO
---TestCase08
+--TestCase8
 --Transaction 2
-EXEC sp_ThemChiTietDonHang_TC '0000000001','000001',1
+EXEC sp_CapNhatSanPham_TC '000001',N'Áo hai dây',300,3

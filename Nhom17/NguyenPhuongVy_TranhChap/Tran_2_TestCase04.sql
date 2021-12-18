@@ -2,4 +2,7 @@
 GO
 --TestCase04
 --Transaction 2
-EXEC  sp_ThemSanPham_TC N'Xà bông tắm',500,6
+begin tran
+	waitfor delay '00:00:09'
+	select * from SanPham with (nolock)
+COMMIT

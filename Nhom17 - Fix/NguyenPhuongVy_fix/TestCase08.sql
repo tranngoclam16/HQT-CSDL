@@ -1,45 +1,65 @@
-﻿--TestCase08
+﻿USE HT_DHCH_ONLINE
+GO
+--TestCase08
+--Transaction 1
+create procedure sp_KiemTraSP
+	@MaSP varchar(6),
+	@TenSP nvarchar(50),
+	@result int output
+as
+begin
+	--SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	begin tran
+		begin try
+			if not exists (select * from SanPham with (XLOCK, ROWLOCK) where @MaSP=MaSP and @TenSP= TenSP) 
+				raiserror(N'Không tồn tại sản phẩm',15,1)
+			set @result=1
+			waitfor delay '00:00:08'
+			select * from SanPham where MaSP= @MaSP and TenSP= @TenSP 
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+--drop procedure sp_KiemTraSP
+
 --Transaction 2
 USE HT_DHCH_ONLINE
 GO
-CREATE PROCEDURE sp_ThemChiTietDonHang_TC
-	(@MaDH varchar(10),
-	@MaSP varchar(6),
-	@SoLuong int)
+CREATE PROCEDURE sp_CapNhatSanPham
+	(@MaSP varchar(6),
+	@TenSP nvarchar(50),
+	@GiaBan float,
+	@SLTon int)
 AS
 BEGIN 
 	BEGIN TRAN
 		BEGIN TRY
-			if not exists (select * from DonHang where @MaDH= MaDH)
+			if not exists (select * from SanPham where @MaSP= MaSP)
 				begin
 					print('1')
-					raiserror(N'Không tồn tại đơn hàng',15,1)
+					raiserror(N'Không tồn tại sản phẩm',15,1)
 				end
 
 			waitfor delay '00:00:05'
-			declare @sl int
-			set @sl=(select SLTon from SanPham where MaSP=@MaSP)
-			print(@sl)
-			if (@sl-@SoLuong>=0)
-			begin
-				if EXISTS (select * from CT_DonHang where MaDH = @MaDH and MaSP = @MaSP)
-					begin
-						waitfor delay '00:00:02'
-						update CT_DonHang
-						set SoLuong = (SoLuong + @SoLuong)
-						where MaDH = @MaDH and MaSP = @MaSP
-					end
-				else
-					begin
-						waitfor delay '00:00:02'
-						INSERT INTO CT_DonHang(MaDH,MaSP,SoLuong) VALUES(@MaDH,@MaSP,@SoLuong)	
-					end
-			end
-			else
-			begin
-				print('2')
-				raiserror(N'Số lượng đặt vượt quá số lượng trong kho',15,1)
-			end
+			update SanPham
+			set TenSP= @TenSP, GiaBan= @GiaBan, SLTon= @SLTon
+			where MaSP= @MaSP
+			
+			--select * from SanPham
+
+			waitfor delay '00:00:02'
+			if (@SLTon <0)
+				begin
+					print('2')
+					raiserror(N'không được nhỏ hơn 0',15,1)
+				end
 		COMMIT TRAN
 		END TRY
 		BEGIN CATCH
@@ -52,24 +72,18 @@ BEGIN
 END
 GO
 --
---drop procedure sp_ThemChiTietDonHang_TC
+--drop procedure sp_CapNhatSanPham
 --=========================================
 --DATATEST
-TRUNCATE TABLE TinhTrangDH
+TRUNCATE TABLE CT_TTDH
 TRUNCATE TABLE CT_DonHang
 TRUNCATE TABLE ThuNhapTX
 DELETE FROM DonHang
 DELETE FROM SanPham
 DELETE FROM KhachHang
 GO
-INSERT KhachHang (MaKH, HoTen, SDT, DiaChi, Email) VALUES ('0930123450', N'Huỳnh Tuấn Khoa', '0930123451', N'366 Phan Văn Trị, Phường 5, Quận Gò Vấp, TP. HCM', 'htkhoa@email.com');
-GO
 INSERT INTO SanPham (MaSP, TenSP, GiaBan, SLTon) VALUES 
-	('000001', N'Áo thun Mickey', 50000, 32),
+	('000001', N'Nước hoa', 50000, 32),
 	('000002', N'Áo thun Minnie', 45000, 4),
 	('000003', N'Áo thun Donald', 46000, 7);
-GO
-INSERT INTO DonHang(MaDH, MaKH) VALUES ('0000000001','0930123450')
-GO
-INSERT INTO CT_DonHang(MaDH, MaSP, SoLuong) VALUES ('0000000001','000002',1)
 GO

@@ -1,4 +1,4 @@
-﻿--TEST CASE 10
+﻿--TEST CASE 07
 create procedure sp_KiemTraSLTon
 	@slt int,
 	@Tong int output

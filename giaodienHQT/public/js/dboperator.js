@@ -42,6 +42,8 @@ async function getProductList(start, num=100){
         let pool=await sql.connect(config);
         length = await pool.request().query("SELECT COUNT(*) FROM SanPham")
         let products=await pool.request().query("SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
+        //TestCase4
+        //let products=await pool.request().query("waitfor delay '00:00:09'; SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, * FROM SanPham)  AS T WHERE T.ROWNUMBER >= "+start+" AND T.ROWNUMBER <" + (parseInt(start)+parseInt(num)));
         //console.log(start)
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
@@ -363,14 +365,14 @@ async function getBillForDelivery(start, num=100){
 async function CheckProductKH(MaSP,TenSP){
     try{
         let pool = await sql.connect(config);
-       console.log(MaSP)
-       console.log(TenSP)
-        let insertStatus = await pool.request()
-        .input('MaSP', sql.VarChar(6), MaSP)
-        .input('TenSP', sql.NVarChar(50), TenSP)
-        .execute("sp_KiemTraSP");
-        console.log(insertStatus)
-        return insertStatus.recordset;
+        console.log(MaSP)
+        console.log(TenSP)
+         let products = await pool.request()
+         .input('MaSP', sql.VarChar(6), MaSP)
+         .input('TenSP', sql.NVarChar(50), TenSP)
+         .output('result',sql.Int)
+         .execute("sp_KiemTraSP");
+         return products;
     }
     catch(error){
         console.log(error);

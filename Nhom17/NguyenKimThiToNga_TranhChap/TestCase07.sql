@@ -1,4 +1,4 @@
-﻿--TEST CASE 10
+﻿--TEST CASE 7 Tranh chấp
 CREATE procedure sp_KiemTraSLTon_TC
 	@slt int,
 	@Tong int output

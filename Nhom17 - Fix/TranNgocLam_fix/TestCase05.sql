@@ -1,18 +1,18 @@
 ﻿USE HT_DHCH_ONLINE
 Go
 
---TestCase07
+--TestCase05
 --Transaction 1
-create procedure sp_CapNhatTinhTrangDonHang_TC
+create procedure sp_CapNhatTinhTrangDonHang
 	(@MaDH varchar(10), @MaTT int)
 as
 begin
 	begin tran
 		begin try
-			insert into CT_TTDH
+			insert into CT_TTDH 
 			values (GETDATE(), @MaDH, @MaTT)
 			waitfor delay '00:00:07'
-			ROLLBACK TRANSACTION 
+			ROLLBACK TRANSACTION
 		end try
 		begin catch
 			IF @@trancount>0
@@ -23,12 +23,6 @@ begin
 		end catch
 end
 go
-
-/*
-drop procedure sp_XemTinhTrangDonHang_TC
-drop procedure sp_ThemTinhTrangDonHang_TC
-*/
-	
 
 	
 go
