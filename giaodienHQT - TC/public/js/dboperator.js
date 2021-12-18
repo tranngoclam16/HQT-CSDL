@@ -289,22 +289,22 @@ async function addShipping(bill){
         let pool = await sql.connect(config);
         console.log(bill)
         let insertStatus = await pool.request()
-        .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTX', sql.VarChar(12), bill.MaTX)
+        .input('MaDH', sql.VarChar(10), bill.MaDH)
         .output('msg', sql.NVarChar(100))
-        .execute("sp_TaiXeNhanDonHang");
+        .execute("sp_TaiXeNhanDonHang_TC");
         console.log(insertStatus.output)
-        return insertStatus.recordsets;
+        return insertStatus.output;
     }
     catch(error){
         console.log(error);
     }
 }
-async function getTX(MaTX){
+async function chechDriverExist(TX){
     //console.log('dboperator',MaTX)
     try{
         let pool=await sql.connect(config);
-        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + MaTX + "'");
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + TX.SDT + "' or CMND= '" + TX.CMND+"'");
         //console.log(products.recordset)
         return products.recordset;
     }
@@ -312,18 +312,38 @@ async function getTX(MaTX){
         console.log(error);
     }
 }
+
+async function getDriver(TX){
+    //console.log('dboperator',MaTX)
+    try{
+        let pool=await sql.connect(config);
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + TX + "'");
+        //console.log(products.recordset)
+        return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 async function addTX(dkn){
     try{
         let pool = await sql.connect(config);
         let insertProduct = await pool.request()
-        .input('MaKH', sql.VarChar(10), dkn.MaKH)
-        .input('pword', sql.VarChar(20), dkn.Password)
-        .input('Hoten', sql.NVarChar(100), dkn.HoTen)
+        .input('CMND', sql.VarChar(12), dkn.CMND)
+        .input('SDT', sql.VarChar(10), dkn.SDT)
+        .input('pword', sql.VarChar(20), dkn.pword)
+        .input('HoTen', sql.NVarChar(100), dkn.HoTen)
         .input('DiaChi', sql.NVarChar(100), dkn.DiaChi)
+        .input('BienSoXe', sql.VarChar(12), dkn.BienSoXe)
+        .input('KVHoatDong', sql.NVarChar(30), dkn.KVHoatDong)
         .input('Email', sql.VarChar(30), dkn.Email)
+        .input('STK', sql.VarChar(15), dkn.STK)
+        .input('NganHang', sql.NVarChar(30), dkn.NganHang)
+        .input('ChiNhanh', sql.NVarChar(30), dkn.ChiNhanh)
         
         /*.query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");*/
-        .execute("sp_CreateAccount_KH")
+        .execute("sp_CreateAccount_TX")
         return insertProduct.recordsets;
     }
     catch(error){
@@ -363,17 +383,24 @@ async function getBillForDelivery(start, num=100){
         return error;
     }
 }
+
 async function CheckProductKH(MaSP,TenSP){
     try{
         let pool = await sql.connect(config);
-       console.log(MaSP)
-       console.log(TenSP)
-        let products = await pool.request()
-        .input('MaSP', sql.VarChar(6), MaSP)
-        .input('TenSP', sql.NVarChar(50), TenSP)
-        .output('result',sql.Int)
-        .execute("sp_KiemTraSP_TC");
-        return products;
+        if (MaSP == null)
+            MaSP=' '
+
+        if (TenSP == null)
+            TenSP=' '
+        console.log(MaSP)
+        console.log(TenSP)
+         let products = await pool.request()
+         .input('MaSP', sql.VarChar(6), MaSP)
+         .input('TenSP', sql.NVarChar(50), TenSP)
+         .output('result',sql.Int)
+         .execute("sp_KiemTraSP");
+         console.log(products.recordset)
+         return products.recordset
     }
     catch(error){
         console.log(error);
@@ -396,7 +423,9 @@ module.exports={
     checkProductSLT:checkProductSLT,
     checkProductPrice:checkProductPrice,
     addShipping:addShipping,
-    getTX:getTX,
+    getDriver:getDriver,
+    chechDriverExist:chechDriverExist,
+    addTX:addTX,
     getDriverBillList:getDriverBillList,
     getBillForDelivery: getBillForDelivery,
     CheckProductKH:CheckProductKH

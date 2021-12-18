@@ -1,21 +1,38 @@
 //const { is } = require("express/lib/request")
 //const { response } = require("express");
 
-registerKH_btn.addEventListener('click',() => {
+registerTX_btn.addEventListener('click',() => {
     let objToPost = { 
-        MaKH: $('#MaKH').val(),
+       /*  MaKH: $('#MaKH').val(),
         HoTen: $('#HoTen').val(),
         DiaChi: $('#DiaChi').val(),
         Email: $('#Email').val(),
-        Password: $('#Password').val()
+        Password: $('#Password').val() */
+
+        CMND:$('#CMND').val(),
+        SDT:$('#SDT').val(),
+        pword:$('#Password').val(),
+        Hoten:$('#HoTen').val(),
+        DiaChi:$('#DiaChi').val(),
+        BienSoXe:$('#BienSoXe').val(),
+        KVHoatDong:$('#KVHoatDong').val(),
+        Email:$('#Email').val(),
+        STK:$('#STK').val(),
+        NganHang:$('#NganHang').val(),
+        ChiNhanh:$('#ChiNhanh').val()
     }
     console.log(objToPost)
-    if (objToPost.MaKH.length != 10 || !Number(objToPost.MaKH.length))
+    console.log(objToPost.CMND.length !=12 && objToPost.CMND.length !=10)
+    if (objToPost.CMND.length !=12 && objToPost.CMND.length !=10)
+        alert("Chứng minh nhân dân không hợp lệ")
+    else if (objToPost.Hoten.length < 1)
+        alert("Vui lòng nhập họ tên")
+    else if (objToPost.SDT.length != 10 || !Number(objToPost.SDT.length))
         alert("Số điện thoại không hợp lệ")
-    else if (objToPost.Password.length < 6)
+    else if (objToPost.pword.length < 6)
         alert("Mật khẩu phải có ít nhất 6 kí tự!")
     else 
-        senData('http://localhost:3000/SignUpKH', objToPost)
+        senData('http://localhost:3000/SignUpTX', objToPost)
 })
 
 //alert function
@@ -47,9 +64,9 @@ const processData = (data)=> {
     if(data.alert){
         alert(data.alert)
     } 
-    else if (data.MaKH){
+    else if (data.SDT){
         alert('Đăng ký thành công')
         sessionStorage.user=JSON.stringify(data)
-        location.replace('/')
+        location.replace('/TX/BillList')
     }
 }

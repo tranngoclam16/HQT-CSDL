@@ -304,7 +304,7 @@ app.listen(3000, () => {
 })
 /*---------------------------------------TÀI XẾ------------------------------------------*/
 //
-app.get('/SigUpTX', (req, res) => {
+app.get('/SignUpTX', (req, res) => {
     res.sendFile(path.join(staticPath,"SignUp_TX.html"));
 })
 
@@ -312,15 +312,16 @@ app.get('/SigUpTX', (req, res) => {
 app.post('/SignUpTX', (req, res) => {
     let dkn = {...req.body};
     console.log(dkn.SDT)
-    dboperator.getTX(dkn.SDT).then(result =>{
-        console.log(result[0]);
-        //console.log(flag)
+    dboperator.chechDriverExist(dkn).then(result =>{
+        console.log(result);
         if (result[0]==null){
             console.log('valid')
-            dboperator.addCustomer(dkn).then(result => {
+            dboperator.addTX(dkn).then(result => {
                 res.json(dkn);
             })
         }
+        else if (result[0].CMND == dkn.CMND)
+            res.json({'alert':'CMND đã được sử dụng. Vui lòng nhập số CMND khác!'});
         else 
         res.json({'alert':'Số điện thoại đã tồn tại. Vui lòng nhập số điện thoại khác!'});
     })
@@ -334,7 +335,7 @@ app.get('/LogInTX', (req, res) => {
 app.post('/LogInTX', (req, res) => {
     let {username, password} = req.body;
     //console.log(username)
-    dboperator.getTX(username).then(result =>{
+    dboperator.getDriver(username).then(result =>{
         console.log(result);
         if (result.length>0){
             if (username==result[0].SDT)
@@ -377,7 +378,7 @@ app.post('/TX/BillList', (req, res) => {
 app.post('/TX/AddShipping',(req,res)=>{
     let bill = {...req.body};
      dboperator.addShipping(bill).then(result => {
-        res.status(201).json(result);
+        res.json(result);
      }) 
  })
  //View Info
@@ -387,7 +388,7 @@ app.get('/TX/Info', (req, res) => {
 app.post('/TX/Info', (req, res) => {
     let MaTX = (req.body['MaTX'])
     console.log("tx: ",MaTX)
-    dboperator.getTX(MaTX).then(result => {
+    dboperator.getDriver(MaTX).then(result => {
        console.log(result)
        res.status(201).json(result);
     })

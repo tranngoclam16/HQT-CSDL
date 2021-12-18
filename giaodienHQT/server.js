@@ -335,7 +335,7 @@ app.get('/LogInTX', (req, res) => {
 app.post('/LogInTX', (req, res) => {
     let {username, password} = req.body;
     //console.log(username)
-    dboperator.getTX(username).then(result =>{
+    dboperator.getDriver(username).then(result =>{
         console.log(result);
         if (result.length>0){
             if (username==result[0].SDT)
