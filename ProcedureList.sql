@@ -255,7 +255,7 @@ BEGIN
         AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
                                       FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)
 		select @mota = Mota from TinhTrangDH where @ttdh = MaTinhTrang
-		print(@mota)
+		select @mota as MoTa
 		select @ttdh as TTDH
 		IF @ttdh < 3
 			BEGIN
@@ -263,19 +263,20 @@ BEGIN
 				PRINT(N'Đơn hàng chưa sẵn sàng để giao')
           --RAISERROR('1',15,1)
 			END
-			ELSE IF @ttdh = 3
-				BEGIN
-					DECLARE @PhiVanChuyen int
-					SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-					INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+			ELSE 
+		IF @ttdh = 3
+			BEGIN
+				DECLARE @PhiVanChuyen int
+				SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
+				INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-					INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-					select @msg = N'Nhận đơn thành công'
-				END
+				INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+				select @msg = N'Nhận đơn thành công'
+			END
 		
 			ELSE 
 			begin
-				select @msg = N'Đơn hàng đã có người nhận'
+				select @msg = N'Đơn hàng đã có người nhận' 
 				print(N'Đơn hàng đã có người nhận')
 			--raiserror('2',15,1);
 			end
@@ -501,30 +502,10 @@ END
 GO
 --DROP PROCEDURE sp_XemTinhTrangDonHang
 --
-<<<<<<< Updated upstream
---DANH SÁCH CÁC ĐƠN HÀNG ĐANG Ở TÌNH TRẠNG CHỜ GIAO HÀNG
-create procedure sp_getBillForDeliver
-	(@start int, @num int, @tong int output)
-as
-begin
-	--declare @tong int
-	
-	select MaDH into #tblTemp
-	from CT_TTDH 
-	group by MaDH
-	having max(MaTT) = 3
-	select @tong = count(*) 
-	from DonHang DH join #tblTemp as T on T.MaDH=DH.MaDH
-	SELECT * 
-	FROM (SELECT ROW_NUMBER() OVER (ORDER BY DonHang.MaDH) AS ROWNUMBER, DonHang.MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, convert(varchar, NgayLap, 113) as NgayLap, PhiVanChuyen, TongHang, TongTien, ThanhToan
-         FROM DonHang join #tblTemp temp on temp.MaDH = DonHang.MaDH)  AS T WHERE T.ROWNUMBER >= @start AND T.ROWNUMBER < (@start+@num)
-	return 
-	
-end
-=======
+
 --TÀI XẾ HỦY NHẬN ĐƠN HÀNG -> XÓA TRONG THU NHẬP TÀI XẾ
---
-CREATE PROCEDURE sp_TaiXeHuyNhanDonHang
+
+create procedure sp_TaiXeHuyNhanDonHang
             (@MaTX VARCHAR(12),
             @MaDH VARCHAR(10))
 AS
@@ -558,5 +539,24 @@ END
 GO
 --DROP PROCEDURE sp_TaiXeHuyNhanDonHang
 --=======================================================================================================================
+--DANH SÁCH CÁC ĐƠN HÀNG ĐANG Ở TÌNH TRẠNG CHỜ GIAO HÀNG
+create procedure sp_getBillForDeliver
+	(@start int, @num int, @tong int output)
+as
+begin
+	--declare @tong int
+	
+	select MaDH into #tblTemp
+	from CT_TTDH 
+	group by MaDH
+	having max(MaTT) = 3
+	select @tong = count(*) 
+	from DonHang DH join #tblTemp as T on T.MaDH=DH.MaDH
+	SELECT * 
+	FROM (SELECT ROW_NUMBER() OVER (ORDER BY DonHang.MaDH) AS ROWNUMBER, DonHang.MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, convert(varchar, NgayLap, 113) as NgayLap, PhiVanChuyen, TongHang, TongTien, ThanhToan
+         FROM DonHang join #tblTemp temp on temp.MaDH = DonHang.MaDH)  AS T WHERE T.ROWNUMBER >= @start AND T.ROWNUMBER < (@start+@num)
+	return 
+	
+end
 
->>>>>>> Stashed changes
+
