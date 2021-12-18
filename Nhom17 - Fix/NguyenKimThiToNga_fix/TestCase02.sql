@@ -3,42 +3,47 @@ USE HT_DHCH_ONLINE
 GO
 CREATE PROCEDURE sp_TaiXeNhanDonHang
             (@MaTX VARCHAR(12),
-            @MaDH VARCHAR(10))
+            @MaDH VARCHAR(10),
+			@msg nvarchar(100) output)
 AS
 BEGIN
-  SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
-  SET NOCOUNT ON;
-  BEGIN TRAN
-    BEGIN TRY
-	  DECLARE @ttdh int, @mota nvarchar(100)
-	  Set @ttdh = (SELECT MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
-          WHERE ttd1.MaDH = @MaDH 
-            AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH))
-		SET @mota = (select Mota from TinhTrangDH where @ttdh = MaTinhTrang)
-		print(@mota)
-      IF @ttdh < 3
-        BEGIN
-          PRINT(N'Đơn hàng chưa sẵn sàng để giao')
-          RAISERROR('1',15,1)
-        END
-      ELSE IF @ttdh = 3
-        BEGIN
-        WAITFOR DELAY '00:00:05'
-        DECLARE @PhiVanChuyen int
-        SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-		INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+	BEGIN TRAN
+		BEGIN TRY
+		DECLARE @ttdh int, @mota nvarchar(100)
+		SELECT @ttdh=MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
+        WHERE ttd1.MaDH = @MaDH 
+        AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)
+		select @mota = Mota from TinhTrangDH where @ttdh = MaTinhTrang
+		select @mota as MoTa
+		select @ttdh as TTDH
+		IF @ttdh < 3
+			BEGIN
+				select @msg = N'Đơn hàng chưa sẵn sàng để giao'
+				PRINT(N'Đơn hàng chưa sẵn sàng để giao')
+          --RAISERROR('1',15,1)
+			END
+			ELSE 
+		IF @ttdh = 3
+			BEGIN
+			WAITFOR DELAY '00:00:05'
+				DECLARE @PhiVanChuyen int
+				SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
+				INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-        END
-	  ELSE 
-		begin
-			print(N'Đơn hàng đã có người nhận')
-			raiserror('2',15,1);
-		end
-    COMMIT TRAN
+				INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+				select @msg = N'Nhận đơn thành công'
+			END
+		
+			ELSE 
+			begin
+				select @msg = N'Đơn hàng đã có người nhận' 
+				print(N'Đơn hàng đã có người nhận')
+			--raiserror('2',15,1);
+			end
+		COMMIT TRAN
     END TRY
-  BEGIN CATCH
+	BEGIN CATCH
 			IF @@trancount>0
 				BEGIN	
 					print(N'Lỗi')

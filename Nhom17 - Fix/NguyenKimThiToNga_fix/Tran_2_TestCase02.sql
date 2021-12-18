@@ -1,3 +1,5 @@
 ﻿Use HT_DHCH_ONLINE
 GO
-EXEC sp_TaiXeNhanDonHang '047733459124', '0000000001'
+declare @msg nvarchar(100)
+EXEC sp_TaiXeNhanDonHang '012456782', '0000000001',@msg=@msg output
+SELECT @msg
