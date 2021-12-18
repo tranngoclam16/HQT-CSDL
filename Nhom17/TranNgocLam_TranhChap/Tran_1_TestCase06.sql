@@ -5,4 +5,4 @@ go
 --Transaction 1
 declare @sum int
 exec sp_KiemTraGiaBan_TC 100000, @Tong = @sum output
-select @sum as NumberOfColumn
+select @sum as TongSoSanPham
