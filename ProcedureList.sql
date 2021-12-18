@@ -67,7 +67,7 @@ GO
 CREATE PROC sp_CreateAccount_KH
 	@MaKH varchar(10),
 	@pword varchar(20),
-	@HoTen nvarchar(50),
+	@HoTen nvarchar(100),
 	@DiaChi nvarchar(100),
 	@Email varchar(30)
 AS
@@ -329,11 +329,11 @@ BEGIN
 
 			INSERT INTO SanPham values (@MaSP, @TenSP, @GiaBan, @SLTon)
 
-			/*if (@SLTon <0)
+			if (@SLTon <0)
 				begin
 					print('1')
 					raiserror(N'không được nhỏ hơn 0',15,1)
-				end*/
+				end
 
 		COMMIT TRAN
 		END TRY
@@ -404,30 +404,45 @@ GO
 --
 CREATE PROCEDURE sp_TaiXeNhanDonHang
             (@MaTX VARCHAR(12),
-            @MaDH VARCHAR(10))
+            @MaDH VARCHAR(10),
+			@msg nvarchar(100) output)
 AS
 BEGIN
-  BEGIN TRAN
-    BEGIN TRY
-      IF (SELECT MaTT FROM CT_TTDH ttd1 
-          WHERE ttd1.MaDH = @MaDH 
-            AND ttd1.NgayCapNhat > ALL(SELECT ttd2.NgayCapNhat 
-                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)) <> 3
-        BEGIN
-          PRINT('1')
-          RAISERROR(N'Đơn hàng đang không được chờ vận chuyển',15,1)
-        END
-      ELSE
-        BEGIN
-        DECLARE @PhiVanChuyen int
-        SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
-        INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
+	BEGIN TRAN
+		BEGIN TRY
+		DECLARE @ttdh int, @mota nvarchar(100)
+		SELECT @ttdh=MaTT FROM CT_TTDH ttd1 with (XLOCK, ROWLOCK)
+        WHERE ttd1.MaDH = @MaDH 
+        AND ttd1.NgayCapNhat >= ALL(SELECT ttd2.NgayCapNhat 
+                                      FROM CT_TTDH ttd2 WHERE ttd2.MaDH = ttd1.MaDH)
+		select @mota = Mota from TinhTrangDH where @ttdh = MaTinhTrang
+		print(@mota)
+		select @ttdh as TTDH
+		IF @ttdh < 3
+			BEGIN
+				select @msg = N'Đơn hàng chưa sẵn sàng để giao'
+				PRINT(N'Đơn hàng chưa sẵn sàng để giao')
+          --RAISERROR('1',15,1)
+			END
+			ELSE IF @ttdh = 3
+				BEGIN
+					DECLARE @PhiVanChuyen int
+					SET @PhiVanChuyen = (SELECT PhiVanChuyen FROM DonHang WHERE MaDH = @MaDH)
+					INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
-        INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-        END
-    COMMIT TRAN
+					INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
+					select @msg = N'Nhận đơn thành công'
+				END
+		
+			ELSE 
+			begin
+				select @msg = N'Đơn hàng đã có người nhận'
+				print(N'Đơn hàng đã có người nhận')
+			--raiserror('2',15,1);
+			end
+		COMMIT TRAN
     END TRY
-  BEGIN CATCH
+	BEGIN CATCH
 			IF @@trancount>0
 				BEGIN	
 					print(N'Lỗi')
@@ -459,7 +474,7 @@ BEGIN
 			set TenSP= @TenSP, GiaBan= @GiaBan, SLTon= @SLTon
 			where MaSP= @MaSP
 			
-			select * from SanPham
+			--select * from SanPham
 
 			if (@SLTon <0)
 				begin
@@ -524,17 +539,12 @@ GO
 --
 --CẬP NHẬT TÌNH TRẠNG ĐƠN HÀNG
 --
-CREATE PROCEDURE sp_CapNhatTinhTrangDonHang
+create PROCEDURE sp_CapNhatTinhTrangDonHang
 	(@MaDH varchar(10), @MaTT int)
 as
 begin
 	begin tran
 		begin try
-			if not exists (select * from CT_TTDH where MaDH= @MaDH)
-				begin
-					print('1')
-					raiserror(N'Không tồn tại đơn hàng',15,1)
-				end
 			insert into CT_TTDH
 			values (GETDATE(), @MaDH, @MaTT)
 			commit tran
@@ -697,5 +707,57 @@ END
 GO
 --DROP PROCEDURE sp_XemTinhTrangDonHang
 --=======================================================================================================================
+--KIỂM TRA CÁC SẢN PHẨM CÓ SLTON <N
+--
+create procedure sp_KiemTraSLTon
+	@slt int,
+	@Tong int output
+as
+begin
+	begin tran
+		begin try
+			select @Tong= count(MaSP) from SanPham where SanPham.SLTon<@slt
 
+			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE SLTon<@slt
+			
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+--DROP PROCEDURE sp_KiemTraSLTon
+--
+
+--KIỂM TRA CÁC SẢN PHẨM CÓ GIABAN <N
+--
+create procedure sp_KiemTraGiaBan
+	@gb float,
+	@Tong int output
+as
+begin
+	begin tran
+		begin try
+			select @Tong= count(MaSP) from SanPham where SanPham.GiaBan<@gb
+
+			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE GiaBan<@gb
+			
+		commit tran
+		end try
+	BEGIN CATCH
+		IF @@trancount>0
+				BEGIN	
+					print(N'Lỗi')
+					ROLLBACK TRANSACTION 
+				END
+		END CATCH
+end
+go
+--DROP PROCEDURE sp_KiemTraGiaBan
+--
 
