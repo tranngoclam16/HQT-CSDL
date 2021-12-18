@@ -12,7 +12,7 @@ BEGIN
 			waitfor delay '00:00:05'
 			declare @ma_count bigint,@MaSP varchar(6)
 		
-			set @MaSP=(select TOP 1 (MaSP) from SanPham with (XLOCK, ROWLOCK) 
+			set @MaSP=(select TOP 1 (MaSP) from SanPham --with (XLOCK, ROWLOCK) 
 			order by MaSP DESC)
 			
 			if (isnull(@MaSP,'false')<>'false')
@@ -50,7 +50,7 @@ BEGIN
 END
 GO
 
---drop procedure sp_ThemSanPham_TC
+--drop procedure sp_ThemSanPham
 --=======================================
 --DATATEST
 TRUNCATE TABLE CT_TTDH
