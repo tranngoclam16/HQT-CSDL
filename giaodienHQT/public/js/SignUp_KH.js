@@ -48,6 +48,7 @@ const processData = (data)=> {
         alert(data.alert)
     } 
     else if (data.MaKH){
+        alert('Đăng ký thành công')
         sessionStorage.user=JSON.stringify(data)
         location.replace('/')
     }

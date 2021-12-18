@@ -286,22 +286,22 @@ async function addShipping(bill){
         let pool = await sql.connect(config);
         console.log(bill)
         let insertStatus = await pool.request()
-        .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTX', sql.VarChar(12), bill.MaTX)
+        .input('MaDH', sql.VarChar(10), bill.MaDH)
         .output('msg', sql.NVarChar(100))
         .execute("sp_TaiXeNhanDonHang");
         console.log(insertStatus.output)
-        return insertStatus.recordsets;
+        return insertStatus.output;
     }
     catch(error){
         console.log(error);
     }
 }
-async function getTX(MaTX){
+async function getTX(TX){
     //console.log('dboperator',MaTX)
     try{
         let pool=await sql.connect(config);
-        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + MaTX + "'");
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + TX.SDT + "' or CMND= '" + TX.CMND+"'");
         //console.log(products.recordset)
         return products.recordset;
     }
@@ -314,14 +314,20 @@ async function addTX(dkn){
     try{
         let pool = await sql.connect(config);
         let insertProduct = await pool.request()
-        .input('MaKH', sql.VarChar(10), dkn.MaKH)
-        .input('pword', sql.VarChar(20), dkn.Password)
-        .input('Hoten', sql.NVarChar(100), dkn.HoTen)
+        .input('CMND', sql.VarChar(12), dkn.CMND)
+        .input('SDT', sql.VarChar(10), dkn.SDT)
+        .input('pword', sql.VarChar(20), dkn.pword)
+        .input('HoTen', sql.NVarChar(100), dkn.HoTen)
         .input('DiaChi', sql.NVarChar(100), dkn.DiaChi)
+        .input('BienSoXe', sql.VarChar(12), dkn.BienSoXe)
+        .input('KVHoatDong', sql.NVarChar(30), dkn.KVHoatDong)
         .input('Email', sql.VarChar(30), dkn.Email)
+        .input('STK', sql.VarChar(15), dkn.STK)
+        .input('NganHang', sql.NVarChar(30), dkn.NganHang)
+        .input('ChiNhanh', sql.NVarChar(30), dkn.ChiNhanh)
         
         /*.query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");*/
-        .execute("sp_CreateAccount_KH")
+        .execute("sp_CreateAccount_TX")
         return insertProduct.recordsets;
     }
     catch(error){
@@ -396,6 +402,7 @@ module.exports={
     checkProductPrice:checkProductPrice,
     addShipping:addShipping,
     getTX:getTX,
+    addTX:addTX,
     getDriverBillList:getDriverBillList,
     getBillForDelivery: getBillForDelivery,
     CheckProductKH:CheckProductKH

@@ -14,30 +14,36 @@
 --add constraint  PK_TNTX
 --primary key (MaTX, MaDH)
 
-drop table ThuNhapTX
+--drop table ThuNhapTX
 
-create table ThuNhapTX (
-	MaTX varchar(10) ,
-	MaDH varchar(10) ,
-	PhiVanChuyen int ,
-	constraint PK_TNTX primary key (MaDH, MaTX),
-	CONSTRAINT FK__ThuNhapTX__MaDH
-	FOREIGN KEY (MaDH) references DonHang(MaDH),
-	CONSTRAINT FK__ThuNhapTX__MaTX 
-	FOREIGN KEY (MaTX) references TaiXe (SDT)
-)
+--create table ThuNhapTX (
+--	MaTX varchar(10) ,
+--	MaDH varchar(10) ,
+--	PhiVanChuyen int ,
+--	constraint PK_TNTX primary key (MaDH, MaTX),
+--	CONSTRAINT FK__ThuNhapTX__MaDH
+--	FOREIGN KEY (MaDH) references DonHang(MaDH),
+--	CONSTRAINT FK__ThuNhapTX__MaTX 
+--	FOREIGN KEY (MaTX) references TaiXe (SDT)
+--)
 
 
-create procedure sp_getBillForDeliver
+alter procedure sp_getBillForDeliver
 	(@start int, @num int, @tong int output)
 as
 begin
 	--declare @tong int
-	
-	select MaDH into #tblTemp
-	from CT_TTDH 
-	group by MaDH
-	having max(MaTT) = 3
+	select * into #tblTemp
+	from (select ttdh1.MaDH, ttdh1.MaTT 
+		from CT_TTDH ttdh1
+		where ttdh1.NgayCapNhat >= all (select ttdh2.NgayCapNhat
+										from CT_TTDH ttdh2
+										where ttdh1.MaDH = ttdh2.MaDH)) as T
+	where T.MaTT=3
+		
+
+	--group by ttdh1.MaDH
+	--having max(ttdh1.MaTT) = 3 
 	select @tong = count(*) 
 	from DonHang DH join #tblTemp as T on T.MaDH=DH.MaDH
 	SELECT * 
@@ -52,9 +58,13 @@ exec sp_getBillForDeliver 0,100,@tong = @sum output
 select @sum
 
 declare @error nvarchar(100)
-exec sp_TaiXeNhanDonHang '0000000003', '0930000000', @msg=@error output
+exec sp_TaiXeNhanDonHang '0930000000','0000000001', @msg=@error output
 select @error
 
 select * 
 from CT_TTDH
-where MaDH='0000000003'
+where MaDH='0000000001'
+
+select * 
+From CT_TTDH
+order by MaDH ASC, NgayCapNhat ASC
