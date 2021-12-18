@@ -18,10 +18,8 @@ create table DoiTac (
 	ThanhPho nvarchar(50),
 	Quan nvarchar(30),
 	SoChiNhanh int,
-	--SoLuongDH int,
 	LoaiHang nvarchar(100),
 	DiaChi nvarchar(200),
-	--SDT varchar(10),
 	Email varchar(30)
 )
 create table HopDong (
@@ -67,7 +65,6 @@ create table KhachHang (
 	MaKH varchar(10) primary key,--username là SDT 
 	pword  varchar (20) not null,--password
 	HoTen nvarchar(100),
-	--SDT varchar(10),
 	DiaChi nvarchar(100),
 	Email varchar(30)
 )
@@ -116,14 +113,14 @@ create table TaiXe (
 )
 
 create table ThuNhapTX (
-	MaTX varchar(12) ,
+	MaTX varchar(10) ,
 	MaDH varchar(10) ,
 	PhiVanChuyen int ,
-	constraint PK_TNTX primary key (MaDH, MaTX),
+	constraint PK_TNTX primary key (MaDH),
 	CONSTRAINT FK__ThuNhapTX__MaDH
 	FOREIGN KEY (MaDH) references DonHang(MaDH),
 	CONSTRAINT FK__ThuNhapTX__MaTX 
-	FOREIGN KEY (MaTX) references TaiXe (CMND)
+	FOREIGN KEY (MaTX) references TaiXe (SDT)
 )
 
 
