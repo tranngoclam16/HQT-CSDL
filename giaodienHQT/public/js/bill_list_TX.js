@@ -1,11 +1,11 @@
-button.addEventListener('click',() => {
+/* button.addEventListener('click',() => {
     let objToPost = { 
         MaDH: $('#textMaDH').val(),
         MaTX: $('#textMaTX').val()
     }
     console.log(objToPost)
     senData('http://localhost:3000/TX/AddShipping', objToPost)
-})
+}) */
 
 //alert function
 const showAlert = (msg) => {
