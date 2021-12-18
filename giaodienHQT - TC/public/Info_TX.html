@@ -15,12 +15,15 @@
         var currentID=""
         var currentPage = 0;
         function goToPage(value){
-                 currentPage += value;
-                 
-                 console.log("click")
-                 console.log(currentPage);
-                 console.log(currentID);
-                 fetchTable(currentPage*100,currentID)
+              currentPage += value;
+              let user = JSON.parse(sessionStorage.user)
+              console.log(user.SDT)
+              fetchData(user.SDT)
+               
+              console.log("click")
+              console.log(currentPage);
+              console.log(currentID);
+              fetchTable(currentPage*100,user.SDT)
         }
       
       </script>
@@ -134,15 +137,16 @@
   </div>
 </div>
 
-<script>
+<!-- <script>
     b.addEventListener('click', function() {
       var y=$('#textField').val()
+      let user = JSON.parse(sessionStorage.user)
       //console.log(y)
-      fetchData(y);
-      fetchTable(0,y);
+      fetchData(user.SDT);
+      fetchTable(0,user.SDT);
       currentID=y
     });
-</script>
+</script> -->
 
 <script id="entry-template" type="text/x-handlebars-template">
   {{#each this}}
@@ -168,4 +172,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
 </body>
 </html>
+
+<script>
+  $(document).ready(function(){  
+      goToPage(0)})
+</script>
 

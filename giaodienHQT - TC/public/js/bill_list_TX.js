@@ -38,4 +38,15 @@ const processData = (data)=> {
   }
 }
   
+const DriverAction = (MaDH)=>{
+  console.log(MaDH)
+  let TX = JSON.parse(sessionStorage.user)
+  console.log(TX.SDT)
+  let objToPost = { 
+    MaDH: MaDH,
+    MaTX: TX.SDT
+  }
+  console.log(objToPost)
+  senData('http://localhost:3000/TX/AddShipping', objToPost)
+}
   

@@ -7,11 +7,11 @@ function fetchData (value) {
           "Content-type":'application/json'
         },
         //credentials: 'include',
-        body: JSON.stringify({start:value})
+        body: JSON.stringify({MaTX:value})
       })
     .then (response => {response.json().then((data) => {
         data = data[0];
-        console.log(data)
+        console.log('js',data)
         document.getElementById('template-MaTX').innerHTML = data["CMND"];
         document.getElementById('template-HoTen').innerHTML = data["HoTen"];
         document.getElementById('template-SDT').innerHTML = data["SDT"];

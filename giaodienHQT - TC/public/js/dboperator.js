@@ -291,8 +291,9 @@ async function addShipping(bill){
         let insertStatus = await pool.request()
         .input('MaDH', sql.VarChar(10), bill.MaDH)
         .input('MaTX', sql.VarChar(12), bill.MaTX)
-        .execute("sp_TaiXeNhanDonHang_TC");
-        console.log(insertStatus)
+        .output('msg', sql.NVarChar(100))
+        .execute("sp_TaiXeNhanDonHang");
+        console.log(insertStatus.output)
         return insertStatus.recordsets;
     }
     catch(error){
@@ -300,11 +301,30 @@ async function addShipping(bill){
     }
 }
 async function getTX(MaTX){
+    //console.log('dboperator',MaTX)
     try{
         let pool=await sql.connect(config);
-        let products=await pool.request().query("SELECT * FROM TaiXe WHERE CMND = '" + MaTX + "'");
+        let products=await pool.request().query("SELECT * FROM TaiXe WHERE SDT = '" + MaTX + "'");
         //console.log(products.recordset)
         return products.recordset;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+async function addTX(dkn){
+    try{
+        let pool = await sql.connect(config);
+        let insertProduct = await pool.request()
+        .input('MaKH', sql.VarChar(10), dkn.MaKH)
+        .input('pword', sql.VarChar(20), dkn.Password)
+        .input('Hoten', sql.NVarChar(100), dkn.HoTen)
+        .input('DiaChi', sql.NVarChar(100), dkn.DiaChi)
+        .input('Email', sql.VarChar(30), dkn.Email)
+        
+        /*.query("INSERT INTO KhachHang VALUES('" + dkn.MaKH + "', '" + dkn.Password + "', '" + dkn.HoTen + "', '" + dkn.DiaChi + "', '" + dkn.Email + "')");*/
+        .execute("sp_CreateAccount_KH")
+        return insertProduct.recordsets;
     }
     catch(error){
         console.log(error);
@@ -320,6 +340,24 @@ async function getDriverBillList(start,MaTX, num=100){
         //console.log(products.recordsets[0])
         //console.log(length.recordsets[0][0][""])
         return {tableLength: length.recordsets[0][0][""], data: products.recordsets[0]};
+    }
+    catch(error){
+        return error;
+    }
+}
+
+async function getBillForDelivery(start, num=100){
+    //console.log(start)
+    try{
+        let pool = await sql.connect(config);
+        let bills = await pool.request()
+        .input('start', sql.Int,start)
+        .input('num', sql.Int,num)
+        .output('Tong', sql.Int)
+        .execute("sp_getBillForDeliver");
+        //console.log(bills.recordset)
+        //console.log(bills.output.Tong)
+        return {tableLength: bills.output.Tong, data: bills.recordset};
     }
     catch(error){
         return error;
@@ -360,6 +398,7 @@ module.exports={
     addShipping:addShipping,
     getTX:getTX,
     getDriverBillList:getDriverBillList,
+    getBillForDelivery: getBillForDelivery,
     CheckProductKH:CheckProductKH
 }
 
