@@ -53,8 +53,10 @@ async function getProductList(start, num=100){
 }
 
 async function addBill(bill){
+    //var flag=1
     try{
-        console.log("bill:", bill)
+        //console.log("bill:", bill)
+        let flag = 1
         let pool = await sql.connect(config);
         let insertBill = await pool.request()
         .input('MaKH', sql.VarChar(10), bill.MaKH)
@@ -66,7 +68,8 @@ async function addBill(bill){
         .input('SDT', sql.VarChar(10), bill.SDT)
         .input('ThanhToan', sql.NVarChar(100), bill.ThanhToan)
         .output('MaDonHang')
-        .execute('sp_ThemDonHang_TC',async(err,result)=>{
+        .execute('sp_ThemDonHang')
+        /* .execute('sp_ThemDonHang',async(err,result)=>{
             if (err) {
                 
             } else {
@@ -82,26 +85,58 @@ async function addBill(bill){
                     .input('MaSP',sql.VarChar(6),MaSP)
                     .input('SoLuong',sql.Int,SL)
                     .output('error',sql.Int)
-                    .execute('sp_ThemChiTietDonHang_TC')
-                    
+                    .execute('sp_ThemChiTietDonHang')
+                    flag = insertP.output.error
                     //console.log(insertP.output.error)
                     if (insertP.output.error==2){
+                        let pool1 = await sql.connect(config);
                         console.log('out of stock');
-                        let de=await pool.request()
+                        let de=await pool1.request()
                         .input('MaDH',sql.VarChar(10),MaDH)
                         .execute('sp_XoaDonHang')
+                        //return 'Số lượng đặt vượt quá số lượng trong kho'
+                        return 2
                         break;
-                    }           
+                    } 
                 }
+                /* console.log('flag',flag)
+                return flag 
             }
-    })
-        return 1;
+            return 1
+        }) */
+        MaDH=insertBill.output.MaDonHang;
+        console.log('MaDH:',MaDH)
+            for (i=0;i<bill.Products.length;i++){
+                var SL=bill.Products[i].quantity;
+                var MaSP=bill.Products[i].id;
+                   // console.log('sp: ',MaSP)
+                let insertP= await pool.request()
+                .input('MaDH',sql.VarChar(10),MaDH)
+                .input('MaSP',sql.VarChar(6),MaSP)
+                .input('SoLuong',sql.Int,SL)
+                .output('error',sql.Int)
+                .execute('sp_ThemChiTietDonHang')
+                flag = insertP.output.error
+                    //console.log(insertP.output.error)
+                if (insertP.output.error==2){
+                    let pool1 = await sql.connect(config);
+                    console.log('out of stock');
+                    let de=await pool1.request()
+                    .input('MaDH',sql.VarChar(10),MaDH)
+                    .execute('sp_XoaDonHang')
+                    //return 'Số lượng đặt vượt quá số lượng trong kho'
+                    return 2
+                    break;
+                } 
+            }
+        //console.log(insertBill.output.MaDonHang)
+        return 1
     }
     catch(error){
         console.log(error);
     }
+    //return flag
 }
-
 
 async function addProduct(dkn){
     try{
