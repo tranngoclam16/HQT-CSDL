@@ -13,7 +13,7 @@
 
     var _options = null;
     var DEFAULT_OPTIONS = {
-      currencySymbol: '$',
+      currencySymbol: 'VND',
       classCartIcon: 'my-cart-icon',
       classCartBadge: 'my-cart-badge',
       classProductQuantity: 'my-product-quantity',

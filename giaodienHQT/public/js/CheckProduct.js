@@ -22,7 +22,7 @@ function fetchTable (choice,value) {
             console.log(data)
             var source = document.getElementById('entry-template').innerHTML;
             var template = Handlebars.compile(source);
-            var html = template(data);
+            var html = template(data.recordset);
             $('#listProduct').html(html);
             document.getElementById("template-Tong").innerHTML= data.output['Tong'];
         }
