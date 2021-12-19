@@ -466,7 +466,10 @@
         data: JSON.stringify(objToPost),
         contentType: "application/json"
     }).done(function (result){
-        console.log('result:',result);
+        console.log(result)
+        alert(result)
+        //alert(sessionStorage.alert)
+        //location.reload('/KH/ProductList')
     }).fail(function (xhr, textStatus, error){
         console.log(textStatus);
         console.log(error);

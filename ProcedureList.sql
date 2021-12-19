@@ -188,7 +188,7 @@ GO
 --
 --THÊM CHI TIẾT ĐƠN HÀNG 
 --
-CREATE PROCEDURE sp_ThemChiTietDonHang
+create PROCEDURE sp_ThemChiTietDonHang
 	(@MaDH varchar(10),
 	@MaSP varchar(6),
 	@SoLuong int,
