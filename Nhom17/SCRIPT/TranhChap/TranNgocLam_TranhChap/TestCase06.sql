@@ -9,7 +9,7 @@ begin
 	begin tran
 		begin try
 			select @Tong= count(MaSP) from SanPham where SanPham.GiaBan<@gb
-			waitfor delay '00:00:05'
+			waitfor delay '00:00:09'
 			SELECT ROW_NUMBER() OVER (ORDER BY MaSP) AS ROWNUMBER, MaSP,TenSP,GiaBan,SLTon FROM SanPham WHERE GiaBan<@gb
 			
 		commit tran
@@ -80,9 +80,9 @@ truncate table HopDong
 delete from DoiTac
 
 --Insert data for TestCase09's testing
-exec sp_ThemSanPham_TC N'Sách', 170000, 10
-exec sp_ThemSanPham_TC N'Áo thun', 89000, 450
-exec sp_ThemSanPham_TC N'Bông cải', 20000, 28
-exec sp_ThemSanPham_TC N'Nước hoa', 700000, 8
-exec sp_ThemSanPham_TC N'Dép', 65000, 1100
-exec sp_ThemSanPham_TC N'Giày thể thao', 300000, 44
+exec sp_ThemSanPham N'Sách', 170000, 10
+exec sp_ThemSanPham N'Áo thun', 89000, 450
+exec sp_ThemSanPham N'Bông cải', 20000, 28
+exec sp_ThemSanPham N'Nước hoa', 700000, 8
+exec sp_ThemSanPham N'Dép', 65000, 1100
+exec sp_ThemSanPham N'Giày thể thao', 300000, 44

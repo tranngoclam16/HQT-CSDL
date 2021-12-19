@@ -13,7 +13,7 @@ begin
 			if not exists (select * from SanPham where @MaSP=MaSP and @TenSP= TenSP) 
 				raiserror(N'Không tồn tại sản phẩm',15,1)
 			set @result=1
-			waitfor delay '00:00:08'
+			waitfor delay '00:00:12'
 			select * from SanPham where MaSP= @MaSP and TenSP= @TenSP 
 		commit tran
 		end try

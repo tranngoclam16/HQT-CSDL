@@ -115,7 +115,7 @@ async function addBill(bill){
                 .input('MaSP',sql.VarChar(6),MaSP)
                 .input('SoLuong',sql.Int,SL)
                 .output('error',sql.Int)
-                .execute('sp_ThemChiTietDonHang')
+                .execute('sp_ThemChiTietDonHang_TC')
                 flag = insertP.output.error
                     //console.log(insertP.output.error)
                 if (insertP.output.error==2){
@@ -433,9 +433,9 @@ async function CheckProductKH(MaSP,TenSP){
          .input('MaSP', sql.VarChar(6), MaSP)
          .input('TenSP', sql.NVarChar(50), TenSP)
          .output('result',sql.Int)
-         .execute("sp_KiemTraSP");
-         console.log(products.recordset)
-         return products.recordset
+         .execute("sp_KiemTraSP_TC");
+         console.log(products)
+         return products
     }
     catch(error){
         console.log(error);
