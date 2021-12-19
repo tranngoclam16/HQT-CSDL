@@ -34,20 +34,20 @@ SET @db_name = N'HT_DHCH_ONLINE'
 --/*append date*/ REPLACE(CONVERT(NVARCHAR(10), GETDATE(), 102), '.', '_') + '_' +
 --/*append time*/ REPLACE(CONVERT(NVARCHAR(5), GETDATE(), 108), ':', '_') + '.bak'
 
-DECLARE @SQL NVARCHAR(MAX)
-SET @SQL = 
-    N'BACKUP DATABASE ' + QUOTENAME(@db_name) + ' TO DISK = @filepath WITH INIT' + 
-      CASE WHEN EXISTS(
-                SELECT value
-                FROM sys.configurations
-                WHERE name = 'backup compression default'
-          )
-        THEN ', COMPRESSION'
-        ELSE ''
-      END
+--DECLARE @SQL NVARCHAR(MAX)
+--SET @SQL = 
+--    N'BACKUP DATABASE ' + QUOTENAME(@db_name) + ' TO DISK = @filepath WITH INIT' + 
+--      CASE WHEN EXISTS(
+--                SELECT value
+--                FROM sys.configurations
+--                WHERE name = 'backup compression default'
+--          )
+--        THEN ', COMPRESSION'
+--        ELSE ''
+--      END
 
-EXEC sys.sp_executesql @SQL, N'@filepath NVARCHAR(4000)', @filepath = @filepath
-GO
+--EXEC sys.sp_executesql @SQL, N'@filepath NVARCHAR(4000)', @filepath = @filepath
+--GO
 
 USE HT_DHCH_ONLINE
 GO
@@ -156,26 +156,26 @@ GO
 --
 -- Inserting data into table dbo.KhachHang
 --
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000000', '00000', N'Đoàn Thanh Bảo ', N'15 Vườn Lài, Phường 17, Quận 4, TP.HCM', 'BarneyRosado@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000001', '00001', N'Trần Vân Trúc ', N'47 Nguyễn Trọng Tuyển, Phường 3, Quận 2, TP.HCM', 'HeleneRapp92@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000002', '00002', N'Bùi Bảo Giang ', N'31 Lê Duy Nhuận, Phường 1, Hoàng Mai, Hà Nội', 'Quarles6@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000003', '00003', N'Nguyễn Bá Trâm ', N'50 Hồ Xuân Hương, Phường 8, Ba Đình, Hà Nội', 'Desire.Guevara@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000004', '00004', N'Tạ Duy Vy ', N'349 34 Nguyễn Thị Thập, Phường 7, Quận 12, TP.HCM', 'Jacqulyn.Villa7@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000005', '00005', N'Cao Thị Đức Thế ', N'142 Trương Đình Hội, Phường 6, Quận 7, TP.HCM', 'Charita_Pettit@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000006', '00006', N'Đoàn Hùng Chương ', N'104 Lê Thánh Tôn, Phường 16, Hoàn Kiếm, Hà Nội', 'Tyson_ESnodgrass@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000007', '00007', N'Tô Huy Khang ', N'56 Nguyễn Duy Dương, Phường 7, Quận 9, TP.HCM', 'Shelton_Dunlap5@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000008', '00008', N'Bùi Đình Khắc Xuân ', N'62 Chương Dương, Phường 1, Đống Đa, Hà Nội', 'Dobbs@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000009', '00009', N'Huỳnh Vân Bình ', N'60 Nguyễn Lương Bằng, Phường 8, Quận 3, TP.HCM', 'HectorMatheny3@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000010', '00010', N'Phan Anh Trân ', N'641 125 Bùi Đình Túy, Phường 2, Tây Hồ, Hà Nội', 'Linkous381@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000011', '00011', N'Đỗ Xuân Nguyên ', N'056 Lăng Cha Cả, Phường 4, Quận 7, TP.HCM', 'MasonMenendez797@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000012', '00012', N'Hồ Hùng Trần Ái ', N'150 Phan Anh, Phường 2, Quận 8, TP.HCM', 'Sabine_Luce7@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000013', '00013', N'Huỳnh Ngọc Dung ', N'363 Lê Hồng Phong, Phường 8, Quận 1, TP.HCM', 'Sean_Galvez@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000014', '00014', N'Đinh Huy Cẩm ', N'15 Sông Đáy, Phường 4, Quận 1, TP.HCM', 'Ema.Clark855@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000015', '00015', N'Trương Bá Xuân Tiến ', N'10 548 Tân Kỳ Tân Quý, Phường 6, Quận 7, TP.HCM', 'Alphonse.SSanderson1@nowhere.c')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000016', '00016', N'Hứa Tuấn Nhung ', N'27 Âu Cơ, Phường 1, Quận 6, TP.HCM', 'Rufus_VCharlton95@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000017', '00017', N'Hoàng Thụy Rin ', N'385 Tăng Bạt Hổ, Phường 1, Quận 3, TP.HCM', 'oqufehnf.iolou@nowhere.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000018', '00018', N'Phan Ngọc Thanh Tiên ', N'546 Trịnh Đình Trọng, Phường 6, Hai Bà Trưng, Hà Nội', 'January.YPence4@example.com')
-INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0930000019', '00019', N'Phạm Tuấn Hưng ', N'305 Âu Cơ, Phường 13, Cầu Giấy, Hà Nội', 'Mims@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000000', '00000', N'Đoàn Thanh Bảo ', N'15 Vườn Lài, Phường 17, Quận 4, TP.HCM', 'BarneyRosado@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000001', '00001', N'Trần Vân Trúc ', N'47 Nguyễn Trọng Tuyển, Phường 3, Quận 2, TP.HCM', 'HeleneRapp92@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000002', '00002', N'Bùi Bảo Giang ', N'31 Lê Duy Nhuận, Phường 1, Hoàng Mai, Hà Nội', 'Quarles6@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000003', '00003', N'Nguyễn Bá Trâm ', N'50 Hồ Xuân Hương, Phường 8, Ba Đình, Hà Nội', 'Desire.Guevara@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000004', '00004', N'Tạ Duy Vy ', N'349 34 Nguyễn Thị Thập, Phường 7, Quận 12, TP.HCM', 'Jacqulyn.Villa7@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000005', '00005', N'Cao Thị Đức Thế ', N'142 Trương Đình Hội, Phường 6, Quận 7, TP.HCM', 'Charita_Pettit@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000006', '00006', N'Đoàn Hùng Chương ', N'104 Lê Thánh Tôn, Phường 16, Hoàn Kiếm, Hà Nội', 'Tyson_ESnodgrass@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000007', '00007', N'Tô Huy Khang ', N'56 Nguyễn Duy Dương, Phường 7, Quận 9, TP.HCM', 'Shelton_Dunlap5@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000008', '00008', N'Bùi Đình Khắc Xuân ', N'62 Chương Dương, Phường 1, Đống Đa, Hà Nội', 'Dobbs@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000009', '00009', N'Huỳnh Vân Bình ', N'60 Nguyễn Lương Bằng, Phường 8, Quận 3, TP.HCM', 'HectorMatheny3@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000010', '00010', N'Phan Anh Trân ', N'641 125 Bùi Đình Túy, Phường 2, Tây Hồ, Hà Nội', 'Linkous381@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000011', '00011', N'Đỗ Xuân Nguyên ', N'056 Lăng Cha Cả, Phường 4, Quận 7, TP.HCM', 'MasonMenendez797@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000012', '00012', N'Hồ Hùng Trần Ái ', N'150 Phan Anh, Phường 2, Quận 8, TP.HCM', 'Sabine_Luce7@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000013', '00013', N'Huỳnh Ngọc Dung ', N'363 Lê Hồng Phong, Phường 8, Quận 1, TP.HCM', 'Sean_Galvez@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000014', '00014', N'Đinh Huy Cẩm ', N'15 Sông Đáy, Phường 4, Quận 1, TP.HCM', 'Ema.Clark855@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000015', '00015', N'Trương Bá Xuân Tiến ', N'10 548 Tân Kỳ Tân Quý, Phường 6, Quận 7, TP.HCM', 'Alphonse.SSanderson1@nowhere.c')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000016', '00016', N'Hứa Tuấn Nhung ', N'27 Âu Cơ, Phường 1, Quận 6, TP.HCM', 'Rufus_VCharlton95@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000017', '00017', N'Hoàng Thụy Rin ', N'385 Tăng Bạt Hổ, Phường 1, Quận 3, TP.HCM', 'oqufehnf.iolou@nowhere.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000018', '00018', N'Phan Ngọc Thanh Tiên ', N'546 Trịnh Đình Trọng, Phường 6, Hai Bà Trưng, Hà Nội', 'January.YPence4@example.com')
+INSERT dbo.KhachHang(MaKH, pword, HoTen, DiaChi, Email) VALUES (N'0931000019', '00019', N'Phạm Tuấn Hưng ', N'305 Âu Cơ, Phường 13, Cầu Giấy, Hà Nội', 'Mims@nowhere.com')
 GO
 
 --
@@ -277,26 +277,26 @@ GO
 --
 -- Inserting data into table dbo.DonHang
 --
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000000', '0930000000', N'97 Hoà Hảo', N'Phường 3', N'Quận 8', N'TP.HCM', N'Nguyễn Khắc Hoài Hảo ', '0521242672', '2020-01-01 00:00:01.000', N'Momo')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000001', '0930000001', N'88 358 Cách Mạng Tháng Tám', N'Phường 7', N'Hoàng Mai', N'Hà Nội', N'Ngô An Bình ', '0760056528', '2020-01-02 00:00:01.750', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000002', '0930000002', N'91 Hồng Lạc', N'Phường 1', N'Quận 12', N'TP.HCM', N'Phan Thanh Khắc Anh ', '0332262152', '2020-01-03 00:00:01.730', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000003', '0930000003', N'873 Lê Văn Sỹ', N'Phường 6', N'Long Biên', N'Hà Nội', N'Đào Phước Trần Thủy ', '0551421731', '2020-01-04 00:00:01.830', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000004', '0930000004', N'064 156 Cộng Hòa', N'Phường 2', N'Thanh Xuân', N'Hà Nội', N'Ngô Phước Vân ', '0434824417', '2020-01-05 00:00:01.540', N'ViettelPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000005', '0930000005', N'070 ý Văn Phức', N'Phường 2', N'Quận 4', N'TP.HCM', N'Vũ Huy Thụy Đại ', '0383058188', '2020-01-06 00:00:01.510', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000006', '0930000006', N'550 Trần Não', N'Phường 5', N'Ba Đình', N'Hà Nội', N'Phùng Đức Thúy ', '0361693816', '2020-01-07 00:00:01.860', N'Bank')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000007', '0930000007', N'61 Nguyễn Thượng Hiền', N'Phường 4', N'Ba Đình', N'Hà Nội', N'Vương Thu Thị Thư ', '0710558031', '2020-01-08 00:00:01.270', N'Momo')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000008', '0930000008', N'04 Công Chúa Ngọc Hân', N'Phường 4', N'Hoàn Kiếm', N'Hà Nội', N'Trương Minh Hoài Long ', '0469029403', '2020-01-09 00:00:01.320', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000009', '0930000009', N'57 Lê Lợi', N'Phường 2', N'Đống Đa', N'Hà Nội', N'Đinh An Trâm ', '0369545818', '2020-01-10 00:00:01.750', N'ViettelPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000010', '0930000010', N'016 005 Trần Xuân Soạn', N'Phường 15', N'Quận 3', N'TP.HCM', N'Hồ Huy Thu ', '0801633708', '2020-01-11 00:00:01.650', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000011', '0930000011', N'120 Bình Long', N'Phường 4', N'Hai Bà Trưng', N'Hà Nội', N'Phạm Hồng Hạ ', '0502139166', '2020-01-12 00:00:01.810', N'Momo')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000012', '0930000012', N'07 õ Văn Kiệt', N'Phường 2', N'Quận 1', N'TP.HCM', N'Cao An An ', '0380495961', '2020-01-13 00:00:01.530', N'Bank')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000013', '0930000013', N'69 Nguyễn Văn Tạo', N'Phường 6', N'Quận 4', N'TP.HCM', N'Trương Huy Du ', '0105421035', '2020-01-14 00:00:01.240', N'Bank')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000014', '0930000014', N'95 An Dương Vương', N'Phường 9', N'Quận 8', N'TP.HCM', N'Hồ Minh Tâm ', '0071363894', '2020-01-15 00:00:01.200', N'ZaloPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000015', '0930000015', N'40 Trịnh Thị Miếng', N'Phường 7', N'Quận 2', N'TP.HCM', N'Vương Vân Ngọc Trân ', '0815488332', '2020-01-16 00:00:01.900', N'Bank')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000016', '0930000016', N'815 Trường Sơn', N'Phường 8', N'Bắc Từ Liêm', N'Hà Nội', N'Lữ An Tín ', '0519265034', '2020-01-17 00:00:01.140', N'Bank')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000017', '0930000017', N'753 Phùng Văn Cung', N'Phường 8', N'Quận 9', N'TP.HCM', N'Đào Phước Trang ', '0979693021', '2020-01-18 00:00:01.900', N'Momo')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000018', '0930000018', N'86 Ngụy Như Kon Tum', N'Phường 1', N'Quận 3', N'TP.HCM', N'Hồ Bá Đức Nguyệt ', '0525408373', '2020-01-19 00:00:01.990', N'ViettelPay')
-INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000019', '0930000019', N'582 Tân Sơn Nhì', N'Phường 3', N'Quận 11', N'TP.HCM', N'Phan Quang Tươi ', '0625171748', '2020-01-20 00:00:01.180', N'ViettelPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000000', '0931000000', N'97 Hoà Hảo', N'Phường 3', N'Quận 8', N'TP.HCM', N'Nguyễn Khắc Hoài Hảo ', '0521242672', '2020-01-01 00:00:01.000', N'Momo')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000001', '0931000001', N'88 358 Cách Mạng Tháng Tám', N'Phường 7', N'Hoàng Mai', N'Hà Nội', N'Ngô An Bình ', '0760056528', '2020-01-02 00:00:01.750', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000002', '0931000002', N'91 Hồng Lạc', N'Phường 1', N'Quận 12', N'TP.HCM', N'Phan Thanh Khắc Anh ', '0332262152', '2020-01-03 00:00:01.730', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000003', '0931000003', N'873 Lê Văn Sỹ', N'Phường 6', N'Long Biên', N'Hà Nội', N'Đào Phước Trần Thủy ', '0551421731', '2020-01-04 00:00:01.830', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000004', '0931000004', N'064 156 Cộng Hòa', N'Phường 2', N'Thanh Xuân', N'Hà Nội', N'Ngô Phước Vân ', '0434824417', '2020-01-05 00:00:01.540', N'ViettelPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000005', '0931000005', N'070 ý Văn Phức', N'Phường 2', N'Quận 4', N'TP.HCM', N'Vũ Huy Thụy Đại ', '0383058188', '2020-01-06 00:00:01.510', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000006', '0931000006', N'550 Trần Não', N'Phường 5', N'Ba Đình', N'Hà Nội', N'Phùng Đức Thúy ', '0361693816', '2020-01-07 00:00:01.860', N'Bank')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000007', '0931000007', N'61 Nguyễn Thượng Hiền', N'Phường 4', N'Ba Đình', N'Hà Nội', N'Vương Thu Thị Thư ', '0710558031', '2020-01-08 00:00:01.270', N'Momo')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000008', '0931000008', N'04 Công Chúa Ngọc Hân', N'Phường 4', N'Hoàn Kiếm', N'Hà Nội', N'Trương Minh Hoài Long ', '0469029403', '2020-01-09 00:00:01.320', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000009', '0931000009', N'57 Lê Lợi', N'Phường 2', N'Đống Đa', N'Hà Nội', N'Đinh An Trâm ', '0369545818', '2020-01-10 00:00:01.750', N'ViettelPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000010', '0931000010', N'016 005 Trần Xuân Soạn', N'Phường 15', N'Quận 3', N'TP.HCM', N'Hồ Huy Thu ', '0801633708', '2020-01-11 00:00:01.650', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000011', '0931000011', N'120 Bình Long', N'Phường 4', N'Hai Bà Trưng', N'Hà Nội', N'Phạm Hồng Hạ ', '0502139166', '2020-01-12 00:00:01.810', N'Momo')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000012', '0931000012', N'07 õ Văn Kiệt', N'Phường 2', N'Quận 1', N'TP.HCM', N'Cao An An ', '0380495961', '2020-01-13 00:00:01.530', N'Bank')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000013', '0931000013', N'69 Nguyễn Văn Tạo', N'Phường 6', N'Quận 4', N'TP.HCM', N'Trương Huy Du ', '0105421035', '2020-01-14 00:00:01.240', N'Bank')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000014', '0931000014', N'95 An Dương Vương', N'Phường 9', N'Quận 8', N'TP.HCM', N'Hồ Minh Tâm ', '0071363894', '2020-01-15 00:00:01.200', N'ZaloPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000015', '0931000015', N'40 Trịnh Thị Miếng', N'Phường 7', N'Quận 2', N'TP.HCM', N'Vương Vân Ngọc Trân ', '0815488332', '2020-01-16 00:00:01.900', N'Bank')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000016', '0931000016', N'815 Trường Sơn', N'Phường 8', N'Bắc Từ Liêm', N'Hà Nội', N'Lữ An Tín ', '0519265034', '2020-01-17 00:00:01.140', N'Bank')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000017', '0931000017', N'753 Phùng Văn Cung', N'Phường 8', N'Quận 9', N'TP.HCM', N'Đào Phước Trang ', '0979693021', '2020-01-18 00:00:01.900', N'Momo')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000018', '0931000018', N'86 Ngụy Như Kon Tum', N'Phường 1', N'Quận 3', N'TP.HCM', N'Hồ Bá Đức Nguyệt ', '0525408373', '2020-01-19 00:00:01.990', N'ViettelPay')
+INSERT dbo.DonHang(MaDH, MaKH, DiaChi, Phuong, Quan, Tinh, TenNguoiNhan, SDT, NgayLap, ThanhToan) VALUES ('0000000019', '0931000019', N'582 Tân Sơn Nhì', N'Phường 3', N'Quận 11', N'TP.HCM', N'Phan Quang Tươi ', '0625171748', '2020-01-20 00:00:01.180', N'ViettelPay')
 GO
 
 --
@@ -372,58 +372,63 @@ GO
 --
 -- Inserting data into table dbo.CT_TTDH
 --
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-10-05 21:51:53.000', N'0000000006', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-10-05 21:51:53.000', N'0000000008', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:44.000', N'0000000017', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-01-01 00:08:49.000', N'0000000003', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-10-05 21:51:53.000', N'0000000007', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-09-09 16:12:04.000', N'0000000009', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:42.000', N'0000000004', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:43.000', N'0000000007', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-07 06:49:28.000', N'0000000005', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-01-01 00:08:49.000', N'0000000002', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-06-30 16:12:04.000', N'0000000012', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-04-27 06:49:28.000', N'0000000018', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-01-01 00:08:49.000', N'0000000001', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:43.000', N'0000000013', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:44.000', N'0000000019', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-06-30 16:12:03.000', N'0000000008', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-01-01 00:08:50.000', N'0000000014', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:44.000', N'0000000016', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-03-12 00:08:50.000', N'0000000002', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:42.000', N'0000000000', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:43.000', N'0000000008', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-04-27 06:49:28.000', N'0000000017', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:43.000', N'0000000009', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-03-12 00:08:51.000', N'0000000015', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-03-12 00:08:50.000', N'0000000004', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-06-30 16:12:03.000', N'0000000010', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-03-12 00:08:50.000', N'0000000003', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-06-30 16:12:03.000', N'0000000009', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-12-10 23:59:59.000', N'0000000004', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-26 21:51:55.000', N'0000000001', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-12-10 23:59:59.000', N'0000000003', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-12-10 23:59:59.000', N'0000000005', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-09-09 16:12:04.000', N'0000000010', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:44.000', N'0000000018', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:42.000', N'0000000005', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-06-30 16:12:04.000', N'0000000011', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-09-09 16:12:05.000', N'0000000016', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-09-09 16:12:04.000', N'0000000011', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-04-27 06:49:27.000', N'0000000000', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-01-01 00:08:50.000', N'0000000013', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:45.000', N'0000000019', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-07 06:49:28.000', N'0000000006', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:43.000', N'0000000012', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-10-25 14:56:42.000', N'0000000006', 1)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-03-12 00:08:51.000', N'0000000014', 2)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-26 21:51:55.000', N'0000000000', 3)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2020-09-09 16:12:05.000', N'0000000015', 4)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-01-04 14:56:42.000', N'0000000001', 5)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-07 06:49:28.000', N'0000000007', 0)
-INSERT dbo.CT_TTDH(NgayCapNhat, MaDH, MaTT) VALUES ('2021-07-26 21:51:55.000', N'0000000002', 1)
-GO
-
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-01-01 00:08:49.000' AS DateTime), N'0000000001', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-01-01 00:08:49.000' AS DateTime), N'0000000002', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-01-01 00:08:49.000' AS DateTime), N'0000000003', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-01-01 00:08:50.000' AS DateTime), N'0000000013', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-01-01 00:08:50.000' AS DateTime), N'0000000014', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-03-12 00:08:50.000' AS DateTime), N'0000000002', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-03-12 00:08:50.000' AS DateTime), N'0000000003', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-03-12 00:08:50.000' AS DateTime), N'0000000004', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-03-12 00:08:51.000' AS DateTime), N'0000000014', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-03-12 00:08:51.000' AS DateTime), N'0000000015', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-06-30 16:12:03.000' AS DateTime), N'0000000008', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-06-30 16:12:03.000' AS DateTime), N'0000000009', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-06-30 16:12:03.000' AS DateTime), N'0000000010', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-06-30 16:12:04.000' AS DateTime), N'0000000011', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-06-30 16:12:04.000' AS DateTime), N'0000000012', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-09-09 16:12:04.000' AS DateTime), N'0000000009', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-09-09 16:12:04.000' AS DateTime), N'0000000010', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-09-09 16:12:04.000' AS DateTime), N'0000000011', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-09-09 16:12:05.000' AS DateTime), N'0000000015', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-09-09 16:12:05.000' AS DateTime), N'0000000016', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:42.000' AS DateTime), N'0000000004', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:42.000' AS DateTime), N'0000000005', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:42.000' AS DateTime), N'0000000006', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:43.000' AS DateTime), N'0000000012', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:43.000' AS DateTime), N'0000000013', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:44.000' AS DateTime), N'0000000018', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2020-10-25 14:56:44.000' AS DateTime), N'0000000019', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:42.000' AS DateTime), N'0000000000', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:42.000' AS DateTime), N'0000000001', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:43.000' AS DateTime), N'0000000007', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:43.000' AS DateTime), N'0000000008', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:43.000' AS DateTime), N'0000000009', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:44.000' AS DateTime), N'0000000016', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:44.000' AS DateTime), N'0000000017', 1)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-01-04 14:56:45.000' AS DateTime), N'0000000019', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-04-27 06:49:27.000' AS DateTime), N'0000000000', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-04-27 06:49:28.000' AS DateTime), N'0000000017', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-04-27 06:49:28.000' AS DateTime), N'0000000018', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-07 06:49:28.000' AS DateTime), N'0000000005', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-07 06:49:28.000' AS DateTime), N'0000000006', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-07 06:49:28.000' AS DateTime), N'0000000007', 2)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-26 21:51:55.000' AS DateTime), N'0000000000', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-26 21:51:55.000' AS DateTime), N'0000000001', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-07-26 21:51:55.000' AS DateTime), N'0000000002', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-10-05 21:51:53.000' AS DateTime), N'0000000006', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-10-05 21:51:53.000' AS DateTime), N'0000000007', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-10-05 21:51:53.000' AS DateTime), N'0000000008', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-10 23:59:59.000' AS DateTime), N'0000000003', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-10 23:59:59.000' AS DateTime), N'0000000004', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-10 23:59:59.000' AS DateTime), N'0000000005', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 22:15:36.830' AS DateTime), N'0000000010', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 22:15:49.423' AS DateTime), N'0000000016', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 22:42:59.207' AS DateTime), N'0000000014', 3)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 23:11:05.120' AS DateTime), N'0000000001', 4)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 23:11:09.810' AS DateTime), N'0000000003', 4)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-18 23:11:15.717' AS DateTime), N'0000000006', 4)
+INSERT [dbo].[CT_TTDH] ([NgayCapNhat], [MaDH], [MaTT]) VALUES (CAST(N'2021-12-19 02:26:36.773' AS DateTime), N'0000000000', 4)
 --
 -- Inserting data into table dbo.HopDong
 --

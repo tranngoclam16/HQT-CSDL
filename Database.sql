@@ -144,12 +144,12 @@ go
 
 --delete from CT_TTDH
 --delete from TinhTrangDH
-insert into TinhTrangDH values
-(0, N'Đơn hàng đã hủy.'),
-(1, N'Đơn hàng được tiếp nhận.'),
-(2, N'Đơn hàng đang đóng gói.'),
-(3, N'Đang chờ giao hàng.'),
-(4, N'Đơn hàng đang giao.'),
-(5, N'Đơn hàng giao thành công.')
+--insert into TinhTrangDH values
+--(0, N'Đơn hàng đã hủy.'),
+--(1, N'Đơn hàng được tiếp nhận.'),
+--(2, N'Đơn hàng đang đóng gói.'),
+--(3, N'Đang chờ giao hàng.'),
+--(4, N'Đơn hàng đang giao.'),
+--(5, N'Đơn hàng giao thành công.')
 
 
