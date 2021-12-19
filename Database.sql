@@ -116,7 +116,7 @@ create table ThuNhapTX (
 	MaTX varchar(10) ,
 	MaDH varchar(10) ,
 	PhiVanChuyen int ,
-	constraint PK_TNTX primary key (MaDH),
+	constraint PK_TNTX primary key (MaDH,MaTX),
 	CONSTRAINT FK__ThuNhapTX__MaDH
 	FOREIGN KEY (MaDH) references DonHang(MaDH),
 	CONSTRAINT FK__ThuNhapTX__MaTX 

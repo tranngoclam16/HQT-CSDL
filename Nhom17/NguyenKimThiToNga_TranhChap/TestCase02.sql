@@ -32,12 +32,12 @@ BEGIN
 				INSERT INTO ThuNhapTX VALUES (@MaTX, @MaDH, @PhiVanChuyen)
 
 				INSERT INTO CT_TTDH VALUES (GETDATE(), @MaDH, 4)
-				select @msg = N'Nhận đơn thành công'
+				set @msg = N'Nhận đơn thành công'
 			END
 		
 			ELSE 
 			begin
-				select @msg = N'Đơn hàng đã có người nhận' 
+				set @msg = N'Đơn hàng đã có người nhận' 
 				print(N'Đơn hàng đã có người nhận')
 			--raiserror('2',15,1);
 			end
@@ -46,6 +46,7 @@ BEGIN
 	BEGIN CATCH
 			IF @@trancount>0
 				BEGIN	
+				set @msg = N'Đơn hàng đã có người nhận'
 					print(N'Lỗi')
 					ROLLBACK TRANSACTION 
 				END

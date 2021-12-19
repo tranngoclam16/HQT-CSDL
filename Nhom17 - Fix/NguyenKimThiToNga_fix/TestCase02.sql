@@ -46,6 +46,7 @@ BEGIN
 	BEGIN CATCH
 			IF @@trancount>0
 				BEGIN	
+				select @msg = N'Đơn hàng đã có người nhận'
 					print(N'Lỗi')
 					ROLLBACK TRANSACTION 
 				END
